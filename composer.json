@@ -1,29 +1,29 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "stephenjude/filament-two-factor-authentication",
+    "description": "Filament Two Factor Authentication",
     "keywords": [
-        ":vendor_name",
+        "stephenjude",
         "laravel",
-        ":package_slug"
+        "filament-two-factor-authentication"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/stephenjude/filament-two-factor-authentication",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/stephenjude/filament-two-factor-authentication/issues",
+        "source": "https://github.com/stephenjude/filament-two-factor-authentication"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "stephenjude",
+            "email": "stephenjudesuccess@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
         "filament/filament": "^3.0",
-        "filament/forms": "^3.0",
-        "filament/tables": "^3.0",
+        "pragmarx/google2fa": "^8.0",
+        "bacon/bacon-qr-code": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -36,18 +36,17 @@
         "pestphp/pest-plugin-laravel": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "spatie/laravel-ray": "^1.26"
+        "phpstan/phpstan-phpunit": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Stephenjude\\FilamentTwoFactorAuthentication\\": "src/",
+            "Stephenjude\\FilamentTwoFactorAuthentication\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "Stephenjude\\FilamentTwoFactorAuthentication\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -67,10 +66,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Stephenjude\\FilamentTwoFactorAuthentication\\FilamentTwoFactorAuthenticationServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FilamentTwoFactorAuthentication": "Stephenjude\\FilamentTwoFactorAuthentication\\Facades\\FilamentTwoFactorAuthentication"
             }
         }
     },

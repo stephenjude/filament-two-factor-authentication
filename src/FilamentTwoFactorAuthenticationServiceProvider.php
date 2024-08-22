@@ -1,26 +1,26 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Stephenjude\FilamentTwoFactorAuthentication;
 
-use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
+use PragmaRX\Google2FA\Google2FA;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
-use VendorName\Skeleton\Testing\TestsSkeleton;
+use Stephenjude\FilamentTwoFactorAuthentication\Commands\FilamentTwoFactorAuthenticationCommand;
+use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
+use Stephenjude\FilamentTwoFactorAuthentication\Testing\TestsFilamentTwoFactorAuthentication;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class FilamentTwoFactorAuthenticationServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'skeleton';
+    public static string $name = 'filament-two-factor-authentication';
 
-    public static string $viewNamespace = 'skeleton';
+    public static string $viewNamespace = 'filament-two-factor-authentication';
 
     public function configurePackage(Package $package): void
     {
@@ -33,17 +33,11 @@ class SkeletonServiceProvider extends PackageServiceProvider
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->publishConfigFile()
                     ->publishMigrations()
+                    ->publishAssets()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub(':vendor_slug/:package_slug');
+                    ->askToStarRepoOnGitHub('stephenjude/filament-two-factor-authentication');
             });
-
-        $configFileName = $package->shortName();
-
-        if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
-            $package->hasConfigFile();
-        }
 
         if (file_exists($package->basePath('/../database/migrations'))) {
             $package->hasMigrations($this->getMigrations());
@@ -56,9 +50,25 @@ class SkeletonServiceProvider extends PackageServiceProvider
         if (file_exists($package->basePath('/../resources/views'))) {
             $package->hasViews(static::$viewNamespace);
         }
+
+        if (app()->runningInConsole()) {
+            foreach (app(Filesystem::class)->files(__DIR__.'/../stubs/') as $file) {
+                $this->publishes([
+                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
+                ], 'skeleton-stubs');
+            }
+        }
     }
 
-    public function packageRegistered(): void {}
+    public function packageRegistered(): void
+    {
+        $this->app->singleton(TwoFactorAuthenticationProviderContract::class, function ($app) {
+            return new TwoFactorAuthenticationProvider(
+                $app->make(Google2FA::class),
+                $app->make(Repository::class)
+            );
+        });
+    }
 
     public function packageBooted(): void
     {
@@ -76,22 +86,13 @@ class SkeletonServiceProvider extends PackageServiceProvider
         // Icon Registration
         FilamentIcon::register($this->getIcons());
 
-        // Handle Stubs
-        if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
-                ], 'skeleton-stubs');
-            }
-        }
-
         // Testing
-        Testable::mixin(new TestsSkeleton);
+        Testable::mixin(new TestsFilamentTwoFactorAuthentication);
     }
 
     protected function getAssetPackageName(): ?string
     {
-        return ':vendor_slug/:package_slug';
+        return 'stephenjude/filament-two-factor-authentication';
     }
 
     /**
@@ -99,11 +100,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
      */
     protected function getAssets(): array
     {
-        return [
-            // AlpineComponent::make('skeleton', __DIR__ . '/../resources/dist/components/skeleton.js'),
-            Css::make('skeleton-styles', __DIR__ . '/../resources/dist/skeleton.css'),
-            Js::make('skeleton-scripts', __DIR__ . '/../resources/dist/skeleton.js'),
-        ];
+        return [];
     }
 
     /**
@@ -111,9 +108,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
      */
     protected function getCommands(): array
     {
-        return [
-            SkeletonCommand::class,
-        ];
+        return [];
     }
 
     /**
@@ -129,7 +124,9 @@ class SkeletonServiceProvider extends PackageServiceProvider
      */
     protected function getRoutes(): array
     {
-        return [];
+        return [
+
+        ];
     }
 
     /**
@@ -146,7 +143,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_skeleton_table',
+            'add_two_factor_authentication_columns',
         ];
     }
 }
