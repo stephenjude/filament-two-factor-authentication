@@ -5,7 +5,7 @@ namespace Stephenjude\FilamentTwoFactorAuthentication;
 use Closure;
 use Illuminate\Http\Request;
 
-class EnforceTwoFactorAuthenticationSetup
+class EnforceTwoFactorSetup
 {
     public function handle(Request $request, Closure $next): mixed
     {

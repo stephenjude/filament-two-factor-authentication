@@ -86,6 +86,14 @@ class FilamentTwoFactorAuthenticationServiceProvider extends PackageServiceProvi
         // Icon Registration
         FilamentIcon::register($this->getIcons());
 
+        if (app()->runningInConsole()) {
+            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
+                $this->publishes([
+                    $file->getRealPath() => base_path("stubs/filament-two-factor-authentication/{$file->getFilename()}"),
+                ], 'filament-two-factor-authentication-stubs');
+            }
+        }
+
         // Testing
         Testable::mixin(new TestsFilamentTwoFactorAuthentication);
     }

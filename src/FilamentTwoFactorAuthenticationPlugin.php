@@ -3,6 +3,8 @@
 namespace Stephenjude\FilamentTwoFactorAuthentication;
 
 use Filament\Contracts\Plugin;
+use Filament\Facades\Filament;
+use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Illuminate\Support\Facades\Route;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\EditProfile;
@@ -13,7 +15,12 @@ use Stephenjude\FilamentTwoFactorAuthentication\Pages\TwoFactorSetup;
 
 class FilamentTwoFactorAuthenticationPlugin implements Plugin
 {
-    protected bool $hasEnforcedTwoFactorAuthenticationSetup = false;
+    protected bool $hasEnforcedTwoFactorSetup = false;
+    protected bool $hasTwoFactorMenuItem = false;
+
+    protected ?string $twoFactorMenuItemLabel = null;
+
+    protected ?string $twoFactorMenuItemIcon = null;
 
     public function getId(): string
     {
@@ -24,31 +31,54 @@ class FilamentTwoFactorAuthenticationPlugin implements Plugin
     {
         $panel
             ->login(TwoFactorLogin::class)
-            ->profile(page: EditProfile::class, isSimple: false)
             ->routes(fn() => [
                 Route::get('/two-factor-challenge', TwoFactorChallenge::class)->name('two-factor.challenge'),
                 Route::get('/two-factor-recovery', TwoFactorRecovery::class)->name('two-factor.recovery'),
                 Route::get('/two-factor-setup', TwoFactorSetup::class)->name('two-factor.setup'),
             ]);
 
-        if ($this->hasEnforcedTwoFactorAuthenticationSetup()) {
+        if ($this->hasTwoFactorMenuItem()) {
+            $panel
+                ->userMenuItems([
+                    MenuItem::make()
+                        ->label($this->twoFactorMenuItemLabel ?? __('2FA Settings'))
+                        ->url(fn(): string => Filament::getCurrentPanel()->route('two-factor.setup'))
+                        ->icon($this->twoFactorMenuItemIcon ?? 'heroicon-o-lock-closed'),
+                ]);
+        }
+
+        if ($this->hasEnforcedTwoFactorSetup()) {
             $panel
                 ->authMiddleware([
-                    EnforceTwoFactorAuthenticationSetup::class
+                    EnforceTwoFactorSetup::class
                 ]);
         }
     }
 
-    public function enforceTwoFactorAuthenticationSetup(bool $condition = true): static
+    public function enforceTwoFactorSetup(bool $condition = true): static
     {
-        $this->hasEnforcedTwoFactorAuthenticationSetup = $condition;
+        $this->hasEnforcedTwoFactorSetup = $condition;
 
         return $this;
     }
 
-    public function hasEnforcedTwoFactorAuthenticationSetup(): bool
+    public function hasEnforcedTwoFactorSetup(): bool
     {
-        return $this->hasEnforcedTwoFactorAuthenticationSetup;
+        return $this->hasEnforcedTwoFactorSetup;
+    }
+
+    public function addTwoFactorMenuItem(bool $condition = true, ?string $label = null, ?string $icon = null): static
+    {
+        $this->hasTwoFactorMenuItem = $condition;
+
+        $this->twoFactorMenuItemLabel = $label;
+
+        return $this;
+    }
+
+    public function hasTwoFactorMenuItem(): bool
+    {
+        return $this->hasTwoFactorMenuItem;
     }
 
     public function boot(Panel $panel): void
