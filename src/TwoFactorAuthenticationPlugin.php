@@ -7,13 +7,15 @@ use Filament\Facades\Filament;
 use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
+use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\EditProfile;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\TwoFactorChallenge;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\TwoFactorLogin;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\TwoFactorRecovery;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\TwoFactorSetup;
+use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
+use Stephenjude\FilamentTwoFactorAuthentication\Pages\Login;
+use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
+use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 
-class FilamentTwoFactorAuthenticationPlugin implements Plugin
+class TwoFactorAuthenticationPlugin implements Plugin
 {
     protected bool $hasEnforcedTwoFactorSetup = false;
     protected bool $hasTwoFactorMenuItem = false;
@@ -30,11 +32,11 @@ class FilamentTwoFactorAuthenticationPlugin implements Plugin
     public function register(Panel $panel): void
     {
         $panel
-            ->login(TwoFactorLogin::class)
+            ->login(Login::class)
             ->routes(fn() => [
-                Route::get('/two-factor-challenge', TwoFactorChallenge::class)->name('two-factor.challenge'),
-                Route::get('/two-factor-recovery', TwoFactorRecovery::class)->name('two-factor.recovery'),
-                Route::get('/two-factor-setup', TwoFactorSetup::class)->name('two-factor.setup'),
+                Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
+                Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
+                Route::get('/two-factor-setup', Setup::class)->name('two-factor.setup'),
             ]);
 
         if ($this->hasTwoFactorMenuItem()) {
@@ -83,7 +85,6 @@ class FilamentTwoFactorAuthenticationPlugin implements Plugin
 
     public function boot(Panel $panel): void
     {
-        //
     }
 
     public static function make(): static
@@ -102,9 +103,9 @@ class FilamentTwoFactorAuthenticationPlugin implements Plugin
     public function routes(): array
     {
         return [
-            Route::get('/two-factor-challenge', TwoFactorChallenge::class)->name('two-factor.challenge'),
-            Route::get('/two-factor-recovery', TwoFactorRecovery::class)->name('two-factor.recovery'),
-            Route::get('/two-factor-setup', TwoFactorSetup::class)->name('two-factor.setup'),
+            Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
+            Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
+            Route::get('/two-factor-setup', Setup::class)->name('two-factor.setup'),
         ];
     }
 }

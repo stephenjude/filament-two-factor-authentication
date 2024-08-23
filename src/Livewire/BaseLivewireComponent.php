@@ -42,12 +42,4 @@ abstract class BaseLivewireComponent extends Component implements HasActions, Ha
             ->danger()
             ->send();
     }
-
-    protected function sendDataSavedNotification(string $message = 'Saved'): void
-    {
-        Notification::make()
-            ->success()
-            ->title(__($message))
-            ->send();
-    }
 }

@@ -11,9 +11,9 @@ use Filament\Http\Responses\Auth\LoginResponse;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
 
-class TwoFactorRecovery extends BaseSimplePage{
+class Recovery extends BaseSimplePage{
 
-    protected static string $view = 'filament-two-factor-authentication::pages.two-factor-recovery';
+    protected static string $view = 'filament-two-factor-authentication::pages.recovery';
 
     public ?array $data = [];
 
@@ -21,6 +21,8 @@ class TwoFactorRecovery extends BaseSimplePage{
     {
         if (Filament::auth()->check()) {
             redirect()->intended(Filament::getUrl());
+
+            return;
         }
 
         $this->form->fill();

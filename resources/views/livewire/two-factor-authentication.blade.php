@@ -29,9 +29,10 @@
                 </div>
 
                 <form wire:submit="confirmSetup">
-                    {{ $this->form }}
-
-                    <div class="mt-4 flex space-x-2">
+                    <div class="mb-4">
+                        {{ $this->form }}
+                    </div>
+                    <div class="flex gap-2">
                         {{$this->confirmSetup}}
                         {{$this->cancelSetup}}
                     </div>
@@ -68,7 +69,7 @@
         </div>
     </x-filament::section>
 
-    <x-filament-actions::modals/>
+    <x-filament-actions::modals />
 
     {{-- Success is as dangerous as failure. --}}
 </div>

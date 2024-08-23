@@ -14,9 +14,9 @@ use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationCh
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationFailed;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationProvider;
 
-class TwoFactorChallenge extends BaseSimplePage
+class Challenge extends BaseSimplePage
 {
-    protected static string $view = 'filament-two-factor-authentication::pages.two-factor-challenge';
+    protected static string $view = 'filament-two-factor-authentication::pages.challenge';
 
     public ?array $data = [];
 
@@ -29,15 +29,23 @@ class TwoFactorChallenge extends BaseSimplePage
     {
         if (Filament::auth()->check()) {
             redirect()->intended(Filament::getUrl());
+
+            return;
         }
 
-        if (!session()->has('login.id')) {
+        $model = Filament::auth()->getProvider()->getModel();
+
+        $user = $model::find(session('login.id'));
+
+        if (!$user) {
             redirect()->to(filament()->getCurrentPanel()?->getLoginUrl());
+
+            return;
         }
 
         $this->form->fill();
 
-        TwoFactorAuthenticationChallenged::dispatch();
+        TwoFactorAuthenticationChallenged::dispatch($user);
     }
 
     public function recoveryAction(): Action

@@ -6,14 +6,18 @@ use Filament\Support\Assets\Asset;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
+use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Stephenjude\FilamentTwoFactorAuthentication\Commands\FilamentTwoFactorAuthenticationCommand;
 use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
+use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
+use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
+use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
+use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 use Stephenjude\FilamentTwoFactorAuthentication\Testing\TestsFilamentTwoFactorAuthentication;
 
 class FilamentTwoFactorAuthenticationServiceProvider extends PackageServiceProvider
@@ -50,14 +54,6 @@ class FilamentTwoFactorAuthenticationServiceProvider extends PackageServiceProvi
         if (file_exists($package->basePath('/../resources/views'))) {
             $package->hasViews(static::$viewNamespace);
         }
-
-        if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__.'/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
-                ], 'skeleton-stubs');
-            }
-        }
     }
 
     public function packageRegistered(): void
@@ -86,13 +82,14 @@ class FilamentTwoFactorAuthenticationServiceProvider extends PackageServiceProvi
         // Icon Registration
         FilamentIcon::register($this->getIcons());
 
-        if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/filament-two-factor-authentication/{$file->getFilename()}"),
-                ], 'filament-two-factor-authentication-stubs');
-            }
-        }
+        // Register Livewire Components
+        Livewire::component('filament-two-factor-authentication::two-factor-challenge', Challenge::class);
+        Livewire::component('filament-two-factor-authentication::two-factor-recovery', Recovery::class);
+        Livewire::component('filament-two-factor-authentication::two-factor-setup', Setup::class);
+        Livewire::component(
+            'filament-two-factor-authentication::two-factor-authentication',
+            TwoFactorAuthentication::class
+        );
 
         // Testing
         Testable::mixin(new TestsFilamentTwoFactorAuthentication);

@@ -69,7 +69,6 @@
                 "Stephenjude\\FilamentTwoFactorAuthentication\\FilamentTwoFactorAuthenticationServiceProvider"
             ],
             "aliases": {
-                "FilamentTwoFactorAuthentication": "Stephenjude\\FilamentTwoFactorAuthentication\\Facades\\FilamentTwoFactorAuthentication"
             }
         }
     },

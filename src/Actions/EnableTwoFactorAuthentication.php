@@ -6,7 +6,6 @@ use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Support\Collection;
 use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationEnabled;
-use Stephenjude\FilamentTwoFactorAuthentication\RecoveryCode;
 
 class EnableTwoFactorAuthentication
 {

@@ -5,7 +5,6 @@ namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Support\Collection;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodesGenerated;
-use Stephenjude\FilamentTwoFactorAuthentication\RecoveryCode;
 
 class GenerateNewRecoveryCodes
 {

@@ -7,10 +7,9 @@ use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Facades\Filament;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Models\Contracts\FilamentUser;
-use Filament\Pages\Auth\Login;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationChallenged;
 
-class TwoFactorLogin extends Login
+class Login extends \Filament\Pages\Auth\Login
 {
     public function authenticate(): ?LoginResponse
     {
@@ -32,7 +31,7 @@ class TwoFactorLogin extends Login
 
             TwoFactorAuthenticationChallenged::dispatch($user);
 
-            return $this->twoFactorLoginChalleneReseponse();
+            return $this->getLoginChallengeReseponse();
         } catch (TooManyRequestsException $exception) {
             $this->getRateLimitedNotification($exception)?->send();
 
@@ -61,14 +60,14 @@ class TwoFactorLogin extends Login
         return $user;
     }
 
-    private function twoFactorLoginChalleneReseponse(): LoginResponse
+    private function getLoginChallengeReseponse(): LoginResponse
     {
         return new class implements LoginResponse {
             public function toResponse($request)
             {
                 return redirect()->to(
                     filament()->getCurrentPanel()->route(
-                       'two-factor.challenge'
+                        'two-factor.challenge'
                     )
                 );
             }
