@@ -12,7 +12,6 @@ use PragmaRX\Google2FA\Google2FA;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Stephenjude\FilamentTwoFactorAuthentication\Commands\FilamentTwoFactorAuthenticationCommand;
 use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;

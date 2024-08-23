@@ -25,7 +25,7 @@ class EnableTwoFactorAuthentication
     /**
      * Enable two factor authentication for the user.
      */
-    public function __invoke(FilamentUser $user, bool $force = false):void
+    public function __invoke(FilamentUser $user, bool $force = false): void
     {
         if (empty($user->two_factor_secret) || $force === true) {
             $user->forceFill([

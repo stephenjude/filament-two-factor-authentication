@@ -58,7 +58,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
     {
         return Action::make('confirmSetup')
             ->label(__('Confirm'))
-            ->visible(fn() => $this->isConfirmingSetup)
+            ->visible(fn () => $this->isConfirmingSetup)
             ->submit('confirmSetup');
     }
 
@@ -67,7 +67,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
         return Action::make('cancelSetup')
             ->label(__('Cancel'))
             ->outlined()
-            ->visible(fn() => $this->isConfirmingSetup)
+            ->visible(fn () => $this->isConfirmingSetup)
             ->action(function () {
                 try {
                     $this->rateLimit(5);
@@ -88,7 +88,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
         return Action::make('enableTwoFactorAuthentication')
             ->label(__('Enable'))
             ->visible(
-                fn() => !$this->getUser()->hasEnabledTwoFactorAuthentication()
+                fn () => ! $this->getUser()->hasEnabledTwoFactorAuthentication()
             )->modalWidth('md')
             ->modalSubmitActionLabel(__('Confirm'))
             ->form([
@@ -99,8 +99,8 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ->required()
                     ->autocomplete('confirm-password')
                     ->rules([
-                        fn() => function (string $attribute, $value, $fail) {
-                            if (!Hash::check($value, $this->getUser()->password)) {
+                        fn () => function (string $attribute, $value, $fail) {
+                            if (! Hash::check($value, $this->getUser()->password)) {
                                 $fail('The provided password was incorrect.');
                             }
                         },
@@ -126,7 +126,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
         return $form
             ->schema([
                 Placeholder::make('setup_key')
-                    ->label(fn() => __(
+                    ->label(fn () => __(
                         'Setup Key: :setup_key',
                         ['setup_key' => decrypt($this->getUser()->two_factor_secret)]
                     )),
@@ -142,7 +142,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
         return Action::make('disableTwoFactorAuthentication')
             ->label(__('Disable'))
             ->color('danger')
-            ->visible(fn() => $this->getUser()->hasEnabledTwoFactorAuthentication())
+            ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->modalWidth('md')
             ->modalSubmitActionLabel(__('Confirm'))
             ->form([
@@ -153,14 +153,14 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ->required()
                     ->autocomplete('current-password')
                     ->rules([
-                        fn() => function (string $attribute, $value, $fail) {
-                            if (!Hash::check($value, $this->getUser()->password)) {
+                        fn () => function (string $attribute, $value, $fail) {
+                            if (! Hash::check($value, $this->getUser()->password)) {
                                 $fail('The provided password was incorrect.');
                             }
                         },
                     ]),
             ])
-            ->action(fn() => app(DisableTwoFactorAuthentication::class)($this->getUser()));
+            ->action(fn () => app(DisableTwoFactorAuthentication::class)($this->getUser()));
     }
 
     protected function generateNewRecoveryCodesAction(): Action
@@ -168,8 +168,8 @@ class TwoFactorAuthentication extends BaseLivewireComponent
         return Action::make('generateNewRecoveryCodes')
             ->label(__('Regenerate Recovery Codes'))
             ->outlined()
-            ->visible(fn() => $this->getUser()->hasEnabledTwoFactorAuthentication())
+            ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->requiresConfirmation()
-            ->action(fn() => app(GenerateNewRecoveryCodes::class)($this->getUser()));
+            ->action(fn () => app(GenerateNewRecoveryCodes::class)($this->getUser()));
     }
 }

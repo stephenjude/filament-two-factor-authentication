@@ -11,7 +11,7 @@ class EnforceTwoFactorSetup
     {
         $user = filament()->auth()->user();
 
-        if (!$user?->hasEnabledTwoFactorAuthentication()) {
+        if (! $user?->hasEnabledTwoFactorAuthentication()) {
             return redirect()->to($this->redirectTo());
         }
 

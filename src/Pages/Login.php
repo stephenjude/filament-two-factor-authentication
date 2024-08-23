@@ -20,7 +20,7 @@ class Login extends \Filament\Pages\Auth\Login
 
             $user = $this->validateCredentials($data);
 
-            if (!$user->hasEnabledTwoFactorAuthentication()) {
+            if (! $user->hasEnabledTwoFactorAuthentication()) {
                 return parent::authenticate();
             }
 
@@ -41,7 +41,7 @@ class Login extends \Filament\Pages\Auth\Login
 
     private function validateCredentials(array $data): FilamentUser
     {
-        if (!Filament::auth()->validate($this->getCredentialsFromFormData($data))) {
+        if (! Filament::auth()->validate($this->getCredentialsFromFormData($data))) {
             $this->throwFailureValidationException();
         }
 
@@ -49,11 +49,11 @@ class Login extends \Filament\Pages\Auth\Login
 
         $user = $model::where(Arr::only($data, 'email'))->first();
 
-        if (!($user instanceof FilamentUser)) {
+        if (! ($user instanceof FilamentUser)) {
             $this->throwFailureValidationException();
         }
 
-        if (!$user->canAccessPanel(Filament::getCurrentPanel())) {
+        if (! $user->canAccessPanel(Filament::getCurrentPanel())) {
             $this->throwFailureValidationException();
         }
 
@@ -62,7 +62,8 @@ class Login extends \Filament\Pages\Auth\Login
 
     private function getLoginChallengeReseponse(): LoginResponse
     {
-        return new class implements LoginResponse {
+        return new class implements LoginResponse
+        {
             public function toResponse($request)
             {
                 return redirect()->to(

@@ -2,7 +2,6 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication;
 
-use App\Traits\Fortify;
 use BaconQrCode\Renderer\Color\Rgb;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
@@ -18,8 +17,8 @@ trait TwoFactorAuthenticatable
      */
     public function hasEnabledTwoFactorAuthentication(): bool
     {
-        return !is_null($this->two_factor_secret) &&
-            !is_null($this->two_factor_confirmed_at);
+        return ! is_null($this->two_factor_secret) &&
+            ! is_null($this->two_factor_confirmed_at);
     }
 
     /**
@@ -56,7 +55,7 @@ trait TwoFactorAuthenticatable
         $svg = (new Writer(
             new ImageRenderer(
                 new RendererStyle(192, 0, null, null, Fill::uniformColor(new Rgb(255, 255, 255), new Rgb(45, 55, 72))),
-                new SvgImageBackEnd()
+                new SvgImageBackEnd
             )
         ))->writeString($this->twoFactorQrCodeUrl());
 
