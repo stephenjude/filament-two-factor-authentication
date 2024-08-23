@@ -20,7 +20,7 @@ use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 use Stephenjude\FilamentTwoFactorAuthentication\Testing\TestsFilamentTwoFactorAuthentication;
 
-class FilamentTwoFactorAuthenticationServiceProvider extends PackageServiceProvider
+class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
 {
     public static string $name = 'filament-two-factor-authentication';
 

@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/stephenjude/filament-two-factor-authentication/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/stephenjude/filament-two-factor-authentication/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/stephenjude/filament-two-factor-authentication.svg?style=flat-square)](https://packagist.org/packages/stephenjude/filament-two-factor-authentication)
 
-This plugin adds 2FA authentication to your Filament application. This package can be added both to new and existing Filament (V3) applications.
+This plugin adds 2FA authentication to your existing Filament applications.
 
 ## Features
 
@@ -38,7 +38,7 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-two-factor-authentication-views"
 ```
 
-## Usage
+## Model Configuration
 First, ensure that your application's authenticatio model uses the `TwoFactorAuthenticatable` trait:
 
 ```php
@@ -52,6 +52,7 @@ class User extends Authenticatable implements FilamentUser
     use TwoFactorAuthenticatable;
 ```
 
+## Plugin Configuration
 Add two factor authentication plugin to a panel by instantiating the plugin class and passing it to the plugin() method
 of the configuration:
 
@@ -78,6 +79,39 @@ If your application already has a user profile page, you can add a 2FA settings 
 <x-filament-panels::page>
     @livewire(\Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication::class)
 </x-filament-panels::page>
+```
+## Events
+This package dispatches events which your application can subscribe to. You can listen to these events inside your EventServiceProvider class:
+
+```php
+use Stephenjude\FilamentTwoFactorAuthentication\Events\{RecoveryCodeReplaced,RecoveryCodesGenerated,TwoFactorAuthenticationChallenged,TwoFactorAuthenticationConfirmed,TwoFactorAuthenticationDisabled,TwoFactorAuthenticationEnabled,TwoFactorAuthenticationFailed,ValidTwoFactorAuthenticationCodeProvided};
+
+protected $listen = [
+    TwoFactorAuthenticationChallenged::class => [
+        // Dispatched when a user is required to enter 2FA code during login.
+    ],
+    TwoFactorAuthenticationFailed::class => [
+        // Dispatched when a user provides incorrect 2FA code or recovery code during login.
+    ],
+    ValidTwoFactorAuthenticationCodeProvided::class => [
+        // Dispatched when a user is required to enter 2FA code during 2FA setup.
+    ]
+    TwoFactorAuthenticationConfirmed::class => [
+        // Dispatched when a user confirms code during 2FA setup.
+    ],
+    TwoFactorAuthenticationEnabled::class => [
+        // Dispatched when a user enables 2FA.
+    ],
+    TwoFactorAuthenticationDisabled::class => [
+        // Dispatched when a user disables 2FA.
+    ],
+    RecoveryCodeReplaced::class => [
+        // Dispatched after a user's recovery code is replaced.
+    ],
+    RecoveryCodesGenerated::class => [
+        // Dispatched after a user's recovery codes are generated.
+    ],
+];
 ```
 
 ## Screenshot

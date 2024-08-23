@@ -40,8 +40,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Stephenjude\\FilamentTwoFactorAuthentication\\": "src/",
-            "Stephenjude\\FilamentTwoFactorAuthentication\\Database\\Factories\\": "database/factories/"
+            "Stephenjude\\FilamentTwoFactorAuthentication\\": "src/"
         }
     },
     "autoload-dev": {
@@ -66,7 +65,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Stephenjude\\FilamentTwoFactorAuthentication\\FilamentTwoFactorAuthenticationServiceProvider"
+                "Stephenjude\\FilamentTwoFactorAuthentication\\TwoFactorAuthenticationServiceProvider"
             ],
             "aliases": {
             }

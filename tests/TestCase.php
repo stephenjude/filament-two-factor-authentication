@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Stephenjude\FilamentTwoFactorAuthentication\FilamentTwoFactorAuthenticationServiceProvider;
+use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -44,7 +44,7 @@ class TestCase extends Orchestra
             SupportServiceProvider::class,
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
-            FilamentTwoFactorAuthenticationServiceProvider::class,
+            TwoFactorAuthenticationServiceProvider::class,
         ];
     }
 
