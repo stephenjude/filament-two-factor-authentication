@@ -52,7 +52,7 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        $migration = include __DIR__.'/../database/migrations/add_two_factor_authentication_columns.php.stub';
+        $migration = include __DIR__ . '/../database/migrations/add_two_factor_authentication_columns.php.stub';
 
         $migration->up();
 

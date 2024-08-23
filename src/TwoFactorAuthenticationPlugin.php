@@ -7,9 +7,6 @@ use Filament\Facades\Filament;
 use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Illuminate\Support\Facades\Route;
-use Livewire\Livewire;
-use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\EditProfile;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Login;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
@@ -18,6 +15,7 @@ use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 class TwoFactorAuthenticationPlugin implements Plugin
 {
     protected bool $hasEnforcedTwoFactorSetup = false;
+
     protected bool $hasTwoFactorMenuItem = false;
 
     protected ?string $twoFactorMenuItemLabel = null;
@@ -33,7 +31,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     {
         $panel
             ->login(Login::class)
-            ->routes(fn() => [
+            ->routes(fn () => [
                 Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
                 Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
                 Route::get('/two-factor-setup', Setup::class)->name('two-factor.setup'),
@@ -44,7 +42,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
                 ->userMenuItems([
                     MenuItem::make()
                         ->label($this->twoFactorMenuItemLabel ?? __('2FA Settings'))
-                        ->url(fn(): string => Filament::getCurrentPanel()->route('two-factor.setup'))
+                        ->url(fn (): string => Filament::getCurrentPanel()->route('two-factor.setup'))
                         ->icon($this->twoFactorMenuItemIcon ?? 'heroicon-o-lock-closed'),
                 ]);
         }
@@ -52,7 +50,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
         if ($this->hasEnforcedTwoFactorSetup()) {
             $panel
                 ->authMiddleware([
-                    EnforceTwoFactorSetup::class
+                    EnforceTwoFactorSetup::class,
                 ]);
         }
     }
@@ -83,9 +81,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->hasTwoFactorMenuItem;
     }
 
-    public function boot(Panel $panel): void
-    {
-    }
+    public function boot(Panel $panel): void {}
 
     public static function make(): static
     {

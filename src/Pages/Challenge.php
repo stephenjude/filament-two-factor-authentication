@@ -20,9 +20,9 @@ class Challenge extends BaseSimplePage
 
     public ?array $data = [];
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
-        return "Two Factor Authentication";
+        return 'Two Factor Authentication';
     }
 
     public function mount(): void
@@ -37,7 +37,7 @@ class Challenge extends BaseSimplePage
 
         $user = $model::find(session('login.id'));
 
-        if (!$user) {
+        if (! $user) {
             redirect()->to(filament()->getCurrentPanel()?->getLoginUrl());
 
             return;
@@ -55,7 +55,7 @@ class Challenge extends BaseSimplePage
             ->label(__('use a recovery code'))
             ->url(
                 filament()->getCurrentPanel()->route(
-                   'two-factor.recovery'
+                    'two-factor.recovery'
                 )
             );
     }
@@ -106,7 +106,7 @@ class Challenge extends BaseSimplePage
                             ->required()
                             ->autocomplete()
                             ->rules([
-                                fn() => function (string $attribute, $value, $fail) {
+                                fn () => function (string $attribute, $value, $fail) {
                                     $model = Filament::auth()->getProvider()->getModel();
 
                                     $user = $model::find(session('login.id'));
@@ -124,7 +124,7 @@ class Challenge extends BaseSimplePage
                                         code: $value
                                     );
 
-                                    if (!$isValidCode) {
+                                    if (! $isValidCode) {
                                         $fail(__('The provided two factor authentication code was invalid.'));
 
                                         event(new TwoFactorAuthenticationFailed($user));

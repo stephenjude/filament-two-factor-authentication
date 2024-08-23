@@ -21,7 +21,7 @@ class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProvider
     /**
      * Create a new two factor authentication provider instance.
      */
-    public function __construct(Google2FA $engine, Repository $cache = null)
+    public function __construct(Google2FA $engine, ?Repository $cache = null)
     {
         $this->engine = $engine;
         $this->cache = $cache;
@@ -55,7 +55,7 @@ class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProvider
         $timestamp = $this->engine->verifyKeyNewer(
             $secret,
             $code,
-            optional($this->cache)->get($key = 'fortify.2fa_codes.'.md5($code))
+            optional($this->cache)->get($key = 'fortify.2fa_codes.' . md5($code))
         );
 
         if ($timestamp !== false) {

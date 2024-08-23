@@ -17,15 +17,15 @@ use Livewire\Component;
 
 abstract class BaseLivewireComponent extends Component implements HasActions, HasForms
 {
-    use WithRateLimiting;
     use InteractsWithActions;
     use InteractsWithForms;
+    use WithRateLimiting;
 
     public function getUser(): FilamentUser
     {
         $user = Filament::auth()->user();
 
-        if (!$user instanceof Model) {
+        if (! $user instanceof Model) {
             throw new Exception(
                 'The authenticated user object must be a Filament Auth model to allow the profile page to update it.'
             );

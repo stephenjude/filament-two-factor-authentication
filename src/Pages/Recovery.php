@@ -8,11 +8,9 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Http\Responses\Auth\LoginResponse;
-use Filament\Pages\Concerns\InteractsWithFormActions;
-use Filament\Pages\SimplePage;
 
-class Recovery extends BaseSimplePage{
-
+class Recovery extends BaseSimplePage
+{
     protected static string $view = 'filament-two-factor-authentication::pages.recovery';
 
     public ?array $data = [];
@@ -56,7 +54,7 @@ class Recovery extends BaseSimplePage{
             ->label(__('use an authentication code'))
             ->url(
                 filament()->getCurrentPanel()->route(
-                   'two-factor.challenge'
+                    'two-factor.challenge'
                 )
             );
     }
