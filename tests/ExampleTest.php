@@ -1,5 +1,7 @@
 <?php
 
 it('can test', function () {
-    expect(true)->toBeTrue();
+    $this->actingAs(User::factory()->create());
+
+    expect(filament()->auth()->check())->toBeTrue();
 });

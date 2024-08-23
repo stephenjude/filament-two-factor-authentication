@@ -15,6 +15,29 @@ This plugin adds 2FA authentication to your Filament application. This package c
 - Extendable 2FA settings component for custom pages.
 - Automated test for all pages and components.
 
+## Installation
+
+Thank you for purchasing Filament Two Factor Authentication Plugin!
+
+Below, you'll find documentation on installing this plugin. If you have any questions, find a bug, need support, or have
+a feature request, please don't hesitate to reach out to me at stephenjudesuccess@gmail.com.
+
+You can install the package via composer:
+
+```bash
+composer require stephenjude/filament-two-factor-authentication
+```
+
+Install the plugin migration using:
+```bash
+php artisan filament-two-factor-authentication::install
+```
+
+Optionally, you can publish the views using
+```bash
+php artisan vendor:publish --tag="filament-two-factor-authentication-views"
+```
+
 ## Usage
 First, ensure that your application's authenticatio model uses the `TwoFactorAuthenticatable` trait:
 
@@ -48,27 +71,13 @@ public function panel(Panel $panel): Panel
 ...
 ```
 
-## Installation
+### Custom 2FA Settings Page
+If your application already has a user profile page, you can add a 2FA settings to your profile page view:
 
-Thank you for purchasing Filament Two Factor Authentication Plugin!
-
-Below, you'll find documentation on installing this plugin. If you have any questions, find a bug, need support, or have
-a feature request, please don't hesitate to reach out to me at stephenjudesuccess@gmail.com.
-
-You can install the package via composer:
-
-```bash
-composer require stephenjude/filament-two-factor-authentication
-```
-
-Install the plugin migration using:
-```bash
-php artisan filament-two-factor-authentication::install
-```
-
-Optionally, you can publish the views using
-```bash
-php artisan vendor:publish --tag="filament-two-factor-authentication-views"
+```php
+<x-filament-panels::page>
+    @livewire(\Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication::class)
+</x-filament-panels::page>
 ```
 
 ## Screenshot
