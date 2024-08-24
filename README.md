@@ -1,23 +1,15 @@
+![Screenshot](art/banner.jpg)
+
 # Filament Two Factor Authentication
 
-[//]: # ([![Latest Version on Packagist]&#40;https://img.shields.io/packagist/v/stephenjude/filament-two-factor-authentication.svg?style=flat-square&#41;]&#40;https://packagist.org/packages/stephenjude/filament-two-factor-authentication&#41;)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/stephenjude/filament-two-factor-authentication.svg?style=flat-square)](https://packagist.org/packages/stephenjude/filament-two-factor-authentication)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/stephenjude/filament-two-factor-authentication/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/stephenjude/filament-two-factor-authentication/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/stephenjude/filament-two-factor-authentication/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/stephenjude/filament-two-factor-authentication/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/stephenjude/filament-two-factor-authentication.svg?style=flat-square)](https://packagist.org/packages/stephenjude/filament-two-factor-authentication)
 
-This plugin adds 2FA authentication to your existing Filament applications.
-
-## Features
-
-- Supports Google 2FA Authenticator and recovery codes.
-- Configurable plugin API for enforcing 2FA.
-- Configurable plugin API for adding 2FA Settings to user menu item.
-- Extendable 2FA settings component for custom pages.
-- Automated test for all pages and components.
+Add two factor authentication to new and existing Filament applications.
 
 ## Installation
-
-Thank you for purchasing Filament Two Factor Authentication Plugin!
 
 Below, you'll find documentation on installing this plugin. If you have any questions, find a bug, need support, or have
 a feature request, please don't hesitate to reach out to me at stephenjudesuccess@gmail.com.
