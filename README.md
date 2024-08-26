@@ -86,7 +86,7 @@ protected $listen = [
         // Dispatched when a user provides incorrect 2FA code or recovery code during login.
     ],
     ValidTwoFactorAuthenticationCodeProvided::class => [
-        // Dispatched when a user is required to enter 2FA code during 2FA setup.
+        // Dispatched when a user provides a valid 2FA code during login.
     ]
     TwoFactorAuthenticationConfirmed::class => [
         // Dispatched when a user confirms code during 2FA setup.
