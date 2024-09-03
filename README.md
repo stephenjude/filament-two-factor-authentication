@@ -1,4 +1,4 @@
-![Screenshot](art/banner.jpg)
+![Screenshot](https://raw.githubusercontent.com/stephenjude/filament-two-factor-authentication/main/art/banner.jpg)
 
 # Filament Two Factor Authentication (2FA)
 
@@ -107,19 +107,19 @@ protected $listen = [
 ```
 
 ## Screenshot
-![Screenshot](art/1.jpeg)
+![Screenshot](https://raw.githubusercontent.com/stephenjude/filament-two-factor-authentication/main/art/1.jpeg)
 #### 2FA Authentication
 
-![Screenshot](art/2.jpeg)
+![Screenshot](https://raw.githubusercontent.com/stephenjude/filament-two-factor-authentication/main/art/2.jpeg)
 #### 2FA Recovery
 
-![Screenshot](art/3.jpeg)
+![Screenshot](https://raw.githubusercontent.com/stephenjude/filament-two-factor-authentication/main/art/3.jpeg)
 #### 2FA Disabled
 
-![Screenshot](art/5.png)
+![Screenshot](https://raw.githubusercontent.com/stephenjude/filament-two-factor-authentication/main/art/5.png)
 #### 2FA Setup 
 
-![Screenshot](art/4.jpeg)
+![Screenshot](https://raw.githubusercontent.com/stephenjude/filament-two-factor-authentication/main/art/4.jpeg)
 #### 2FA Enabled (Recovery Codes)
 
 
