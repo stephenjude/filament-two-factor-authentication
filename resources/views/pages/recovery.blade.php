@@ -12,4 +12,7 @@
             :full-width="$this->hasFullWidthFormActions()"
         />
     </x-filament-panels::form>
+
+    <x-filament-two-factor-authentication::logout />
+
 </x-filament-panels::page.simple>

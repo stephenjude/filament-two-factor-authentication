@@ -11,7 +11,7 @@ class EnforceTwoFactorSetup
     {
         $user = filament()->auth()->user();
 
-        if ($request->is('/logout/*') || $request->is('/profile/*')) {
+        if ($request->is('*/logout') || $request->is('*/profile')) {
            return $next($request);
         }
 
