@@ -22,7 +22,7 @@ composer require stephenjude/filament-two-factor-authentication
 
 Install the plugin migration using:
 ```bash
-php artisan filament-two-factor-authentication::install
+php artisan filament-two-factor-authentication:install
 ```
 
 Optionally, you can publish the views using
