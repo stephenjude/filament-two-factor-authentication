@@ -9,6 +9,9 @@
 
 Add two factor authentication to new and existing Filament applications.
 
+## Learn More
+[Filament Two-Factor Authentication - Filament Daily](https://www.youtube.com/watch?v=zLqKFsAmEaQ)
+
 ## Installation
 
 Below, you'll find documentation on installing this plugin. If you have any questions, find a bug, need support, or have
