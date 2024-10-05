@@ -27,7 +27,7 @@ abstract class BaseLivewireComponent extends Component implements HasActions, Ha
 
         if (! $user instanceof Model) {
             throw new Exception(
-                'The authenticated user object must be a Filament Auth model to allow the profile page to update it.'
+                __('The authenticated user object must be a Filament Auth model to allow the profile page to update it.')
             );
         }
 
