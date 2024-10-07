@@ -2,6 +2,10 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.5 - 2024-10-05
+
+- Texts linked to translation #4 by @batinmustu
+
 ## 0.0.4 - 2024-09-06
 
 - Include logout action on 2FA pages
