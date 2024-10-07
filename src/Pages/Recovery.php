@@ -8,12 +8,18 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Http\Responses\Auth\LoginResponse;
+use Illuminate\Contracts\Support\Htmlable;
 
 class Recovery extends BaseSimplePage
 {
     protected static string $view = 'filament-two-factor-authentication::pages.recovery';
 
     public ?array $data = [];
+
+    public function getTitle(): string | Htmlable
+    {
+        return __('Recovery');
+    }
 
     public function mount(): void
     {
