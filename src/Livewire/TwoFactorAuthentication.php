@@ -101,7 +101,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ->rules([
                         fn () => function (string $attribute, $value, $fail) {
                             if (! Hash::check($value, $this->getUser()->password)) {
-                                $fail('The provided password was incorrect.');
+                                $fail(__('The provided password was incorrect.'));
                             }
                         },
                     ]),
@@ -155,7 +155,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ->rules([
                         fn () => function (string $attribute, $value, $fail) {
                             if (! Hash::check($value, $this->getUser()->password)) {
-                                $fail('The provided password was incorrect.');
+                                $fail(__('The provided password was incorrect.'));
                             }
                         },
                     ]),

@@ -22,7 +22,7 @@ class Challenge extends BaseSimplePage
 
     public function getTitle(): string | Htmlable
     {
-        return 'Two Factor Authentication';
+        return __('Two Factor Authentication');
     }
 
     public function mount(): void

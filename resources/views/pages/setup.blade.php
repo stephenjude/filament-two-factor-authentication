@@ -4,7 +4,7 @@
 
     @if(!filament('filament-two-factor-authentication')->hasEnforcedTwoFactorSetup() || filament()->auth()->user()?->hasEnabledTwoFactorAuthentication())
         <x-filament::link :href="filament()->getCurrentPanel()->getUrl(filament()->getTenant())" weight="semibold">
-            Dashboard
+            {{__('Dashboard')}}
         </x-filament::link>
     @endif
 </x-filament-panels::page.simple>
