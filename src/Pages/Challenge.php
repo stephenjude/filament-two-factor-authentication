@@ -9,7 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Http\Responses\Auth\LoginResponse;
 use Illuminate\Contracts\Support\Htmlable;
-use Laravel\Fortify\Events\ValidTwoFactorAuthenticationCodeProvided;
+use  Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorAuthenticationCodeProvided;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationChallenged;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationFailed;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationProvider;

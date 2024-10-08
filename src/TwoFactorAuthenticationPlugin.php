@@ -95,13 +95,4 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
         return $plugin;
     }
-
-    public function routes(): array
-    {
-        return [
-            Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
-            Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
-            Route::get('/two-factor-setup', Setup::class)->name('two-factor.setup'),
-        ];
-    }
 }
