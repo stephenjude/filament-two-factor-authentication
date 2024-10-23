@@ -76,7 +76,9 @@ class Challenge extends BaseSimplePage
 
             session()->regenerate();
 
-            event(new ValidTwoFactorAuthenticationCodeProvided(Filament::auth()->user()));
+            if (class_exists(ValidTwoFactorAuthenticationCodeProvided::class)) {
+                event(new ValidTwoFactorAuthenticationCodeProvided(Filament::auth()->user()));
+            }
 
             return app(LoginResponse::class);
         } catch (TooManyRequestsException $exception) {
