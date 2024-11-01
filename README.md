@@ -10,7 +10,7 @@
 Add two factor authentication to new and existing Filament applications.
 
 ## Learn More
-[Filament Two-Factor Authentication](https://www.youtube.com/watch?v=zLqKFsAmEaQ)
+[Filament Two-Factor Authentication Demo](https://www.youtube.com/watch?v=zLqKFsAmEaQ) — Filament Daily 
 
 ## Installation
 
