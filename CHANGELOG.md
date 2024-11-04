@@ -2,6 +2,10 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.7 - 2024-10-28
+
+- Added support for dark mode in the recovery code display and fixed the dashboard link on the 2FA setup page by @elishaukpong
+
 ## 0.0.6 - 2024-10-23
 
 - Fixed event issue
