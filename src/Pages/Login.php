@@ -18,20 +18,41 @@ class Login extends \Filament\Pages\Auth\Login
 
             $data = $this->form->getState();
 
-            $user = $this->validateCredentials($data);
-
-            if (! $user->hasEnabledTwoFactorAuthentication()) {
-                return parent::authenticate();
+            if (! Filament::auth()->attempt([
+                'email' => $data['email'],
+                'password' => $data['password'],
+            ], $data['remember'] ?? false)) {
+                throw $this->getFailureValidationException();
             }
 
-            session([
-                'login.id' => $user->getKey(),
-                'login.remember' => $data['remember'],
-            ]);
+            $user = Filament::auth()->user();
 
-            TwoFactorAuthenticationChallenged::dispatch($user);
+            if (! $user instanceof FilamentUser) {
+                Filament::auth()->logout();
 
-            return $this->getLoginChallengeReseponse();
+                throw $this->getFailureValidationException();
+            }
+
+            if (! $user->hasVerifiedEmail() && $user->shouldVerifyEmail()) {
+                Filament::auth()->logout();
+
+                return $this->getEmailVerificationPromptResponse();
+            }
+
+            if ($user->hasEnabledTwoFactorAuthentication()) {
+                Filament::auth()->logout();
+
+                session([
+                    'login.id' => $user->getKey(),
+                    'login.remember' => $data['remember'] ?? false,
+                ]);
+
+                TwoFactorAuthenticationChallenged::dispatch($user);
+
+                return $this->getLoginChallengeResponse();
+            }
+
+            return app(LoginResponse::class);
         } catch (TooManyRequestsException $exception) {
             $this->getRateLimitedNotification($exception)?->send();
 
@@ -60,7 +81,7 @@ class Login extends \Filament\Pages\Auth\Login
         return $user;
     }
 
-    private function getLoginChallengeReseponse(): LoginResponse
+    private function getLoginChallengeResponse(): LoginResponse
     {
         return new class implements LoginResponse
         {
