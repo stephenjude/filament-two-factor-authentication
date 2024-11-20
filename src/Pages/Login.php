@@ -2,11 +2,11 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication\Pages;
 
-use Illuminate\Support\Arr;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Facades\Filament;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Support\Arr;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationChallenged;
 
 class Login extends \Filament\Pages\Auth\Login
