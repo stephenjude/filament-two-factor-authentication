@@ -2,7 +2,7 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication\Pages;
 
-use Arr;
+use Illuminate\Support\Arr;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Facades\Filament;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
