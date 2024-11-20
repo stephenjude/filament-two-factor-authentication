@@ -2,6 +2,10 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.9 - 2024-11-20
+
+- Fixed incomplete `Arr` import on Login.php by @brunovt074  in #13
+
 ## 0.0.8 - 2024-11-04
 
 - Introduced components by @elishaukpong in #7
