@@ -2,6 +2,10 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.10 - 2025-01-07
+
+- Fixed logout route issue by @gustavocaiano in #15
+
 ## 0.0.9 - 2024-11-20
 
 - Fixed incomplete `Arr` import on Login.php by @brunovt074  in #13
