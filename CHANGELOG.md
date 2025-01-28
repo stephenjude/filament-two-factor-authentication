@@ -2,6 +2,10 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.11 - 2025-01-28
+
+- Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 #18
+
 ## 0.0.10 - 2025-01-07
 
 - Fixed logout route issue by @gustavocaiano in #15
