@@ -23,6 +23,16 @@ class Recovery extends BaseSimplePage
             return;
         }
 
+        $model = Filament::auth()->getProvider()->getModel();
+
+        $user = $model::find(session('login.id'));
+
+        if (! $user) {
+            redirect()->to(filament()->getCurrentPanel()?->getLoginUrl());
+
+            return;
+        }
+
         $this->form->fill();
     }
 
