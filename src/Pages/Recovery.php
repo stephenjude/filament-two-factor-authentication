@@ -8,6 +8,7 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Http\Responses\Auth\LoginResponse;
+use Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCodeProvided;
 
 class Recovery extends BaseSimplePage
 {
@@ -48,6 +49,8 @@ class Recovery extends BaseSimplePage
             session()->forget(['login.id', 'login.remember']);
 
             session()->regenerate();
+
+            event(new ValidTwoFactorRecoveryCodeProvided(Filament::auth()->user()));
 
             return app(LoginResponse::class);
         } catch (TooManyRequestsException $exception) {
