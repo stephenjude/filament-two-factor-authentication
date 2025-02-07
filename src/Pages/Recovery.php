@@ -128,4 +128,9 @@ class Recovery extends BaseSimplePage
     {
         return true;
     }
+
+    public function getTitle(): string | Htmlable
+    {
+        return __('Recovery Code');
+    }
 }
