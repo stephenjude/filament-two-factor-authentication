@@ -2,6 +2,21 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.12 - 2025-02-07
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/stephenjude/filament-two-factor-authentication/pull/19
+* feat: Add translatable title for recovery page by @Abdulmajeed-Jamaan in https://github.com/stephenjude/filament-two-factor-authentication/pull/21
+* fix(auth): check for valid authenticated session before applying recovery code by @Abdulmajeed-Jamaan in https://github.com/stephenjude/filament-two-factor-authentication/pull/22
+* feat(event): Add new event when valid recovery code provided by @Abdulmajeed-Jamaan in https://github.com/stephenjude/filament-two-factor-authentication/pull/23
+
+### New Contributors
+
+* @Abdulmajeed-Jamaan made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/21
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.11...0.0.12
+
 ## 0.0.11 - 2025-01-28
 
 - Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 #18
