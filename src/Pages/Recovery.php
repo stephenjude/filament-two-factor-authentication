@@ -7,8 +7,8 @@ use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Illuminate\Contracts\Support\Htmlable;
 use Filament\Http\Responses\Auth\LoginResponse;
+use Illuminate\Contracts\Support\Htmlable;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCodeProvided;
 
 class Recovery extends BaseSimplePage
