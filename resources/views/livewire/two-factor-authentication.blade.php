@@ -21,17 +21,20 @@
 
     <x-filament-actions::modals />
 
-    @if(!filament('filament-two-factor-authentication')->hasEnforcedTwoFactorSetup() || filament()->auth()->user()?->hasEnabledTwoFactorAuthentication())
-        <div class="my-4 text-center">
-            <x-filament::link :href="filament()->getCurrentPanel()->getUrl(filament()->getTenant())" weight="semibold">
-                {{__('Dashboard')}}
-            </x-filament::link>
-        </div>
-    @endif
+    @if(str(url()->current())->contains('two-factor-setup'))
+        @if(!filament('filament-two-factor-authentication')->hasEnforcedTwoFactorSetup() || filament()->auth()->user()?->hasEnabledTwoFactorAuthentication())
+            <div class="my-4 text-center">
+                <x-filament::link :href="filament()->getCurrentPanel()->getUrl(filament()->getTenant())"
+                                  weight="semibold">
+                    {{__('Dashboard')}}
+                </x-filament::link>
+            </div>
+        @endif
 
-    @if($this->enableTwoFactorAuthentication->isVisible())
-        <div class="my-4 text-center">
-            <x-filament-two-factor-authentication::logout />
-        </div>
+        @if($this->enableTwoFactorAuthentication->isVisible())
+            <div class="my-4 text-center">
+                <x-filament-two-factor-authentication::logout />
+            </div>
+        @endif
     @endif
 </div>
