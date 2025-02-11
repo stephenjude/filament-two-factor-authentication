@@ -2,6 +2,10 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.14 - 2025-02-11
+
+- Only show dashboard/logout links on 2FA setup page.
+
 ## 0.0.13 - 2025-02-09
 
 ### What's Changed
