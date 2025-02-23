@@ -10,7 +10,7 @@
     {{__("To finish enabling two factor authentication, scan the following QR code using your phone's authenticator application or enter the setup key and provide the generated OTP code.")}}
 </p>
 
-<div class="mb-4">
+<div class="mb-4 p-2 bg-white inline-block rounded-lg">
     {!! $this->getUser()->twoFactorQrCodeSvg() !!}
 </div>
 
