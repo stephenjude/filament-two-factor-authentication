@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.15 - 2025-02-24
+
+### What's Changed
+
+* Fix QR code scanning issue in dark mode by adding white padding by @waleed-GRT in https://github.com/stephenjude/filament-two-factor-authentication/pull/26
+
+### New Contributors
+
+* @waleed-GRT made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/26
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.14...0.0.15
+
 ## 0.0.14 - 2025-02-11
 
 - Only show dashboard/logout links on 2FA setup page.
