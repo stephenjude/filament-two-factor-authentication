@@ -19,18 +19,8 @@ class Recovery extends BaseSimplePage
 
     public function mount(): void
     {
-        if (Filament::auth()->check()) {
+        if (! Filament::auth()->check()) {
             redirect()->intended(Filament::getUrl());
-
-            return;
-        }
-
-        $model = Filament::auth()->getProvider()->getModel();
-
-        $user = $model::find(session('login.id'));
-
-        if (! $user) {
-            redirect()->to(filament()->getCurrentPanel()?->getLoginUrl());
 
             return;
         }
@@ -45,13 +35,11 @@ class Recovery extends BaseSimplePage
 
             $this->form->getState();
 
-            Filament::auth()->loginUsingId(session('login.id'), session('login.remember'));
+            $user = Filament::auth()->user();
 
-            session()->forget(['login.id', 'login.remember']);
+            $user->setTwoFactorChallengePassed();
 
-            session()->regenerate();
-
-            event(new ValidTwoFactorRecoveryCodeProvided(Filament::auth()->user()));
+            event(new ValidTwoFactorRecoveryCodeProvided($user));
 
             return app(LoginResponse::class);
         } catch (TooManyRequestsException $exception) {
@@ -94,15 +82,7 @@ class Recovery extends BaseSimplePage
                             ->autocomplete()
                             ->autofocus()->rules([
                                 fn () => function (string $attribute, $value, $fail) {
-                                    $model = Filament::auth()->getProvider()->getModel();
-
-                                    if (! $user = $model::find(session('login.id'))) {
-                                        $fail(__('The provided two factor recovery code was invalid.'));
-
-                                        redirect()->to(filament()->getCurrentPanel()->getLoginUrl());
-
-                                        return;
-                                    }
+                                    $user = Filament::auth()->user();
 
                                     $validCode = collect($user->recoveryCodes())->first(
                                         fn ($code) => hash_equals($code, $value) ? $code : null

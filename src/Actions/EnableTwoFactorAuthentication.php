@@ -35,6 +35,8 @@ class EnableTwoFactorAuthentication
                 })->all())),
             ])->save();
 
+            $user->setTwoFactorChallengePassed();
+
             TwoFactorAuthenticationEnabled::dispatch($user);
         }
     }
