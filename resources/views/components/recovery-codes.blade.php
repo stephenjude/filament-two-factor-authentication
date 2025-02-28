@@ -1,4 +1,4 @@
-<h2 class="text-xl font-medium mb-4">{{__('filament-two-factor-authentication::components.recovery_codes.heading')}}</h2>
+<h2 class="text-xl font-medium mb-4">{{__('filament-two-factor-authentication::components.recovery_codes.header')}}</h2>
 
 <p class="text-sm mb-4">
     {{__('filament-two-factor-authentication::components.recovery_codes.description')}}
