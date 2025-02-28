@@ -27,7 +27,7 @@ abstract class BaseLivewireComponent extends Component implements HasActions, Ha
 
         if (! $user instanceof Model) {
             throw new Exception(
-                __('The authenticated user object must be a Filament Auth model to allow the profile page to update it.')
+                __('filament-two-factor-authentication::components.base.wrong_user')
             );
         }
 
@@ -37,8 +37,8 @@ abstract class BaseLivewireComponent extends Component implements HasActions, Ha
     protected function sendRateLimitedNotification(TooManyRequestsException $exception): void
     {
         Notification::make()
-            ->title(__('Too many requests'))
-            ->body(__('Please try again in :seconds seconds', ['seconds' => $exception->secondsUntilAvailable]))
+            ->title(__('filament-two-factor-authentication::components.base.rate_limit_exceeded'))
+            ->body(__('filament-two-factor-authentication::components.base.try_again', ['seconds' => $exception->secondsUntilAvailable]))
             ->danger()
             ->send();
     }

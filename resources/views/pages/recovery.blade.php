@@ -1,6 +1,6 @@
 <x-filament-panels::page.simple>
     <x-slot name="subheading">
-        {{__('Or ')}}
+        {{__('filament-two-factor-authentication::pages.subheading').' '}}
         {{ $this->challengeAction }}
     </x-slot>
 

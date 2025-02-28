@@ -1,11 +1,11 @@
 <div>
     <x-filament::section :aside="$aside">
         <x-slot name="heading">
-            {{__('Two Factor Authentication')}}
+            {{__('filament-two-factor-authentication::section.header')}}
         </x-slot>
 
         <x-slot name="description">
-            {{__('Add additional security to your account using two factor authentication.')}}
+            {{__('filament-two-factor-authentication::section.description')}}
         </x-slot>
 
         <div class="">
@@ -26,7 +26,7 @@
             <div class="my-4 text-center">
                 <x-filament::link :href="filament()->getCurrentPanel()->getUrl(filament()->getTenant())"
                                   weight="semibold">
-                    {{__('Dashboard')}}
+                    {{__('filament-two-factor-authentication::section.dashboard')}}
                 </x-filament::link>
             </div>
         @endif

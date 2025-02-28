@@ -57,7 +57,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
     public function confirmSetupAction(): Action
     {
         return Action::make('confirmSetup')
-            ->label(__('Confirm'))
+            ->label(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->visible(fn () => $this->isConfirmingSetup)
             ->submit('confirmSetup');
     }
@@ -65,7 +65,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
     public function cancelSetupAction(): Action
     {
         return Action::make('cancelSetup')
-            ->label(__('Cancel'))
+            ->label(__('filament-two-factor-authentication::components.2fa.cancel'))
             ->outlined()
             ->visible(fn () => $this->isConfirmingSetup)
             ->action(function () {
@@ -86,14 +86,14 @@ class TwoFactorAuthentication extends BaseLivewireComponent
     protected function enableTwoFactorAuthenticationAction(): Action
     {
         return Action::make('enableTwoFactorAuthentication')
-            ->label(__('Enable'))
+            ->label(__('filament-two-factor-authentication::components.2fa.enable'))
             ->visible(
                 fn () => ! $this->getUser()->hasEnabledTwoFactorAuthentication()
             )->modalWidth('md')
-            ->modalSubmitActionLabel(__('Confirm'))
+            ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form([
                 TextInput::make('confirmPassword')
-                    ->label(__('Confirm Password'))
+                    ->label(__('filament-two-factor-authentication::components.2fa.confirm_password'))
                     ->password()
                     ->revealable(filament()->arePasswordsRevealable())
                     ->required()
@@ -101,7 +101,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ->rules([
                         fn () => function (string $attribute, $value, $fail) {
                             if (! Hash::check($value, $this->getUser()->password)) {
-                                $fail(__('The provided password was incorrect.'));
+                                $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
                             }
                         },
                     ]),
@@ -127,11 +127,11 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->schema([
                 Placeholder::make('setup_key')
                     ->label(fn () => __(
-                        'Setup Key: :setup_key',
+                        'filament-two-factor-authentication::components.2fa.setup_key',
                         ['setup_key' => decrypt($this->getUser()->two_factor_secret)]
                     )),
                 TextInput::make('code')
-                    ->label(__('Code'))
+                    ->label(__('filament-two-factor-authentication::components.2fa.code'))
                     ->required(),
             ])
             ->statePath('data');
@@ -140,14 +140,14 @@ class TwoFactorAuthentication extends BaseLivewireComponent
     protected function disableTwoFactorAuthenticationAction(): Action
     {
         return Action::make('disableTwoFactorAuthentication')
-            ->label(__('Disable'))
+            ->label(__('filament-two-factor-authentication::components.2fa.disable'))
             ->color('danger')
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->modalWidth('md')
-            ->modalSubmitActionLabel(__('Confirm'))
+            ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form([
                 TextInput::make('currentPassword')
-                    ->label(__('Current Password'))
+                    ->label(__('filament-two-factor-authentication::components.2fa.current_password'))
                     ->password()
                     ->revealable(filament()->arePasswordsRevealable())
                     ->required()
@@ -155,7 +155,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ->rules([
                         fn () => function (string $attribute, $value, $fail) {
                             if (! Hash::check($value, $this->getUser()->password)) {
-                                $fail(__('The provided password was incorrect.'));
+                                $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
                             }
                         },
                     ]),
@@ -166,7 +166,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
     protected function generateNewRecoveryCodesAction(): Action
     {
         return Action::make('generateNewRecoveryCodes')
-            ->label(__('Regenerate Recovery Codes'))
+            ->label(__('filament-two-factor-authentication::components.2fa.regenerate_recovery_codes'))
             ->outlined()
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->requiresConfirmation()

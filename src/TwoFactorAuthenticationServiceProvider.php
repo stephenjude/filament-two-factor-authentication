@@ -35,6 +35,7 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
          */
         $package->name(static::$name)
             ->hasCommands($this->getCommands())
+            ->hasTranslations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishMigrations()
