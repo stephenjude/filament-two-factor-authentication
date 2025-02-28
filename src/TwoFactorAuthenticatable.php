@@ -8,6 +8,7 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
+use Illuminate\Support\Facades\Hash;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodeReplaced;
 
 trait TwoFactorAuthenticatable
@@ -19,6 +20,22 @@ trait TwoFactorAuthenticatable
     {
         return ! is_null($this->two_factor_secret) &&
             ! is_null($this->two_factor_confirmed_at);
+    }
+
+    public function isTwoFactorChallengePassed(): bool
+    {
+        $sessionKey = 'login_2fa_challenge_passed_' . $this->id;
+
+        return Hash::check($this->two_factor_secret, session()->get($sessionKey));
+    }
+
+    public function setTwoFactorChallengePassed(): void
+    {
+        $sessionKey = 'login_2fa_challenge_passed_' . $this->id;
+        $sessionValue = Hash::make($this->two_factor_secret);
+
+        session()->put($sessionKey, $sessionValue);
+        session()->regenerate();
     }
 
     /**

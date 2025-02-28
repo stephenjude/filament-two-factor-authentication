@@ -27,21 +27,13 @@ class Challenge extends BaseSimplePage
 
     public function mount(): void
     {
-        if (Filament::auth()->check()) {
-            redirect()->intended(Filament::getUrl());
-
-            return;
-        }
-
-        $model = Filament::auth()->getProvider()->getModel();
-
-        $user = $model::find(session('login.id'));
-
-        if (! $user) {
+        if (! Filament::auth()->check()) {
             redirect()->to(filament()->getCurrentPanel()?->getLoginUrl());
 
             return;
         }
+
+        $user = Filament::auth()->user();
 
         $this->form->fill();
 
@@ -67,16 +59,11 @@ class Challenge extends BaseSimplePage
 
             $this->form->getState();
 
-            Filament::auth()->loginUsingId(
-                id: session('login.id'),
-                remember: session('login.remember')
-            );
+            $user = Filament::auth()->user();
 
-            session()->forget(['login.id', 'login.remember']);
+            $user->setTwoFactorChallengePassed();
 
-            session()->regenerate();
-
-            event(new ValidTwoFactorAuthenticationCodeProvided(Filament::auth()->user()));
+            event(new ValidTwoFactorAuthenticationCodeProvided($user));
 
             return app(LoginResponse::class);
         } catch (TooManyRequestsException $exception) {
@@ -107,10 +94,8 @@ class Challenge extends BaseSimplePage
                             ->autocomplete()
                             ->rules([
                                 fn () => function (string $attribute, $value, $fail) {
-                                    $model = Filament::auth()->getProvider()->getModel();
 
-                                    $user = $model::find(session('login.id'));
-
+                                    $user = Filament::auth()->user();
                                     if (is_null($user)) {
                                         $fail(__('The provided two factor authentication code was invalid.'));
 
