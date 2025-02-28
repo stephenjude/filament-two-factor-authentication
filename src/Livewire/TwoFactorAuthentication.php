@@ -24,6 +24,8 @@ class TwoFactorAuthentication extends BaseLivewireComponent
 
     public bool $isConfirmingSetup = false;
 
+    public bool $showRecoveryCodes = false;
+
     public function mount(): void
     {
         $this->form->fill();
@@ -44,6 +46,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             app(ConfirmTwoFactorAuthentication::class)($this->getUser(), $data['code']);
 
             $this->isConfirmingSetup = false;
+            $this->showRecoveryCodes = true;
 
             if ($this->redirectTo) {
                 redirect()->to($this->redirectTo);
@@ -183,6 +186,11 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->outlined()
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->requiresConfirmation()
-            ->action(fn () => app(GenerateNewRecoveryCodes::class)($this->getUser()));
+            ->action(
+                function () {
+                    $this->showRecoveryCodes = true;
+                    app(GenerateNewRecoveryCodes::class)($this->getUser());
+                }
+            );
     }
 }
