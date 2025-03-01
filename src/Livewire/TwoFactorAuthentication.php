@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\ConfirmTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\DisableTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\EnableTwoFactorAuthentication;
-use Stephenjude\FilamentTwoFactorAuthentication\Actions\GenerateNewRecoveryCodes;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
 class TwoFactorAuthentication extends BaseLivewireComponent
@@ -102,18 +101,18 @@ class TwoFactorAuthentication extends BaseLivewireComponent
 
                 return [
                     TextInput::make('confirmPassword')
-                    ->label(__('filament-two-factor-authentication::components.2fa.confirm_password'))
-                    ->password()
-                    ->revealable(filament()->arePasswordsRevealable())
-                    ->required()
-                    ->autocomplete('confirm-password')
-                    ->rules([
-                        fn () => function (string $attribute, $value, $fail) {
-                            if (! Hash::check($value, $this->getUser()->password)) {
-                                $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
-                            }
-                        },
-                    ]),
+                        ->label(__('filament-two-factor-authentication::components.2fa.confirm_password'))
+                        ->password()
+                        ->revealable(filament()->arePasswordsRevealable())
+                        ->required()
+                        ->autocomplete('confirm-password')
+                        ->rules([
+                            fn () => function (string $attribute, $value, $fail) {
+                                if (! Hash::check($value, $this->getUser()->password)) {
+                                    $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
+                                }
+                            },
+                        ]),
                 ];
             })
             ->action(function () {
@@ -181,7 +180,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
     protected function generateNewRecoveryCodesAction(): Action
     {
         return Action::make('generateNewRecoveryCodes')
-        ->label(__('filament-two-factor-authentication::components.2fa.regenerate_recovery_codes'))
+            ->label(__('filament-two-factor-authentication::components.2fa.regenerate_recovery_codes'))
             ->outlined()
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
 
@@ -210,6 +209,4 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             })
             ->action(fn () => app(DisableTwoFactorAuthentication::class)($this->getUser()));
     }
-
-
 }
