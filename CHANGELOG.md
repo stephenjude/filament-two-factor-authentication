@@ -2,6 +2,15 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.17 - 2025-03-01
+
+### What's Changed
+
+* Feature: Session based 2FA challenge by @webard in https://github.com/stephenjude/filament-two-factor-authentication/pull/27
+* Feature: password required for regenerate recovery codes by @webard in https://github.com/stephenjude/filament-two-factor-authentication/pull/31
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.16...0.0.17
+
 ## 0.0.16 - 2025-02-28
 
 ### What's Changed
