@@ -8,7 +8,7 @@ return [
     'logout' => [
         'button' => 'Wyloguj się',
     ],
-    'recovery_codes' => [
+    'enabled' => [
         'header' => 'Włączono dwuetapowe uwierzytelnianie',
         'description' => 'Przechowuj te kody odzyskiwania w bezpiecznym menedżerze haseł. Mogą być użyte do odzyskania dostępu do Twojego konta, jeśli urządzenie do dwuetapowego uwierzytelniania zostanie utracone.',
     ],
