@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.18 - 2025-03-01
+
+### What's Changed
+
+* Feature: Key based translations + polish language by @webard in https://github.com/stephenjude/filament-two-factor-authentication/pull/29
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.17...0.0.18
+
 ## 0.0.17 - 2025-03-01
 
 ### What's Changed
