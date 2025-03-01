@@ -22,7 +22,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     protected string $enforceTwoFactorSetupMiddleware = EnforceTwoFactorSetup::class;
 
-    protected string $twoFactorChallengeMiddleware = ChallengeTwoFactor::class;
+    protected string | bool $twoFactorChallengeMiddleware = ChallengeTwoFactor::class;
 
     protected bool $hasTwoFactorMenuItem = false;
 
@@ -58,10 +58,12 @@ class TwoFactorAuthenticationPlugin implements Plugin
                 ]);
         }
 
-        $panel
-            ->authMiddleware([
-                $this->twoFactorChallengeMiddleware,
-            ]);
+        if ($this->twoFactorChallengeMiddleware !== false) {
+            $panel
+                ->authMiddleware([
+                    $this->twoFactorChallengeMiddleware,
+                ]);
+        }
 
         if ($this->hasEnforcedTwoFactorSetup()) {
             $panel
@@ -95,7 +97,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->evaluate($this->isPasswordRequiredForDisable);
     }
 
-    public function setChallengeTwoFactorMiddleware(string $middleware = ChallengeTwoFactor::class): static
+    public function setChallengeTwoFactorMiddleware(string | bool $middleware = ChallengeTwoFactor::class): static
     {
         $this->twoFactorChallengeMiddleware = $middleware;
 
