@@ -162,7 +162,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                 }
 
                 return [TextInput::make('currentPassword')
-                    ->label(__('Current Password'))
+                    ->label(__('filament-two-factor-authentication::components.2fa.current_password'))
                     ->password()
                     ->revealable(filament()->arePasswordsRevealable())
                     ->required()
