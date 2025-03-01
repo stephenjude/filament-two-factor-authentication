@@ -2,6 +2,19 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.16 - 2025-02-28
+
+### What's Changed
+
+* Feature: Configure if password is needed when enabling/disabling 2fa by @webard in https://github.com/stephenjude/filament-two-factor-authentication/pull/28
+* Feature: Recovery codes visible only after enabling 2FA and regenerating recovery codes by @webard in https://github.com/stephenjude/filament-two-factor-authentication/pull/30
+
+### New Contributors
+
+* @webard made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/28
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.15...0.0.16
+
 ## 0.0.15 - 2025-02-24
 
 ### What's Changed

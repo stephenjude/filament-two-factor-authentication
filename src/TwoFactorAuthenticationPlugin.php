@@ -2,10 +2,12 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication;
 
+use Closure;
 use Filament\Contracts\Plugin;
 use Filament\Facades\Filament;
 use Filament\Navigation\MenuItem;
 use Filament\Panel;
+use Filament\Support\Concerns\EvaluatesClosures;
 use Illuminate\Support\Facades\Route;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Login;
@@ -14,6 +16,8 @@ use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 
 class TwoFactorAuthenticationPlugin implements Plugin
 {
+    use EvaluatesClosures;
+
     protected bool $hasEnforcedTwoFactorSetup = false;
 
     protected bool $hasTwoFactorMenuItem = false;
@@ -21,6 +25,10 @@ class TwoFactorAuthenticationPlugin implements Plugin
     protected ?string $twoFactorMenuItemLabel = null;
 
     protected ?string $twoFactorMenuItemIcon = null;
+
+    protected bool | Closure $isPasswordRequiredForEnable = true;
+
+    protected bool | Closure $isPasswordRequiredForDisable = true;
 
     public function getId(): string
     {
@@ -53,6 +61,30 @@ class TwoFactorAuthenticationPlugin implements Plugin
                     EnforceTwoFactorSetup::class,
                 ]);
         }
+    }
+
+    public function requirePasswordWhenEnabling(bool | Closure $condition = true): static
+    {
+        $this->isPasswordRequiredForEnable = $condition;
+
+        return $this;
+    }
+
+    public function requirePasswordWhenDisabling(bool | Closure $condition = true): static
+    {
+        $this->isPasswordRequiredForDisable = $condition;
+
+        return $this;
+    }
+
+    public function isPasswordRequiredForEnable(): bool
+    {
+        return $this->evaluate($this->isPasswordRequiredForEnable);
+    }
+
+    public function isPasswordRequiredForDisable(): bool
+    {
+        return $this->evaluate($this->isPasswordRequiredForDisable);
     }
 
     public function enforceTwoFactorSetup(bool $condition = true): static
