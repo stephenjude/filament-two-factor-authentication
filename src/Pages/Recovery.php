@@ -53,7 +53,7 @@ class Recovery extends BaseSimplePage
     {
         return Action::make('two_factor_challenge_login')
             ->link()
-            ->label(__('use an authentication code'))
+            ->label(__('filament-two-factor-authentication::pages.recovery.action_label'))
             ->url(
                 filament()->getCurrentPanel()->route(
                     'two-factor.challenge'
@@ -74,7 +74,7 @@ class Recovery extends BaseSimplePage
                             ->hiddenLabel()
                             ->hint(
                                 __(
-                                    'Please confirm access to your account by entering one of your emergency recovery codes.'
+                                    'filament-two-factor-authentication::pages.recovery.form_hint'
                                 )
                             )
                             ->label(__('Recovery Code'))
@@ -89,7 +89,7 @@ class Recovery extends BaseSimplePage
                                     );
 
                                     if (! $validCode) {
-                                        $fail(__('The provided two factor recovery code was invalid.'));
+                                        $fail(__('filament-two-factor-authentication::pages.recovery.error'));
                                     }
                                 },
                             ]),
@@ -125,6 +125,6 @@ class Recovery extends BaseSimplePage
 
     public function getTitle(): string | Htmlable
     {
-        return __('Recovery Code');
+        return __('filament-two-factor-authentication::pages.recovery.title');
     }
 }

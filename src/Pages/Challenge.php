@@ -85,11 +85,9 @@ class Challenge extends BaseSimplePage
                         TextInput::make('code')
                             ->hiddenLabel()
                             ->hint(
-                                __(
-                                    'Please confirm access to your account by entering the authentication code provided by your authenticator application.'
-                                )
+                                __('filament-two-factor-authentication::pages.challenge.confirm')
                             )
-                            ->label(__('Code'))
+                            ->label(__('filament-two-factor-authentication::pages.challenge.code'))
                             ->required()
                             ->autocomplete()
                             ->rules([
@@ -97,7 +95,7 @@ class Challenge extends BaseSimplePage
 
                                     $user = Filament::auth()->user();
                                     if (is_null($user)) {
-                                        $fail(__('The provided two factor authentication code was invalid.'));
+                                        $fail(__('filament-two-factor-authentication::pages.challenge.error'));
 
                                         redirect()->to(filament()->getCurrentPanel()->getLoginUrl());
 
@@ -110,7 +108,7 @@ class Challenge extends BaseSimplePage
                                     );
 
                                     if (! $isValidCode) {
-                                        $fail(__('The provided two factor authentication code was invalid.'));
+                                        $fail(__('filament-two-factor-authentication::pages.challenge.error'));
 
                                         event(new TwoFactorAuthenticationFailed($user));
                                     }
