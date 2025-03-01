@@ -170,7 +170,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ->rules([
                         fn () => function (string $attribute, $value, $fail) {
                             if (! Hash::check($value, $this->getUser()->password)) {
-                                $fail(__('The provided password was incorrect.'));
+                                $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
                             }
                         },
                     ]),
