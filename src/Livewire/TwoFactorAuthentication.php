@@ -93,10 +93,10 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->label(__('Enable'))
             ->visible(
                 fn () => ! $this->getUser()->hasEnabledTwoFactorAuthentication()
-            )->modalWidth('md')
+            )
+            ->modalWidth('md')
             ->modalSubmitActionLabel(__('Confirm'))
             ->form(function () {
-
                 if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForEnable()) {
                     return null;
                 }
@@ -154,10 +154,43 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->color('danger')
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->modalWidth('md')
-            ->modalSubmitActionLabel(__('Confirm'))
+            ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
 
                 if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForDisable()) {
+                    return null;
+                }
+
+                return [TextInput::make('currentPassword')
+                    ->label(__('filament-two-factor-authentication::components.2fa.current_password'))
+                    ->password()
+                    ->revealable(filament()->arePasswordsRevealable())
+                    ->required()
+                    ->autocomplete('current-password')
+                    ->rules([
+                        fn () => function (string $attribute, $value, $fail) {
+                            if (! Hash::check($value, $this->getUser()->password)) {
+                                $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
+                            }
+                        },
+                    ]),
+                ];
+            })
+            ->action(fn () => app(DisableTwoFactorAuthentication::class)($this->getUser()));
+    }
+
+    protected function generateNewRecoveryCodesAction(): Action
+    {
+        return Action::make('generateNewRecoveryCodes')
+            ->label(__('Regenerate Recovery Codes'))
+            ->outlined()
+            ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
+
+            ->requiresConfirmation(! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForRegenerateRecoveryCodes())
+            ->modalWidth('md')
+            ->modalSubmitActionLabel(__('Confirm'))
+            ->form(function () {
+                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForRegenerateRecoveryCodes()) {
                     return null;
                 }
 
@@ -176,16 +209,6 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ]),
                 ];
             })
-            ->action(fn () => app(DisableTwoFactorAuthentication::class)($this->getUser()));
-    }
-
-    protected function generateNewRecoveryCodesAction(): Action
-    {
-        return Action::make('generateNewRecoveryCodes')
-            ->label(__('Regenerate Recovery Codes'))
-            ->outlined()
-            ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
-            ->requiresConfirmation()
             ->action(
                 function () {
                     $this->showRecoveryCodes = true;
