@@ -154,7 +154,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->color('danger')
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->modalWidth('md')
-            ->modalSubmitActionLabel(__('Confirm'))
+            ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
 
                 if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForDisable()) {
