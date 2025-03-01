@@ -9,8 +9,8 @@ use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Illuminate\Support\Facades\Route;
+use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ChallengeTwoFactor;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Login;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 
@@ -19,6 +19,10 @@ class TwoFactorAuthenticationPlugin implements Plugin
     use EvaluatesClosures;
 
     protected bool $hasEnforcedTwoFactorSetup = false;
+
+    protected string $enforceTwoFactorSetupMiddleware = EnforceTwoFactorSetup::class;
+
+    protected string | bool $twoFactorChallengeMiddleware = ChallengeTwoFactor::class;
 
     protected bool $hasTwoFactorMenuItem = false;
 
@@ -38,7 +42,6 @@ class TwoFactorAuthenticationPlugin implements Plugin
     public function register(Panel $panel): void
     {
         $panel
-            ->login(Login::class)
             ->routes(fn () => [
                 Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
                 Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
@@ -55,10 +58,17 @@ class TwoFactorAuthenticationPlugin implements Plugin
                 ]);
         }
 
+        if ($this->twoFactorChallengeMiddleware !== false) {
+            $panel
+                ->authMiddleware([
+                    $this->twoFactorChallengeMiddleware,
+                ]);
+        }
+
         if ($this->hasEnforcedTwoFactorSetup()) {
             $panel
                 ->authMiddleware([
-                    EnforceTwoFactorSetup::class,
+                    $this->enforceTwoFactorSetupMiddleware,
                 ]);
         }
     }
@@ -87,11 +97,29 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->evaluate($this->isPasswordRequiredForDisable);
     }
 
-    public function enforceTwoFactorSetup(bool $condition = true): static
+    public function setChallengeTwoFactorMiddleware(string | bool $middleware = ChallengeTwoFactor::class): static
     {
-        $this->hasEnforcedTwoFactorSetup = $condition;
+        $this->twoFactorChallengeMiddleware = $middleware;
 
         return $this;
+    }
+
+    public function getChallengeTwoFactorMiddleware(): string
+    {
+        return $this->twoFactorChallengeMiddleware;
+    }
+
+    public function enforceTwoFactorSetup(bool $condition = true, string $middleware = EnforceTwoFactorSetup::class): static
+    {
+        $this->hasEnforcedTwoFactorSetup = $condition;
+        $this->enforceTwoFactorSetupMiddleware = $middleware;
+
+        return $this;
+    }
+
+    public function getEnforceTwoFactorSetupMiddleware(): string
+    {
+        return $this->enforceTwoFactorSetupMiddleware;
     }
 
     public function hasEnforcedTwoFactorSetup(): bool
