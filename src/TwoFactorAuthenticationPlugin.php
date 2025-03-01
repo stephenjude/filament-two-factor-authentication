@@ -30,6 +30,8 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     protected bool | Closure $isPasswordRequiredForDisable = true;
 
+    protected bool | Closure $isPasswordRequiredForRegenerateRecoveryCodes = true;
+
     public function getId(): string
     {
         return 'filament-two-factor-authentication';
@@ -75,6 +77,18 @@ class TwoFactorAuthenticationPlugin implements Plugin
         $this->isPasswordRequiredForDisable = $condition;
 
         return $this;
+    }
+
+    public function requirePasswordWhenRegeneratingRecoveryCodes(bool | Closure $condition = true): static
+    {
+        $this->isPasswordRequiredForRegenerateRecoveryCodes = $condition;
+
+        return $this;
+    }
+
+    public function isPasswordRequiredForRegenerateRecoveryCodes(): bool
+    {
+        return $this->evaluate($this->isPasswordRequiredForRegenerateRecoveryCodes);
     }
 
     public function isPasswordRequiredForEnable(): bool

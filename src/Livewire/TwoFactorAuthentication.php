@@ -93,10 +93,10 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->label(__('Enable'))
             ->visible(
                 fn () => ! $this->getUser()->hasEnabledTwoFactorAuthentication()
-            )->modalWidth('md')
+            )
+            ->modalWidth('md')
             ->modalSubmitActionLabel(__('Confirm'))
             ->form(function () {
-
                 if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForEnable()) {
                     return null;
                 }
@@ -185,7 +185,30 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->label(__('Regenerate Recovery Codes'))
             ->outlined()
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
-            ->requiresConfirmation()
+
+            ->requiresConfirmation(! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForRegenerateRecoveryCodes())
+            ->modalWidth('md')
+            ->modalSubmitActionLabel(__('Confirm'))
+            ->form(function () {
+                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForRegenerateRecoveryCodes()) {
+                    return null;
+                }
+
+                return [TextInput::make('currentPassword')
+                    ->label(__('Current Password'))
+                    ->password()
+                    ->revealable(filament()->arePasswordsRevealable())
+                    ->required()
+                    ->autocomplete('current-password')
+                    ->rules([
+                        fn () => function (string $attribute, $value, $fail) {
+                            if (! Hash::check($value, $this->getUser()->password)) {
+                                $fail(__('The provided password was incorrect.'));
+                            }
+                        },
+                    ]),
+                ];
+            })
             ->action(
                 function () {
                     $this->showRecoveryCodes = true;
