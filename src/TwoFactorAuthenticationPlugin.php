@@ -2,10 +2,12 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication;
 
+use Closure;
 use Filament\Contracts\Plugin;
 use Filament\Facades\Filament;
 use Filament\Navigation\MenuItem;
 use Filament\Panel;
+use Filament\Support\Concerns\EvaluatesClosures;
 use Illuminate\Support\Facades\Route;
 use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ChallengeTwoFactor;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
@@ -14,17 +16,23 @@ use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 
 class TwoFactorAuthenticationPlugin implements Plugin
 {
+    use EvaluatesClosures;
+
     protected bool $hasEnforcedTwoFactorSetup = false;
 
     protected string $enforceTwoFactorSetupMiddleware = EnforceTwoFactorSetup::class;
 
-    protected string $challengeTwoFactorCheckMiddleware = ChallengeTwoFactor::class;
+    protected string $twoFactorChallengeMiddleware = ChallengeTwoFactor::class;
 
     protected bool $hasTwoFactorMenuItem = false;
 
     protected ?string $twoFactorMenuItemLabel = null;
 
     protected ?string $twoFactorMenuItemIcon = null;
+
+    protected bool | Closure $isPasswordRequiredForEnable = true;
+
+    protected bool | Closure $isPasswordRequiredForDisable = true;
 
     public function getId(): string
     {
@@ -52,7 +60,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
         $panel
             ->authMiddleware([
-                $this->challengeTwoFactorCheckMiddleware,
+                $this->twoFactorChallengeMiddleware,
             ]);
 
         if ($this->hasEnforcedTwoFactorSetup()) {
@@ -63,16 +71,40 @@ class TwoFactorAuthenticationPlugin implements Plugin
         }
     }
 
+    public function requirePasswordWhenEnabling(bool | Closure $condition = true): static
+    {
+        $this->isPasswordRequiredForEnable = $condition;
+
+        return $this;
+    }
+
+    public function requirePasswordWhenDisabling(bool | Closure $condition = true): static
+    {
+        $this->isPasswordRequiredForDisable = $condition;
+
+        return $this;
+    }
+
+    public function isPasswordRequiredForEnable(): bool
+    {
+        return $this->evaluate($this->isPasswordRequiredForEnable);
+    }
+
+    public function isPasswordRequiredForDisable(): bool
+    {
+        return $this->evaluate($this->isPasswordRequiredForDisable);
+    }
+
     public function setChallengeTwoFactorMiddleware(string $middleware = ChallengeTwoFactor::class): static
     {
-        $this->challengeTwoFactorCheckMiddleware = $middleware;
+        $this->twoFactorChallengeMiddleware = $middleware;
 
         return $this;
     }
 
     public function getChallengeTwoFactorMiddleware(): string
     {
-        return $this->challengeTwoFactorCheckMiddleware;
+        return $this->twoFactorChallengeMiddleware;
     }
 
     public function enforceTwoFactorSetup(bool $condition = true, string $middleware = EnforceTwoFactorSetup::class): static

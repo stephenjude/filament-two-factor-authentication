@@ -14,7 +14,15 @@
             @elseif($this->enableTwoFactorAuthentication->isVisible())
                 <x-filament-two-factor-authentication::enable />
             @elseif($this->disableTwoFactorAuthentication->isVisible())
-                <x-filament-two-factor-authentication::recovery-codes />
+                <x-filament-two-factor-authentication::enabled />
+
+                @if($this->showRecoveryCodes)
+                    <x-filament-two-factor-authentication::recovery-codes />
+                @endif
+
+                {{$this->generateNewRecoveryCodes}}
+
+                {{$this->disableTwoFactorAuthentication}}
             @endif
         </div>
     </x-filament::section>

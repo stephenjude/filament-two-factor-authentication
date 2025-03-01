@@ -12,6 +12,7 @@ use Stephenjude\FilamentTwoFactorAuthentication\Actions\ConfirmTwoFactorAuthenti
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\DisableTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\EnableTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\GenerateNewRecoveryCodes;
+use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
 class TwoFactorAuthentication extends BaseLivewireComponent
 {
@@ -22,6 +23,8 @@ class TwoFactorAuthentication extends BaseLivewireComponent
     public ?string $redirectTo = null;
 
     public bool $isConfirmingSetup = false;
+
+    public bool $showRecoveryCodes = false;
 
     public function mount(): void
     {
@@ -43,6 +46,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             app(ConfirmTwoFactorAuthentication::class)($this->getUser(), $data['code']);
 
             $this->isConfirmingSetup = false;
+            $this->showRecoveryCodes = true;
 
             if ($this->redirectTo) {
                 redirect()->to($this->redirectTo);
@@ -91,8 +95,13 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                 fn () => ! $this->getUser()->hasEnabledTwoFactorAuthentication()
             )->modalWidth('md')
             ->modalSubmitActionLabel(__('Confirm'))
-            ->form([
-                TextInput::make('confirmPassword')
+            ->form(function () {
+
+                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForEnable()) {
+                    return null;
+                }
+
+                return [TextInput::make('confirmPassword')
                     ->label(__('Confirm Password'))
                     ->password()
                     ->revealable(filament()->arePasswordsRevealable())
@@ -105,7 +114,8 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                             }
                         },
                     ]),
-            ])
+                ];
+            })
             ->action(function () {
                 try {
                     $this->rateLimit(5);
@@ -145,8 +155,13 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->modalWidth('md')
             ->modalSubmitActionLabel(__('Confirm'))
-            ->form([
-                TextInput::make('currentPassword')
+            ->form(function () {
+
+                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForDisable()) {
+                    return null;
+                }
+
+                return [TextInput::make('currentPassword')
                     ->label(__('Current Password'))
                     ->password()
                     ->revealable(filament()->arePasswordsRevealable())
@@ -159,7 +174,8 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                             }
                         },
                     ]),
-            ])
+                ];
+            })
             ->action(fn () => app(DisableTwoFactorAuthentication::class)($this->getUser()));
     }
 
@@ -170,6 +186,11 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->outlined()
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->requiresConfirmation()
-            ->action(fn () => app(GenerateNewRecoveryCodes::class)($this->getUser()));
+            ->action(
+                function () {
+                    $this->showRecoveryCodes = true;
+                    app(GenerateNewRecoveryCodes::class)($this->getUser());
+                }
+            );
     }
 }
