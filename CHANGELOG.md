@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.19 - 2025-03-04
+
+### What's Changed
+
+* Remove custom login usage that is no longer in use by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/33
+
+### New Contributors
+
+* @stephenjude made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/33
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.18...0.0.19
+
 ## 0.0.18 - 2025-03-01
 
 ### What's Changed
