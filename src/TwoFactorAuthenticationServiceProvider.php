@@ -84,7 +84,6 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
         FilamentIcon::register($this->getIcons());
 
         // Register Livewire Components
-        Livewire::component('filament-panels::pages.auth.login', Login::class);
         Livewire::component('filament-two-factor-authentication::pages.challenge', Challenge::class);
         Livewire::component('filament-two-factor-authentication::pages.recovery', Recovery::class);
         Livewire::component('filament-two-factor-authentication::pages.setup', Setup::class);
