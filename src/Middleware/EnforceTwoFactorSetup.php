@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication;
+namespace Stephenjude\FilamentTwoFactorAuthentication\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

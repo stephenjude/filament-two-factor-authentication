@@ -10,6 +10,7 @@ use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Illuminate\Support\Facades\Route;
 use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ChallengeTwoFactor;
+use Stephenjude\FilamentTwoFactorAuthentication\Middleware\EnforceTwoFactorSetup;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
