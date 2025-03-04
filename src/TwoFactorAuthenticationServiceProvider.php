@@ -15,7 +15,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Login;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 use Stephenjude\FilamentTwoFactorAuthentication\Testing\TestsFilamentTwoFactorAuthentication;
@@ -84,7 +83,6 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
         FilamentIcon::register($this->getIcons());
 
         // Register Livewire Components
-        Livewire::component('filament-panels::pages.auth.login', Login::class);
         Livewire::component('filament-two-factor-authentication::pages.challenge', Challenge::class);
         Livewire::component('filament-two-factor-authentication::pages.recovery', Recovery::class);
         Livewire::component('filament-two-factor-authentication::pages.setup', Setup::class);
