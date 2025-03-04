@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.20 - 2025-03-04
+
+### What's Changed
+
+* fix: EnforceTwoFactor middleware namespace by @webard in https://github.com/stephenjude/filament-two-factor-authentication/pull/35
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.19...0.0.20
+
 ## 0.0.19 - 2025-03-04
 
 ### What's Changed
