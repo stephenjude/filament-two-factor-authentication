@@ -15,7 +15,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Login;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
 use Stephenjude\FilamentTwoFactorAuthentication\Testing\TestsFilamentTwoFactorAuthentication;
