@@ -12,7 +12,7 @@ return [
         'header' => 'You have enabled two factor authentication.',
         'description' => 'Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.',
     ],
-    'setup-confirmation' => [
+    'setup_confirmation' => [
         'header' => 'Finish enabling two factor authentication.',
         'description' => 'When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone\'s Google Authenticator application.',
         'scan_qr_code' => 'To finish enabling two factor authentication, scan the following QR code using your phone\'s authenticator application or enter the setup key and provide the generated OTP code.',
