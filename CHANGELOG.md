@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.21 - 2025-03-10
+
+### What's Changed
+
+* Fixing Bad Translation Key by @GlitterCakes in https://github.com/stephenjude/filament-two-factor-authentication/pull/37
+
+### New Contributors
+
+* @GlitterCakes made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/37
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.20...0.0.21
+
 ## 0.0.20 - 2025-03-04
 
 ### What's Changed
