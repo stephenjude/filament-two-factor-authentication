@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.22 - 2025-03-12
+
+### What's Changed
+
+* Fixed 404 link for new issues by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/40
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.21...0.0.22
+
 ## 0.0.21 - 2025-03-10
 
 ### What's Changed
