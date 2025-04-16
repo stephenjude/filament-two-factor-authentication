@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.23 - 2025-04-16
+
+### What's Changed
+
+* Fix page reload error by @kateengland-moore in https://github.com/stephenjude/filament-two-factor-authentication/pull/41
+
+### New Contributors
+
+* @kateengland-moore made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/41
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.22...0.0.23
+
 ## 0.0.22 - 2025-03-12
 
 ### What's Changed
