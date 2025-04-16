@@ -35,7 +35,6 @@ trait TwoFactorAuthenticatable
         $sessionValue = Hash::make($this->two_factor_secret);
 
         session()->put($sessionKey, $sessionValue);
-        // session()->regenerate();
     }
 
     /**
