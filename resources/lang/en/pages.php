@@ -3,6 +3,7 @@
 return [
     'subheading' => 'Or',
     'challenge' => [
+        'action_label' => 'use a recovery code',
         'confirm' => 'Please confirm access to your account by entering the authentication code provided by your authenticator application.',
         'code' => 'Code',
         'error' => 'The provided two factor authentication code was invalid.',

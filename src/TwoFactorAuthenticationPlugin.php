@@ -55,7 +55,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
             $panel
                 ->userMenuItems([
                     MenuItem::make()
-                        ->label($this->twoFactorMenuItemLabel ?? __('fila-two-factor-authentication::plugin.user_menu_item_label'))
+                        ->label($this->twoFactorMenuItemLabel ?? __('filament-two-factor-authentication::plugin.user_menu_item_label'))
                         ->url(fn (): string => Filament::getCurrentPanel()->route('two-factor.setup'))
                         ->icon($this->twoFactorMenuItemIcon ?? 'heroicon-o-lock-closed'),
                 ]);
