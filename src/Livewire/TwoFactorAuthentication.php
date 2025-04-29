@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\ConfirmTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\DisableTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\EnableTwoFactorAuthentication;
+use Stephenjude\FilamentTwoFactorAuthentication\Actions\GenerateNewRecoveryCodes;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
 class TwoFactorAuthentication extends BaseLivewireComponent
@@ -207,6 +208,6 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ]),
                 ];
             })
-            ->action(fn () => app(DisableTwoFactorAuthentication::class)($this->getUser()));
+            ->action(fn () => app(GenerateNewRecoveryCodes::class)($this->getUser()));
     }
 }
