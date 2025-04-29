@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.24 - 2025-04-29
+
+### What's Changed
+
+* Add German translations by @GrameJunior in https://github.com/stephenjude/filament-two-factor-authentication/pull/46
+
+### New Contributors
+
+* @GrameJunior made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/46
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.23...0.0.24
+
 ## 0.0.23 - 2025-04-16
 
 ### What's Changed
