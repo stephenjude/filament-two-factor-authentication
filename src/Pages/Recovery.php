@@ -77,7 +77,6 @@ class Recovery extends BaseSimplePage
                                     'filament-two-factor-authentication::pages.recovery.form_hint'
                                 )
                             )
-                            ->label(__('Recovery Code'))
                             ->required()
                             ->autocomplete()
                             ->autofocus()->rules([

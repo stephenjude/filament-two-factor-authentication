@@ -22,7 +22,7 @@ class Challenge extends BaseSimplePage
 
     public function getTitle(): string | Htmlable
     {
-        return __('Two Factor Authentication');
+        return __('filament-two-factor-authentication::section.header');
     }
 
     public function mount(): void
@@ -44,7 +44,7 @@ class Challenge extends BaseSimplePage
     {
         return Action::make('recovery')
             ->link()
-            ->label(__('use a recovery code'))
+            ->label(__('filament-two-factor-authentication::pages.challenge.action_label'))
             ->url(
                 filament()->getCurrentPanel()->route(
                     'two-factor.recovery'
