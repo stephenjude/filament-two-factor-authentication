@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.25 - 2025-04-29
+
+### What's Changed
+
+* Fix generating new recovery codes by @GrameJunior in https://github.com/stephenjude/filament-two-factor-authentication/pull/45
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.24...0.0.25
+
 ## 0.0.24 - 2025-04-29
 
 ### What's Changed
