@@ -208,6 +208,6 @@ class TwoFactorAuthentication extends BaseLivewireComponent
                     ]),
                 ];
             })
-            ->action(fn () => $this->showRecoveryCodes = true, app(GenerateNewRecoveryCodes::class)($this->getUser()));
+            ->action(fn () => app(GenerateNewRecoveryCodes::class)($this->getUser()), $this->showRecoveryCodes = true);
     }
 }
