@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 0.0.27 - 2025-05-07
+
+### What's Changed
+
+* Login through recovery code by @talha-abdullah-990 in https://github.com/stephenjude/filament-two-factor-authentication/pull/51
+
+### New Contributors
+
+* @talha-abdullah-990 made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/51
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/0.0.26...0.0.27
+
 ## 0.0.26 - 2025-05-04
 
 ### What's Changed
