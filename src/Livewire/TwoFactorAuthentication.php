@@ -96,7 +96,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             )->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForEnable()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 
@@ -156,7 +156,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForDisable()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 
@@ -185,11 +185,11 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->outlined()
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
 
-            ->requiresConfirmation(! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForRegenerateRecoveryCodes())
+            ->requiresConfirmation(! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword())
             ->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForRegenerateRecoveryCodes()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 

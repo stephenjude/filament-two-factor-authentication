@@ -9,10 +9,13 @@ use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Illuminate\Support\Facades\Hash;
+use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodeReplaced;
 
 trait TwoFactorAuthenticatable
 {
+    use InteractsWithPasskeys;
+
     /**
      * Determine if two-factor authentication has been enabled.
      */

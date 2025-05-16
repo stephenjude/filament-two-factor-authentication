@@ -3,9 +3,13 @@
 namespace Stephenjude\FilamentTwoFactorAuthentication;
 
 use Filament\Support\Assets\Asset;
+use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Support\Facades\Blade;
 use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
@@ -37,8 +41,9 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
             ->hasTranslations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->publishMigrations()
                     ->publishAssets()
+                    ->publishMigrations()
+                    ->publish('passkeys-migrations')
                     ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('stephenjude/filament-two-factor-authentication');
             });
@@ -77,6 +82,15 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
         FilamentAsset::registerScriptData(
             $this->getScriptData(),
             $this->getAssetPackageName()
+        );
+
+        FilamentAsset::register([
+            Js::make('passkey-js', __DIR__.'/../resources/dist/filament-two-factor-authentication.js'),
+        ]);
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+            fn (): string => Blade::render("<x-authenticate-passkey />"),
         );
 
         // Icon Registration

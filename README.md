@@ -7,7 +7,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/stephenjude/filament-two-factor-authentication/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/stephenjude/filament-two-factor-authentication/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/stephenjude/filament-two-factor-authentication.svg?style=flat-square)](https://packagist.org/packages/stephenjude/filament-two-factor-authentication)
 
-Add two factor authentication to new and existing Filament applications.
+Add two-factor authentication to new and existing Filament applications.
 
 ## Learn More
 [Filament Two-Factor Authentication Demo](https://www.youtube.com/watch?v=zLqKFsAmEaQ) — Filament Daily 
@@ -62,6 +62,7 @@ public function panel(Panel $panel): Panel
             TwoFactorAuthenticationPlugin::make()
                     ->addTwoFactorMenuItem() // Add 2FA settings to user menu items
                     ->enforceTwoFactorSetup() // Enforce 2FA setup for all users
+                    ->enablePasskeyAuthentication() // Enable passkey authentication
         ])
 }
 ...
