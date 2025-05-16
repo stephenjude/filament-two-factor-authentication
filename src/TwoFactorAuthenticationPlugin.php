@@ -170,33 +170,43 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     public function enableTwoFactorAuthentication(
         Closure|bool $condition = true,
-        Closure|bool $requiresPassword = true,
         Closure|bool $forced = true,
-        Closure|bool $addMenuItem = true,
-        Closure|string $menuItemLabel = true,
+        Closure|bool $requiresPassword = true,
         Closure|string $forceMiddleware = EnforceTwoFactorSetup::class,
         Closure|string $challengeMiddleware = ChallengeTwoFactor::class,
+        Closure|bool $addMenuItem = true,
+        Closure|string|null $menuItemLabel = null,
+        Closure|string|null $menuItemIcon = null,
     ): static {
         $this->enableTwoFactorAuthentication = $this->evaluate($condition);
 
-        $this->twoFactorChallengeMiddleware = $this->evaluate($challengeMiddleware);
-
         $this->hasEnforcedTwoFactorSetup = $this->evaluate($forced);
-
-        $this->enforceTwoFactorSetupMiddleware = $this->evaluate($forceMiddleware);
 
         $this->twoFactorSetupRequiresPassword = $this->evaluate($requiresPassword);
 
 
-        $this->hasTwoFactorMenuItem = $this->evaluate($condition);
+        $this->twoFactorChallengeMiddleware = $this->evaluate($challengeMiddleware);
 
-        $this->twoFactorMenuItemLabel = $label;
+        $this->enforceTwoFactorSetupMiddleware = $this->evaluate($forceMiddleware);
+
+
+        $this->hasTwoFactorMenuItem = $this->evaluate($addMenuItem);
+
+        $this->twoFactorMenuItemLabel = $this->evaluate($menuItemLabel);
+
+        $this->twoFactorMenuItemIcon = $this->evaluate($menuItemIcon);
+
 
         $this->isPasswordRequiredForEnable = $this->evaluate($requiresPassword);
         $this->isPasswordRequiredForDisable = $this->evaluate($requiresPassword);
         $this->isPasswordRequiredForRegenerateRecoveryCodes = $this->evaluate($requiresPassword);
 
         return $this;
+    }
+
+    public function hasEnabledPasskeyAuthentication(): bool
+    {
+        return $this->enablePasskeyAuthentication;
     }
 
     public function enablePasskeyAuthentication(Closure|bool $condition = true): static
@@ -226,12 +236,24 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
         $this->twoFactorMenuItemLabel = $label;
 
+        $this->twoFactorMenuItemIcon = $icon;
+
         return $this;
     }
 
     public function hasTwoFactorMenuItem(): bool
     {
         return $this->hasTwoFactorMenuItem;
+    }
+
+    public function getTwoFactorMenuItemLabel(): bool
+    {
+        return $this->twoFactorMenuItemLabel;
+    }
+
+    public function getTwoFactorMenuItemIcon(): bool
+    {
+        return $this->twoFactorMenuItemIcon;
     }
 
     public function hasEnabledPasskeyAuthentication(): bool

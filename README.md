@@ -60,9 +60,8 @@ public function panel(Panel $panel): Panel
     return $panel
         ->plugins([
             TwoFactorAuthenticationPlugin::make()
-                    ->addTwoFactorMenuItem() // Add 2FA settings to user menu items
-                    ->enforceTwoFactorSetup() // Enforce 2FA setup for all users
-                    ->enablePasskeyAuthentication() // Enable passkey authentication
+                    ->enableTwoFactorAuthentication() // Enable Google 2FA
+                    ->enablePasskeyAuthentication() // Enable Passkey
         ])
 }
 ...
