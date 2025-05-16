@@ -30,7 +30,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     protected string $enforceTwoFactorSetupMiddleware = EnforceTwoFactorSetup::class;
 
-    protected string|bool $twoFactorChallengeMiddleware = ChallengeTwoFactor::class;
+    protected string | bool $twoFactorChallengeMiddleware = ChallengeTwoFactor::class;
 
     protected bool $hasTwoFactorMenuItem = false;
 
@@ -39,13 +39,13 @@ class TwoFactorAuthenticationPlugin implements Plugin
     protected ?string $twoFactorMenuItemIcon = null;
 
     #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
-    protected bool|Closure $isPasswordRequiredForEnable = true;
+    protected bool | Closure $isPasswordRequiredForEnable = true;
 
     #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
-    protected bool|Closure $isPasswordRequiredForDisable = true;
+    protected bool | Closure $isPasswordRequiredForDisable = true;
 
     #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
-    protected bool|Closure $isPasswordRequiredForRegenerateRecoveryCodes = true;
+    protected bool | Closure $isPasswordRequiredForRegenerateRecoveryCodes = true;
 
     public function getId(): string
     {
@@ -55,7 +55,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     public function register(Panel $panel): void
     {
         $panel
-            ->routes(fn() => [
+            ->routes(fn () => [
                 Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
                 Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
                 Route::get('/two-factor-setup', Setup::class)->name('two-factor.setup'),
@@ -66,11 +66,11 @@ class TwoFactorAuthenticationPlugin implements Plugin
                 ->userMenuItems([
                     MenuItem::make()
                         ->label(
-                            $this->twoFactorMenuItemLabel ?? fn() => __(
-                            'filament-two-factor-authentication::plugin.user_menu_item_label'
+                            $this->twoFactorMenuItemLabel ?? fn () => __(
+                                'filament-two-factor-authentication::plugin.user_menu_item_label'
+                            )
                         )
-                        )
-                        ->url(fn(): string => Filament::getCurrentPanel()->route('two-factor.setup'))
+                        ->url(fn (): string => Filament::getCurrentPanel()->route('two-factor.setup'))
                         ->icon($this->twoFactorMenuItemIcon ?? 'heroicon-o-lock-closed'),
                 ]);
         }
@@ -91,7 +91,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
-    public function requirePasswordWhenEnabling(bool|Closure $condition = true): static
+    public function requirePasswordWhenEnabling(bool | Closure $condition = true): static
     {
         $this->isPasswordRequiredForEnable = $this->evaluate($condition);
 
@@ -99,7 +99,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
-    public function requirePasswordWhenDisabling(bool|Closure $condition = true): static
+    public function requirePasswordWhenDisabling(bool | Closure $condition = true): static
     {
         $this->isPasswordRequiredForDisable = $this->evaluate($condition);
 
@@ -107,7 +107,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
-    public function requirePasswordWhenRegeneratingRecoveryCodes(Closure|bool $condition = true): static
+    public function requirePasswordWhenRegeneratingRecoveryCodes(Closure | bool $condition = true): static
     {
         $this->isPasswordRequiredForRegenerateRecoveryCodes = $this->evaluate($condition);
 
@@ -117,19 +117,19 @@ class TwoFactorAuthenticationPlugin implements Plugin
     #[Deprecated('Use twoFactorSetupRequiresPassword instead')]
     public function isPasswordRequiredForRegenerateRecoveryCodes(): bool
     {
-        return ($this->isPasswordRequiredForRegenerateRecoveryCodes);
+        return $this->isPasswordRequiredForRegenerateRecoveryCodes;
     }
 
     #[Deprecated('Use twoFactorSetupRequiresPassword instead')]
     public function isPasswordRequiredForEnable(): bool
     {
-        return ($this->isPasswordRequiredForEnable);
+        return $this->isPasswordRequiredForEnable;
     }
 
     #[Deprecated('Use twoFactorSetupRequiresPassword instead')]
     public function isPasswordRequiredForDisable(): bool
     {
-        return ($this->isPasswordRequiredForDisable);
+        return $this->isPasswordRequiredForDisable;
     }
 
     public function twoFactorSetupRequiresPassword(): bool
@@ -138,7 +138,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication(challengeMiddleware:ChallengeTwoFactor::class) instead')]
-    public function setChallengeTwoFactorMiddleware(Closure|string|bool $middleware = ChallengeTwoFactor::class): static
+    public function setChallengeTwoFactorMiddleware(Closure | string | bool $middleware = ChallengeTwoFactor::class): static
     {
         $this->twoFactorChallengeMiddleware = $this->evaluate($middleware);
 
@@ -158,8 +158,8 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     #[Deprecated('Use enableTwoFactorAuthentication(forced:true) instead')]
     public function enforceTwoFactorSetup(
-        Closure|bool $condition = true,
-        Closure|string $middleware = EnforceTwoFactorSetup::class
+        Closure | bool $condition = true,
+        Closure | string $middleware = EnforceTwoFactorSetup::class
     ): static {
         $this->hasEnforcedTwoFactorSetup = $this->evaluate($condition);
 
@@ -169,13 +169,13 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     public function enableTwoFactorAuthentication(
-        Closure|bool $condition = true,
-        Closure|bool $requiresPassword = true,
-        Closure|bool $forced = true,
-        Closure|bool $addMenuItem = true,
-        Closure|string $menuItemLabel = true,
-        Closure|string $forceMiddleware = EnforceTwoFactorSetup::class,
-        Closure|string $challengeMiddleware = ChallengeTwoFactor::class,
+        Closure | bool $condition = true,
+        Closure | bool $requiresPassword = true,
+        Closure | bool $forced = true,
+        Closure | bool $addMenuItem = true,
+        Closure | string $menuItemLabel = true,
+        Closure | string $forceMiddleware = EnforceTwoFactorSetup::class,
+        Closure | string $challengeMiddleware = ChallengeTwoFactor::class,
     ): static {
         $this->enableTwoFactorAuthentication = $this->evaluate($condition);
 
@@ -186,7 +186,6 @@ class TwoFactorAuthenticationPlugin implements Plugin
         $this->enforceTwoFactorSetupMiddleware = $this->evaluate($forceMiddleware);
 
         $this->twoFactorSetupRequiresPassword = $this->evaluate($requiresPassword);
-
 
         $this->hasTwoFactorMenuItem = $this->evaluate($condition);
 
@@ -199,7 +198,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this;
     }
 
-    public function enablePasskeyAuthentication(Closure|bool $condition = true): static
+    public function enablePasskeyAuthentication(Closure | bool $condition = true): static
     {
         $this->enablePasskeyAuthentication = $this->evaluate($condition);
 
@@ -218,7 +217,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     #[\Deprecated('Use enableTwoFactorAuthentication( instead')]
     public function addTwoFactorMenuItem(
-        Closure|bool $condition = true,
+        Closure | bool $condition = true,
         ?string $label = null,
         ?string $icon = null
     ): static {
@@ -239,9 +238,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->enablePasskeyAuthentication;
     }
 
-    public function boot(Panel $panel): void
-    {
-    }
+    public function boot(Panel $panel): void {}
 
     public static function make(): static
     {
