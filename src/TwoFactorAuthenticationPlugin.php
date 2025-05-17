@@ -10,8 +10,8 @@ use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Illuminate\Support\Facades\Route;
 use JetBrains\PhpStorm\Deprecated;
-use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ChallengeTwoFactor;
 use Stephenjude\FilamentTwoFactorAuthentication\Middleware\EnforceTwoFactorSetup;
+use Stephenjude\FilamentTwoFactorAuthentication\Middleware\TwoFactorChallenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
@@ -30,7 +30,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     protected string $enforceTwoFactorSetupMiddleware = EnforceTwoFactorSetup::class;
 
-    protected string|bool $twoFactorChallengeMiddleware = ChallengeTwoFactor::class;
+    protected string|bool $twoFactorChallengeMiddleware = TwoFactorChallenge::class;
 
     protected bool $hasTwoFactorMenuItem = false;
 
@@ -54,6 +54,9 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
+        if ($this->) {
+            return;
+        }
         $panel
             ->routes(fn() => [
                 Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
@@ -66,7 +69,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
                 ->userMenuItems([
                     MenuItem::make()
                         ->label(
-                            $this->twoFactorMenuItemLabel ?? fn() => __(
+                            $this->getTwoFactorMenuItemLabel() ?? fn() => __(
                             'filament-two-factor-authentication::plugin.user_menu_item_label'
                         )
                         )
@@ -75,7 +78,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
                 ]);
         }
 
-        if ($this->twoFactorChallengeMiddleware !== false) {
+        if (is_string($this->twoFactorChallengeMiddleware)) {
             $panel
                 ->authMiddleware([
                     $this->twoFactorChallengeMiddleware,
@@ -138,7 +141,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication(challengeMiddleware:ChallengeTwoFactor::class) instead')]
-    public function setChallengeTwoFactorMiddleware(Closure|string|bool $middleware = ChallengeTwoFactor::class): static
+    public function setChallengeTwoFactorMiddleware(Closure|string|bool $middleware = TwoFactorChallenge::class): static
     {
         $this->twoFactorChallengeMiddleware = $this->evaluate($middleware);
 
@@ -173,8 +176,8 @@ class TwoFactorAuthenticationPlugin implements Plugin
         Closure|bool $forced = true,
         Closure|bool $requiresPassword = true,
         Closure|string $forceMiddleware = EnforceTwoFactorSetup::class,
-        Closure|string $challengeMiddleware = ChallengeTwoFactor::class,
-        Closure|bool $addMenuItem = true,
+        Closure|string $challengeMiddleware = TwoFactorChallenge::class,
+        Closure|bool $addMenuItem = false,
         Closure|string|null $menuItemLabel = null,
         Closure|string|null $menuItemIcon = null,
     ): static {
@@ -198,7 +201,9 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
 
         $this->isPasswordRequiredForEnable = $this->evaluate($requiresPassword);
+
         $this->isPasswordRequiredForDisable = $this->evaluate($requiresPassword);
+
         $this->isPasswordRequiredForRegenerateRecoveryCodes = $this->evaluate($requiresPassword);
 
         return $this;
@@ -226,7 +231,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->hasEnforcedTwoFactorSetup;
     }
 
-    #[\Deprecated('Use enableTwoFactorAuthentication( instead')]
+    #[\Deprecated('Use enableTwoFactorAuthentication(addMenuItem:true, menuItemLabel:label, menuItemIcon:icon) instead')]
     public function addTwoFactorMenuItem(
         Closure|bool $condition = true,
         ?string $label = null,
@@ -246,19 +251,14 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->hasTwoFactorMenuItem;
     }
 
-    public function getTwoFactorMenuItemLabel(): bool
+    public function getTwoFactorMenuItemLabel(): ?string
     {
         return $this->twoFactorMenuItemLabel;
     }
 
-    public function getTwoFactorMenuItemIcon(): bool
+    public function getTwoFactorMenuItemIcon(): ?string
     {
         return $this->twoFactorMenuItemIcon;
-    }
-
-    public function hasEnabledPasskeyAuthentication(): bool
-    {
-        return $this->enablePasskeyAuthentication;
     }
 
     public function boot(Panel $panel): void
