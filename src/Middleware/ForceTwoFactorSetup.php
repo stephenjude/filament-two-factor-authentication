@@ -5,7 +5,7 @@ namespace Stephenjude\FilamentTwoFactorAuthentication\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class EnforceTwoFactorSetup
+class ForceTwoFactorSetup
 {
     public function handle(Request $request, Closure $next): mixed
     {
@@ -15,7 +15,7 @@ class EnforceTwoFactorSetup
             return $next($request);
         }
 
-        if (! $user?->hasEnabledTwoFactorAuthentication()) {
+        if (! $user?->hasEnabledTwoFactorAuthentication() && ! $user?->hasEnabledPasskeyAuthentication()) {
             return redirect()->to($this->redirectTo());
         }
 

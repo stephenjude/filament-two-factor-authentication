@@ -21,20 +21,25 @@ trait TwoFactorAuthenticatable
      */
     public function hasEnabledTwoFactorAuthentication(): bool
     {
-        return ! is_null($this->two_factor_secret) &&
-            ! is_null($this->two_factor_confirmed_at);
+        return !is_null($this->two_factor_secret) &&
+            !is_null($this->two_factor_confirmed_at);
+    }
+
+    public function hasEnabledPasskeyAuthentication(): bool
+    {
+        return $this?->passkeys()?->exists();
     }
 
     public function isTwoFactorChallengePassed(): bool
     {
-        $sessionKey = 'login_2fa_challenge_passed_' . $this->id;
+        $sessionKey = 'login_2fa_challenge_passed_'.$this->id;
 
         return Hash::check($this->two_factor_secret, session()->get($sessionKey));
     }
 
     public function setTwoFactorChallengePassed(): void
     {
-        $sessionKey = 'login_2fa_challenge_passed_' . $this->id;
+        $sessionKey = 'login_2fa_challenge_passed_'.$this->id;
         $sessionValue = Hash::make($this->two_factor_secret);
 
         session()->put($sessionKey, $sessionValue);

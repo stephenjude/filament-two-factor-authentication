@@ -23,6 +23,24 @@ You can install the package via composer:
 composer require stephenjude/filament-two-factor-authentication
 ```
 
+Add the `TwoFactorAuthenticatable` trait to your application's authentication model and implement the `HasPasskeys` trait:
+
+```php
+namespace App\Models;
+
+use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
+use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticatable;
+
+//...
+
+class User extends Authenticatable implements FilamentUser, HasPasskeys
+{
+    use TwoFactorAuthenticatable;
+    
+    //...
+
+```
+
 Install the plugin migration using:
 ```bash
 php artisan filament-two-factor-authentication:install
@@ -33,23 +51,8 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="filament-two-factor-authentication-views"
 ```
 
-## Model Configuration
-First, ensure that your application's authenticatio model uses the `TwoFactorAuthenticatable` trait:
-
-```php
-namespace App\Models;
-...
-use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticatable;
-
-class User extends Authenticatable implements FilamentUser
-{
-    ...
-    use TwoFactorAuthenticatable;
-```
-
 ## Plugin Configuration
-Add two factor authentication plugin to a panel by instantiating the plugin class and passing it to the plugin() method
-of the configuration:
+Add two-factor authentication plugin to a panel by instantiating the plugin class and passing it to the plugin() method of the configuration:
 
 ```php
 ...
@@ -62,17 +65,53 @@ public function panel(Panel $panel): Panel
             TwoFactorAuthenticationPlugin::make()
                     ->enableTwoFactorAuthentication() // Enable Google 2FA
                     ->enablePasskeyAuthentication() // Enable Passkey
+                    ->addTwoFactorMenuItem() // Add 2FA menu item
+                    ->forceTwoFactorSetup() // Force 2FA setup
         ])
 }
 ...
 ```
 
-### Custom 2FA Settings Page
+> The passkey authentication feature is implemented using the [spatie/laravel-passkeys](https://github.com/spatie/laravel-passkeys) package under the hood.
+
+### Advanced Configurations
+
+```php
+...
+use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
+use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ForceTwoFactorSetup;
+use Stephenjude\FilamentTwoFactorAuthentication\Middleware\TwoFactorChallenge;
+
+TwoFactorAuthenticationPlugin::make()
+        ->enableTwoFactorAuthentication(
+            condition:  true, // Enable Google 2FA 
+            challengeMiddleware:  TwoFactorChallenge::class, // Middleware to challenge user with 2FA
+        ) 
+        ->enablePasskeyAuthentication(
+            condition:  true, // Enable Passkey 
+        ) 
+        ->forceTwoFactorSetup(
+            condition:  true, // Force 2FA setup for all users
+            requiresPassword:  true, // Require password during setup
+            forceMiddleware:  ForceTwoFactorSetup::class, // Middleware to enforce 2FA
+        )
+        ->addTwoFactorMenuItem(
+            condition:  true, // Show 2FA on the user menu item
+            label:  '2FA', // Menu item label   
+            icon:  'heroicon-s-key', // Menu item icon
+        )
+])
+...
+```
+
+### Custom Settings Page
 If your application already has a user profile page, you can add a 2FA settings to your profile page view:
 
 ```php
 <x-filament-panels::page>
     @livewire(\Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication::class)
+
+    @livewire(\Stephenjude\FilamentTwoFactorAuthentication\Livewire\PasskeyAuthentication::class)
 </x-filament-panels::page>
 ```
 ## Events
