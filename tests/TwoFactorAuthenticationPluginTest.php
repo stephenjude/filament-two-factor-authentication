@@ -45,7 +45,6 @@ it('forces setup and toggles password requirement on plugin', function () {
     expect($this->plugin->twoFactorSetupRequiresPassword())->toBeFalse();
 });
 
-
 it('can render setup page', function () {
     livewire(Setup::class)->assertSuccessful();
 });

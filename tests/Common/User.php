@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Schema;
 use Spatie\LaravelPasskeys\Models\Concerns\HasPasskeys;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticatable;
 
-class User extends Authenticatable implements HasPasskeys, FilamentUser
+class User extends Authenticatable implements FilamentUser, HasPasskeys
 {
-    use Notifiable, TwoFactorAuthenticatable;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -64,6 +65,7 @@ class User extends Authenticatable implements HasPasskeys, FilamentUser
             'password' => bcrypt('password'),
         ]);
     }
+
     public static function createTable(): void
     {
         Schema::create('users', function (Blueprint $table) {

@@ -12,8 +12,6 @@ use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
@@ -66,11 +64,11 @@ class TestCase extends Orchestra
 
         User::createTable();
 
-        $migration = include __DIR__.'/../database/migrations/add_two_factor_authentication_columns.php.stub';
+        $migration = include __DIR__ . '/../database/migrations/add_two_factor_authentication_columns.php.stub';
 
         $migration->up();
 
-        $migration = include __DIR__.'/../vendor/spatie/laravel-passkeys/database/migrations/create_passkeys_table.php.stub';
+        $migration = include __DIR__ . '/../vendor/spatie/laravel-passkeys/database/migrations/create_passkeys_table.php.stub';
 
         $migration->up();
     }

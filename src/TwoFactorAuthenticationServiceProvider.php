@@ -20,7 +20,6 @@ use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
-use Stephenjude\FilamentTwoFactorAuthentication\Testing\TestsFilamentTwoFactorAuthentication;
 
 class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
 {
@@ -74,12 +73,12 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
         $this->configurePasskey();
 
         FilamentAsset::register([
-            Js::make('passkey-js', __DIR__.'/../resources/dist/filament-two-factor-authentication.js'),
+            Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
         ]);
 
         FilamentView::registerRenderHook(
             PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
-            fn(): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
+            fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
         );
 
         // Register Livewire Components
@@ -98,21 +97,20 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
 
     protected function configurePasskey(): void
     {
-        $provider = config('auth.guards.'.filament()?->getCurrentPanel()?->getAuthGuard().'.provider');
+        $provider = config('auth.guards.' . filament()?->getCurrentPanel()?->getAuthGuard() . '.provider');
 
         Config::set(
             key: 'passkeys.models.authenticatable',
-            value: Config::get('auth.providers.'.$provider.'.model', 'App\\Models\\User')
+            value: Config::get('auth.providers.' . $provider . '.model', 'App\\Models\\User')
         );
 
         $path = filament()?->getCurrentPanel()?->getPath();
 
         Config::set(
             key: 'passkeys.redirect_to_after_login',
-            value: $path? "/$path" : "/dashboard"
+            value: $path ? "/$path" : '/dashboard'
         );
     }
-
 
     /**
      * @return array<string>
