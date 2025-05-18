@@ -5,7 +5,6 @@ namespace Stephenjude\FilamentTwoFactorAuthentication\Livewire;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables\Actions\Action;
@@ -19,7 +18,7 @@ use Illuminate\View\View;
 use Spatie\LaravelPasskeys\Livewire\PasskeysComponent;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
-class PasskeyAuthentication extends PasskeysComponent implements HasTable, HasActions, HasForms
+class PasskeyAuthentication extends PasskeysComponent implements HasActions, HasForms, HasTable
 {
     use Defaults;
     use InteractsWithTable;
@@ -34,7 +33,7 @@ class PasskeyAuthentication extends PasskeysComponent implements HasTable, HasAc
     public function table(Table $table): Table
     {
         return $table
-            ->query(fn() => $this->getUser()->passkeys()->latest())
+            ->query(fn () => $this->getUser()->passkeys()->latest())
             ->headerActions([
                 Action::make('addPasskey')
                     ->label(__('filament-two-factor-authentication::components.passkey.add'))
@@ -50,21 +49,21 @@ class PasskeyAuthentication extends PasskeysComponent implements HasTable, HasAc
                         $this->dispatch('passkeyPropertiesValidated', [
                             'passkeyOptions' => json_decode($this->generatePasskeyOptions()),
                         ]);
-                    })
+                    }),
             ])
             ->columns([
                 Stack::make([
                     TextColumn::make('name')
                         ->label(__('Name'))
-                        ->description(fn($record) => $record->last_used_at
+                        ->description(fn ($record) => $record->last_used_at
                             ? $record->last_used_at->diffForHumans()
                             : __('Never used')),
-                ])
+                ]),
             ])
             ->actions([
                 DeleteAction::make()
                     ->form(function () {
-                        if (!TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
+                        if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                             return null;
                         }
 
@@ -76,14 +75,14 @@ class PasskeyAuthentication extends PasskeysComponent implements HasTable, HasAc
                                 ->required()
                                 ->autocomplete('current-password')
                                 ->rules([
-                                    fn() => function (string $attribute, $value, $fail) {
-                                        if (!\Hash::check($value, $this->getUser()->password)) {
+                                    fn () => function (string $attribute, $value, $fail) {
+                                        if (! \Hash::check($value, $this->getUser()->password)) {
                                             $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
                                         }
                                     },
                                 ]),
                         ];
-                    })
+                    }),
             ])
             ->paginated(false);
     }

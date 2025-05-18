@@ -22,7 +22,7 @@ trait Defaults
     {
         $user = Filament::auth()->user();
 
-        if (!$user instanceof Model) {
+        if (! $user instanceof Model) {
             throw new Exception(
                 __('filament-two-factor-authentication::components.base.wrong_user')
             );

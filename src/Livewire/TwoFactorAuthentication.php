@@ -67,7 +67,7 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
     {
         return Action::make('confirmSetup')
             ->label(__('filament-two-factor-authentication::components.2fa.confirm'))
-            ->visible(fn() => $this->isConfirmingSetup)
+            ->visible(fn () => $this->isConfirmingSetup)
             ->submit('confirmSetup');
     }
 
@@ -76,7 +76,7 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
         return Action::make('cancelSetup')
             ->label(__('filament-two-factor-authentication::components.2fa.cancel'))
             ->outlined()
-            ->visible(fn() => $this->isConfirmingSetup)
+            ->visible(fn () => $this->isConfirmingSetup)
             ->action(function () {
                 try {
                     $this->rateLimit(5);
@@ -97,11 +97,11 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
         return Action::make('enableTwoFactorAuthentication')
             ->label(__('filament-two-factor-authentication::components.2fa.enable'))
             ->visible(
-                fn() => !$this->getUser()->hasEnabledTwoFactorAuthentication()
+                fn () => ! $this->getUser()->hasEnabledTwoFactorAuthentication()
             )->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (!TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 
@@ -113,8 +113,8 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
                         ->required()
                         ->autocomplete('confirm-password')
                         ->rules([
-                            fn() => function (string $attribute, $value, $fail) {
-                                if (!Hash::check($value, $this->getUser()->password)) {
+                            fn () => function (string $attribute, $value, $fail) {
+                                if (! Hash::check($value, $this->getUser()->password)) {
                                     $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
                                 }
                             },
@@ -141,7 +141,7 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
         return $form
             ->schema([
                 Placeholder::make('setup_key')
-                    ->label(fn() => __(
+                    ->label(fn () => __(
                         'filament-two-factor-authentication::components.2fa.setup_key',
                         ['setup_key' => decrypt($this->getUser()->two_factor_secret)]
                     )),
@@ -157,11 +157,11 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
         return Action::make('disableTwoFactorAuthentication')
             ->label(__('filament-two-factor-authentication::components.2fa.disable'))
             ->color('danger')
-            ->visible(fn() => $this->getUser()->hasEnabledTwoFactorAuthentication())
+            ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (!TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 
@@ -173,15 +173,15 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
                         ->required()
                         ->autocomplete('current-password')
                         ->rules([
-                            fn() => function (string $attribute, $value, $fail) {
-                                if (!Hash::check($value, $this->getUser()->password)) {
+                            fn () => function (string $attribute, $value, $fail) {
+                                if (! Hash::check($value, $this->getUser()->password)) {
                                     $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
                                 }
                             },
                         ]),
                 ];
             })
-            ->action(fn() => app(DisableTwoFactorAuthentication::class)($this->getUser()));
+            ->action(fn () => app(DisableTwoFactorAuthentication::class)($this->getUser()));
     }
 
     protected function generateNewRecoveryCodesAction(): Action
@@ -189,12 +189,12 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
         return Action::make('generateNewRecoveryCodes')
             ->label(__('filament-two-factor-authentication::components.2fa.regenerate_recovery_codes'))
             ->outlined()
-            ->visible(fn() => $this->getUser()->hasEnabledTwoFactorAuthentication())
-            ->requiresConfirmation(!TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword())
+            ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
+            ->requiresConfirmation(! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword())
             ->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (!TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 
@@ -206,14 +206,14 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
                         ->required()
                         ->autocomplete('current-password')
                         ->rules([
-                            fn() => function (string $attribute, $value, $fail) {
-                                if (!Hash::check($value, $this->getUser()->password)) {
+                            fn () => function (string $attribute, $value, $fail) {
+                                if (! Hash::check($value, $this->getUser()->password)) {
                                     $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
                                 }
                             },
                         ]),
                 ];
             })
-            ->action(fn() => app(GenerateNewRecoveryCodes::class)($this->getUser()), $this->showRecoveryCodes = true);
+            ->action(fn () => app(GenerateNewRecoveryCodes::class)($this->getUser()), $this->showRecoveryCodes = true);
     }
 }
