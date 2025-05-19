@@ -1,10 +1,13 @@
 {
     "name": "stephenjude/filament-two-factor-authentication",
-    "description": "Filament Two Factor Authentication",
+    "description": "Filament Two Factor Authentication: Google 2FA + Passkey Authentication",
     "keywords": [
         "stephenjude",
         "laravel",
-        "filament-two-factor-authentication"
+        "filament",
+        "2fa",
+        "passkey authentication",
+        "two-factor authentication"
     ],
     "homepage": "https://github.com/stephenjude/filament-two-factor-authentication",
     "support": {
@@ -24,19 +27,17 @@
         "filament/filament": "^3.0",
         "pragmarx/google2fa": "^8.0",
         "bacon/bacon-qr-code": "^3.0",
+        "spatie/laravel-passkeys": "^1.0"   ,
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^7.9|^8.0",
-        "nunomaduro/larastan": "^2.0.1",
-        "orchestra/testbench": "^8.0|^9.0",
-        "pestphp/pest": "^2.1",
-        "pestphp/pest-plugin-arch": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.0",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0"
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "pestphp/pest": "^2.1|^3.0",
+        "pestphp/pest-plugin-arch": "^2.0|^3.0",
+        "pestphp/pest-plugin-laravel": "^2.0|^3.0",
+        "pestphp/pest-plugin-livewire": "^2.1|^3.0"
     },
     "autoload": {
         "psr-4": {

@@ -4,18 +4,23 @@ namespace Stephenjude\FilamentTwoFactorAuthentication\Livewire;
 
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Actions\Action;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Illuminate\Support\Facades\Hash;
+use Livewire\Component;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\ConfirmTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\DisableTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\EnableTwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\GenerateNewRecoveryCodes;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
-class TwoFactorAuthentication extends BaseLivewireComponent
+class TwoFactorAuthentication extends Component implements HasActions, HasForms
 {
+    use Defaults;
+
     public ?array $data = [];
 
     public bool $aside = true;
@@ -96,7 +101,7 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             )->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForEnable()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 
@@ -156,23 +161,24 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForDisable()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 
-                return [TextInput::make('currentPassword')
-                    ->label(__('filament-two-factor-authentication::components.2fa.current_password'))
-                    ->password()
-                    ->revealable(filament()->arePasswordsRevealable())
-                    ->required()
-                    ->autocomplete('current-password')
-                    ->rules([
-                        fn () => function (string $attribute, $value, $fail) {
-                            if (! Hash::check($value, $this->getUser()->password)) {
-                                $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
-                            }
-                        },
-                    ]),
+                return [
+                    TextInput::make('currentPassword')
+                        ->label(__('filament-two-factor-authentication::components.2fa.current_password'))
+                        ->password()
+                        ->revealable(filament()->arePasswordsRevealable())
+                        ->required()
+                        ->autocomplete('current-password')
+                        ->rules([
+                            fn () => function (string $attribute, $value, $fail) {
+                                if (! Hash::check($value, $this->getUser()->password)) {
+                                    $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
+                                }
+                            },
+                        ]),
                 ];
             })
             ->action(fn () => app(DisableTwoFactorAuthentication::class)($this->getUser()));
@@ -184,28 +190,28 @@ class TwoFactorAuthentication extends BaseLivewireComponent
             ->label(__('filament-two-factor-authentication::components.2fa.regenerate_recovery_codes'))
             ->outlined()
             ->visible(fn () => $this->getUser()->hasEnabledTwoFactorAuthentication())
-
-            ->requiresConfirmation(! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForRegenerateRecoveryCodes())
+            ->requiresConfirmation(! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword())
             ->modalWidth('md')
             ->modalSubmitActionLabel(__('filament-two-factor-authentication::components.2fa.confirm'))
             ->form(function () {
-                if (! TwoFactorAuthenticationPlugin::get()->isPasswordRequiredForRegenerateRecoveryCodes()) {
+                if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                     return null;
                 }
 
-                return [TextInput::make('currentPassword')
-                    ->label(__('filament-two-factor-authentication::components.2fa.current_password'))
-                    ->password()
-                    ->revealable(filament()->arePasswordsRevealable())
-                    ->required()
-                    ->autocomplete('current-password')
-                    ->rules([
-                        fn () => function (string $attribute, $value, $fail) {
-                            if (! Hash::check($value, $this->getUser()->password)) {
-                                $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
-                            }
-                        },
-                    ]),
+                return [
+                    TextInput::make('currentPassword')
+                        ->label(__('filament-two-factor-authentication::components.2fa.current_password'))
+                        ->password()
+                        ->revealable(filament()->arePasswordsRevealable())
+                        ->required()
+                        ->autocomplete('current-password')
+                        ->rules([
+                            fn () => function (string $attribute, $value, $fail) {
+                                if (! Hash::check($value, $this->getUser()->password)) {
+                                    $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
+                                }
+                            },
+                        ]),
                 ];
             })
             ->action(fn () => app(GenerateNewRecoveryCodes::class)($this->getUser()), $this->showRecoveryCodes = true);

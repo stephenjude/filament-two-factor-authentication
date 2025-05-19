@@ -34,4 +34,10 @@ return [
         'current_password' => 'Current Password',
         'regenerate_recovery_codes' => 'Generate New Recovery Codes',
     ],
+    'passkey' => [
+        'add' => 'Create Passkey',
+        'name' => 'Name',
+        'added' => 'Passkey added successfully.',
+        'login' => 'Login with Passkey',
+    ],
 ];

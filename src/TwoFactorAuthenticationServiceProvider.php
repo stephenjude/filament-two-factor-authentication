@@ -2,22 +2,24 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication;
 
-use Filament\Support\Assets\Asset;
+use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentIcon;
+use Filament\Support\Facades\FilamentView;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Cache\Repository;
-use Livewire\Features\SupportTesting\Testable;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Config;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
+use Stephenjude\FilamentTwoFactorAuthentication\Livewire\PasskeyAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
-use Stephenjude\FilamentTwoFactorAuthentication\Testing\TestsFilamentTwoFactorAuthentication;
 
 class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
 {
@@ -33,12 +35,12 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package->name(static::$name)
-            ->hasCommands($this->getCommands())
             ->hasTranslations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->publishMigrations()
                     ->publishAssets()
+                    ->publishMigrations()
+                    ->publish('passkeys-migrations')
                     ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('stephenjude/filament-two-factor-authentication');
             });
@@ -68,19 +70,16 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        // Asset Registration
-        FilamentAsset::register(
-            $this->getAssets(),
-            $this->getAssetPackageName()
-        );
+        $this->configurePasskey();
 
-        FilamentAsset::registerScriptData(
-            $this->getScriptData(),
-            $this->getAssetPackageName()
-        );
+        FilamentAsset::register([
+            Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
+        ]);
 
-        // Icon Registration
-        FilamentIcon::register($this->getIcons());
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+            fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
+        );
 
         // Register Livewire Components
         Livewire::component('filament-two-factor-authentication::pages.challenge', Challenge::class);
@@ -90,56 +89,27 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
             'filament-two-factor-authentication::livewire.two-factor-authentication',
             TwoFactorAuthentication::class
         );
-
-        // Testing
-        Testable::mixin(new TestsFilamentTwoFactorAuthentication);
+        Livewire::component(
+            'filament-two-factor-authentication::livewire.passkey-authentication',
+            PasskeyAuthentication::class
+        );
     }
 
-    protected function getAssetPackageName(): ?string
+    protected function configurePasskey(): void
     {
-        return 'stephenjude/filament-two-factor-authentication';
-    }
+        $provider = config('auth.guards.' . filament()?->getCurrentPanel()?->getAuthGuard() . '.provider');
 
-    /**
-     * @return array<Asset>
-     */
-    protected function getAssets(): array
-    {
-        return [];
-    }
+        Config::set(
+            key: 'passkeys.models.authenticatable',
+            value: Config::get('auth.providers.' . $provider . '.model', 'App\\Models\\User')
+        );
 
-    /**
-     * @return array<class-string>
-     */
-    protected function getCommands(): array
-    {
-        return [];
-    }
+        $path = filament()?->getCurrentPanel()?->getPath();
 
-    /**
-     * @return array<string>
-     */
-    protected function getIcons(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<string>
-     */
-    protected function getRoutes(): array
-    {
-        return [
-
-        ];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    protected function getScriptData(): array
-    {
-        return [];
+        Config::set(
+            key: 'passkeys.redirect_to_after_login',
+            value: $path ? "/$path" : '/dashboard'
+        );
     }
 
     /**

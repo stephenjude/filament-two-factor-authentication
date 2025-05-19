@@ -4,13 +4,13 @@ namespace Stephenjude\FilamentTwoFactorAuthentication;
 
 use Closure;
 use Filament\Contracts\Plugin;
-use Filament\Facades\Filament;
 use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Illuminate\Support\Facades\Route;
-use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ChallengeTwoFactor;
-use Stephenjude\FilamentTwoFactorAuthentication\Middleware\EnforceTwoFactorSetup;
+use JetBrains\PhpStorm\Deprecated;
+use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ForceTwoFactorSetup;
+use Stephenjude\FilamentTwoFactorAuthentication\Middleware\TwoFactorChallenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
@@ -19,22 +19,34 @@ class TwoFactorAuthenticationPlugin implements Plugin
 {
     use EvaluatesClosures;
 
+    protected bool $enablePasskeyAuthentication = false;
+
+    protected bool $enableTwoFactorAuthentication = false;
+
+    #[Deprecated('Use the `hasForcedTwoFactorSetup` property instead.')]
     protected bool $hasEnforcedTwoFactorSetup = false;
 
-    protected string $enforceTwoFactorSetupMiddleware = EnforceTwoFactorSetup::class;
+    protected bool $hasForcedTwoFactorSetup = false;
 
-    protected string | bool $twoFactorChallengeMiddleware = ChallengeTwoFactor::class;
+    protected bool $twoFactorSetupRequiresPassword = false;
+
+    protected string $enforceTwoFactorSetupMiddleware = ForceTwoFactorSetup::class;
+
+    protected string | bool $twoFactorChallengeMiddleware = TwoFactorChallenge::class;
 
     protected bool $hasTwoFactorMenuItem = false;
 
-    protected ?string $twoFactorMenuItemLabel = null;
+    protected ?string $twoFactorMenuItemLabel = 'filament-two-factor-authentication::plugin.user_menu_item_label';
 
-    protected ?string $twoFactorMenuItemIcon = null;
+    protected ?string $twoFactorMenuItemIcon = 'heroicon-o-lock-closed';
 
+    #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
     protected bool | Closure $isPasswordRequiredForEnable = true;
 
+    #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
     protected bool | Closure $isPasswordRequiredForDisable = true;
 
+    #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
     protected bool | Closure $isPasswordRequiredForRegenerateRecoveryCodes = true;
 
     public function getId(): string
@@ -44,109 +56,193 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
+        if (! $this->hasEnabledTwoFactorAuthentication() && ! $this->hasEnabledPasskeyAuthentication()) {
+            return;
+        }
+
         $panel
             ->routes(fn () => [
                 Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
                 Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
                 Route::get('/two-factor-setup', Setup::class)->name('two-factor.setup'),
-            ]);
-
-        if ($this->hasTwoFactorMenuItem()) {
-            $panel
-                ->userMenuItems([
-                    MenuItem::make()
-                        ->label($this->twoFactorMenuItemLabel ?? fn () => __('filament-two-factor-authentication::plugin.user_menu_item_label'))
-                        ->url(fn (): string => Filament::getCurrentPanel()->route('two-factor.setup'))
-                        ->icon($this->twoFactorMenuItemIcon ?? 'heroicon-o-lock-closed'),
-                ]);
-        }
-
-        if ($this->twoFactorChallengeMiddleware !== false) {
-            $panel
-                ->authMiddleware([
-                    $this->twoFactorChallengeMiddleware,
-                ]);
-        }
-
-        if ($this->hasEnforcedTwoFactorSetup()) {
-            $panel
-                ->authMiddleware([
-                    $this->enforceTwoFactorSetupMiddleware,
-                ]);
-        }
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->visible($this->hasTwoFactorMenuItem())
+                    ->url(fn (): string => $panel->route('two-factor.setup'))
+                    ->label(fn () => __($this->getTwoFactorMenuItemLabel()))
+                    ->icon(fn () => $this->getTwoFactorMenuItemIcon()),
+            ])
+            ->authMiddleware(
+                array_filter([
+                    $this->getTwoFactorChallengeMiddleware(),
+                    $this->hasForcedTwoFactorSetup() ? $this->getForcedTwoFactorSetupMiddleware() : null,
+                ])
+            );
     }
 
+    #[Deprecated('Use enableTwoFactorAuthentication instead')]
     public function requirePasswordWhenEnabling(bool | Closure $condition = true): static
     {
-        $this->isPasswordRequiredForEnable = $condition;
+        $this->isPasswordRequiredForEnable = $this->evaluate($condition);
 
         return $this;
     }
 
+    #[Deprecated('Use enableTwoFactorAuthentication instead')]
     public function requirePasswordWhenDisabling(bool | Closure $condition = true): static
     {
-        $this->isPasswordRequiredForDisable = $condition;
+        $this->isPasswordRequiredForDisable = $this->evaluate($condition);
 
         return $this;
     }
 
-    public function requirePasswordWhenRegeneratingRecoveryCodes(bool | Closure $condition = true): static
+    #[Deprecated('Use enableTwoFactorAuthentication instead')]
+    public function requirePasswordWhenRegeneratingRecoveryCodes(Closure | bool $condition = true): static
     {
-        $this->isPasswordRequiredForRegenerateRecoveryCodes = $condition;
+        $this->isPasswordRequiredForRegenerateRecoveryCodes = $this->evaluate($condition);
 
         return $this;
     }
 
+    #[Deprecated('Use twoFactorSetupRequiresPassword instead')]
     public function isPasswordRequiredForRegenerateRecoveryCodes(): bool
     {
-        return $this->evaluate($this->isPasswordRequiredForRegenerateRecoveryCodes);
+        return $this->isPasswordRequiredForRegenerateRecoveryCodes;
     }
 
+    #[Deprecated('Use twoFactorSetupRequiresPassword instead')]
     public function isPasswordRequiredForEnable(): bool
     {
-        return $this->evaluate($this->isPasswordRequiredForEnable);
+        return $this->isPasswordRequiredForEnable;
     }
 
+    #[Deprecated('Use twoFactorSetupRequiresPassword instead')]
     public function isPasswordRequiredForDisable(): bool
     {
-        return $this->evaluate($this->isPasswordRequiredForDisable);
+        return $this->isPasswordRequiredForDisable;
     }
 
-    public function setChallengeTwoFactorMiddleware(string | bool $middleware = ChallengeTwoFactor::class): static
+    public function twoFactorSetupRequiresPassword(): bool
     {
-        $this->twoFactorChallengeMiddleware = $middleware;
+        return $this->twoFactorSetupRequiresPassword;
+    }
+
+    #[Deprecated('Use enableTwoFactorAuthentication(challengeMiddleware:ChallengeTwoFactor::class) instead')]
+    public function setChallengeTwoFactorMiddleware(Closure | string | bool $middleware = TwoFactorChallenge::class): static
+    {
+        $this->twoFactorChallengeMiddleware = $this->evaluate($middleware);
 
         return $this;
     }
 
+    #[Deprecated('Use getTwoFactorChallengeMiddleware() instead')]
     public function getChallengeTwoFactorMiddleware(): string
     {
         return $this->twoFactorChallengeMiddleware;
     }
 
-    public function enforceTwoFactorSetup(bool $condition = true, string $middleware = EnforceTwoFactorSetup::class): static
+    public function getTwoFactorChallengeMiddleware(): string
     {
-        $this->hasEnforcedTwoFactorSetup = $condition;
-        $this->enforceTwoFactorSetupMiddleware = $middleware;
+        return $this->twoFactorChallengeMiddleware;
+    }
+
+    #[Deprecated('Use forceTwoFactorSetup() instead')]
+    public function enforceTwoFactorSetup(
+        Closure | bool $condition = true,
+        Closure | string $middleware = ForceTwoFactorSetup::class
+    ): static {
+        $this->hasForcedTwoFactorSetup = $this->evaluate($condition);
+
+        $this->enforceTwoFactorSetupMiddleware = $this->evaluate($middleware);
+
+        $this->hasEnforcedTwoFactorSetup = $this->evaluate($condition);
 
         return $this;
     }
 
+    public function forceTwoFactorSetup(
+        Closure | bool $condition = true,
+        Closure | bool $requiresPassword = true,
+        Closure | string $middleware = ForceTwoFactorSetup::class,
+    ): static {
+        $this->hasForcedTwoFactorSetup = $this->evaluate($condition);
+
+        $this->enforceTwoFactorSetupMiddleware = $this->evaluate($middleware);
+
+        $this->twoFactorSetupRequiresPassword = $this->evaluate($requiresPassword);
+
+        $this->hasEnforcedTwoFactorSetup = $this->evaluate($condition);
+
+        $this->isPasswordRequiredForEnable = $this->evaluate($requiresPassword);
+
+        $this->isPasswordRequiredForDisable = $this->evaluate($requiresPassword);
+
+        $this->isPasswordRequiredForRegenerateRecoveryCodes = $this->evaluate($requiresPassword);
+
+        return $this;
+    }
+
+    public function enableTwoFactorAuthentication(
+        Closure | bool $condition = true,
+        Closure | string $challengeMiddleware = TwoFactorChallenge::class,
+    ): static {
+        $this->enableTwoFactorAuthentication = $this->evaluate($condition);
+
+        $this->twoFactorChallengeMiddleware = $this->evaluate($challengeMiddleware);
+
+        return $this;
+    }
+
+    public function hasEnabledTwoFactorAuthentication(): bool
+    {
+        return $this->enableTwoFactorAuthentication;
+    }
+
+    public function hasEnabledPasskeyAuthentication(): bool
+    {
+        return $this->enablePasskeyAuthentication;
+    }
+
+    public function enablePasskeyAuthentication(Closure | bool $condition = true): static
+    {
+        $this->enablePasskeyAuthentication = $this->evaluate($condition);
+
+        return $this;
+    }
+
+    #[Deprecated('Use getForcedTwoFactorSetupMiddleware() instead')]
     public function getEnforceTwoFactorSetupMiddleware(): string
     {
         return $this->enforceTwoFactorSetupMiddleware;
     }
 
-    public function hasEnforcedTwoFactorSetup(): bool
+    public function getForcedTwoFactorSetupMiddleware(): string
     {
-        return $this->hasEnforcedTwoFactorSetup;
+        return $this->enforceTwoFactorSetupMiddleware;
     }
 
-    public function addTwoFactorMenuItem(bool $condition = true, ?string $label = null, ?string $icon = null): static
+    #[Deprecated('Use hasForcedTwoFactorSetup() instead')]
+    public function hasEnforcedTwoFactorSetup(): bool
     {
-        $this->hasTwoFactorMenuItem = $condition;
+        return $this->hasForcedTwoFactorSetup;
+    }
 
-        $this->twoFactorMenuItemLabel = $label;
+    public function hasForcedTwoFactorSetup(): bool
+    {
+        return $this->hasForcedTwoFactorSetup;
+    }
+
+    public function addTwoFactorMenuItem(
+        Closure | bool $condition = true,
+        Closure | string | null $label = null,
+        Closure | string | null $icon = null,
+    ): static {
+        $this->hasTwoFactorMenuItem = $this->evaluate($condition);
+
+        $this->twoFactorMenuItemLabel = $this->evaluate($label) ?? $this->twoFactorMenuItemLabel;
+
+        $this->twoFactorMenuItemIcon = $this->evaluate($icon) ?? $this->twoFactorMenuItemIcon;
 
         return $this;
     }
@@ -154,6 +250,16 @@ class TwoFactorAuthenticationPlugin implements Plugin
     public function hasTwoFactorMenuItem(): bool
     {
         return $this->hasTwoFactorMenuItem;
+    }
+
+    public function getTwoFactorMenuItemLabel(): ?string
+    {
+        return $this->twoFactorMenuItemLabel;
+    }
+
+    public function getTwoFactorMenuItemIcon(): ?string
+    {
+        return $this->twoFactorMenuItemIcon;
     }
 
     public function boot(Panel $panel): void {}

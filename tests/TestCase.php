@@ -12,11 +12,15 @@ use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
+use Spatie\LaravelPasskeys\LaravelPasskeysServiceProvider;
+use Stephenjude\FilamentTwoFactorAuthentication\Tests\Common\AdminPanelProvider;
+use Stephenjude\FilamentTwoFactorAuthentication\Tests\Common\User;
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationServiceProvider;
+
+use function Pest\Laravel\actingAs;
 
 class TestCase extends Orchestra
 {
@@ -24,9 +28,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Stephenjude\\FilamentTwoFactorAuthentication\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
-        );
+        actingAs(User::createDefault());
     }
 
     protected function getPackageProviders($app)
@@ -45,16 +47,29 @@ class TestCase extends Orchestra
             TablesServiceProvider::class,
             WidgetsServiceProvider::class,
             TwoFactorAuthenticationServiceProvider::class,
+            LaravelPasskeysServiceProvider::class,
+            AdminPanelProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app)
     {
+        config()->set('app.key', 'base64:Hupx3yAySikrM2/edkZQNQHslgDWYfiBfCuSThJ5SK8=');
+
         config()->set('database.default', 'testing');
+
+        config()->set('auth.providers.users.model', User::class);
+
+        config()->set('passkeys.models.authenticatable', User::class);
+
+        User::createTable();
 
         $migration = include __DIR__ . '/../database/migrations/add_two_factor_authentication_columns.php.stub';
 
         $migration->up();
 
+        $migration = include __DIR__ . '/../vendor/spatie/laravel-passkeys/database/migrations/create_passkeys_table.php.stub';
+
+        $migration->up();
     }
 }
