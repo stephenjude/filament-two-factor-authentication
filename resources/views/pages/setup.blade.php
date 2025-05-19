@@ -21,8 +21,7 @@
     <div class="text-center">
         @if(
             !$plugin->hasForcedTwoFactorSetup() ||
-             $user->hasEnabledTwoFactorAuthentication() ||
-             $user->hasEnabledPasskeyAuthentication()
+             $user->hasEnabledTwoFactorAuthentication()
         )
             <x-filament::link :href="filament()->getCurrentPanel()->getUrl(filament()->getTenant())"
                               weight="semibold">

@@ -15,7 +15,7 @@ class ForceTwoFactorSetup
             return $next($request);
         }
 
-        if (! $user?->hasEnabledTwoFactorAuthentication() && ! $user?->hasEnabledPasskeyAuthentication()) {
+        if (! $user?->hasEnabledTwoFactorAuthentication()) {
             return redirect()->to($this->redirectTo());
         }
 

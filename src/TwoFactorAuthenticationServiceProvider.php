@@ -35,7 +35,6 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package->name(static::$name)
-            ->hasRoute('web')
             ->hasTranslations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
