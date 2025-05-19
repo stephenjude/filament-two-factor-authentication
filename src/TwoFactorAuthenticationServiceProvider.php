@@ -38,6 +38,9 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
             ->hasTranslations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
+                    ->startWith(function (InstallCommand $command) {
+                        $command->callSilently('vendor:publish', ['--tag' => 'passkeys-migrations']);
+                    })
                     ->publishAssets()
                     ->publishMigrations()
                     ->publish('passkeys-migrations')

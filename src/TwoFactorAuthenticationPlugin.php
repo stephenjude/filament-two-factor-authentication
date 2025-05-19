@@ -9,6 +9,8 @@ use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Illuminate\Support\Facades\Route;
 use JetBrains\PhpStorm\Deprecated;
+use Spatie\LaravelPasskeys\Http\Controllers\AuthenticateUsingPasskeyController;
+use Spatie\LaravelPasskeys\Http\Controllers\GeneratePasskeyAuthenticationOptionsController;
 use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ForceTwoFactorSetup;
 use Stephenjude\FilamentTwoFactorAuthentication\Middleware\TwoFactorChallenge;
 use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
@@ -65,6 +67,12 @@ class TwoFactorAuthenticationPlugin implements Plugin
                 Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
                 Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
                 Route::get('/two-factor-setup', Setup::class)->name('two-factor.setup'),
+                Route::prefix('passkeys')->group(function () {
+                    Route::get('authentication-options', GeneratePasskeyAuthenticationOptionsController::class)
+                        ->name('passkeys.authentication_options');
+                    Route::post('authenticate', AuthenticateUsingPasskeyController::class)
+                        ->name('passkeys.login');
+                }),
             ])
             ->userMenuItems([
                 MenuItem::make()

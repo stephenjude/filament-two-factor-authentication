@@ -41,7 +41,8 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
                     ->form([
                         TextInput::make('name')
                             ->label(__('filament-two-factor-authentication::components.passkey.name'))
-                            ->required(),
+                            ->required()
+                            ->autocomplete(false),
                     ])
                     ->action(function ($data) {
                         $this->name = $data['name'];
@@ -77,7 +78,9 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
                                 ->rules([
                                     fn () => function (string $attribute, $value, $fail) {
                                         if (! \Hash::check($value, $this->getUser()->password)) {
-                                            $fail(__('filament-two-factor-authentication::components.2fa.wrong_password'));
+                                            $fail(
+                                                __('filament-two-factor-authentication::components.2fa.wrong_password')
+                                            );
                                         }
                                     },
                                 ]),
