@@ -35,12 +35,13 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package->name(static::$name)
+            ->hasRoute('web')
             ->hasTranslations()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->startWith(
-                        fn (InstallCommand $command) => $command->callSilently('vendor:publish', ['--tag' => 'passkeys-migrations'])
-                    )
+                    ->startWith(function (InstallCommand $command) {
+                        $command->callSilently('vendor:publish', ['--tag' => 'passkeys-migrations']);
+                    })
                     ->publishAssets()
                     ->publishMigrations()
                     ->publish('passkeys-migrations')

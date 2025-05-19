@@ -32,7 +32,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     protected string $enforceTwoFactorSetupMiddleware = ForceTwoFactorSetup::class;
 
-    protected string | bool $twoFactorChallengeMiddleware = TwoFactorChallenge::class;
+    protected string|bool $twoFactorChallengeMiddleware = TwoFactorChallenge::class;
 
     protected bool $hasTwoFactorMenuItem = false;
 
@@ -41,13 +41,13 @@ class TwoFactorAuthenticationPlugin implements Plugin
     protected ?string $twoFactorMenuItemIcon = 'heroicon-o-lock-closed';
 
     #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
-    protected bool | Closure $isPasswordRequiredForEnable = true;
+    protected bool|Closure $isPasswordRequiredForEnable = true;
 
     #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
-    protected bool | Closure $isPasswordRequiredForDisable = true;
+    protected bool|Closure $isPasswordRequiredForDisable = true;
 
     #[Deprecated('Use the `twoFactorSetupRequiresPassword` property instead.')]
-    protected bool | Closure $isPasswordRequiredForRegenerateRecoveryCodes = true;
+    protected bool|Closure $isPasswordRequiredForRegenerateRecoveryCodes = true;
 
     public function getId(): string
     {
@@ -56,22 +56,27 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        if (! $this->hasEnabledTwoFactorAuthentication() && ! $this->hasEnabledPasskeyAuthentication()) {
+        if (!$this->hasEnabledTwoFactorAuthentication() && !$this->hasEnabledPasskeyAuthentication()) {
             return;
         }
 
-        $panel
-            ->routes(fn () => [
+        if ($this->hasEnabledTwoFactorAuthentication()) {
+            $panel->routes(fn() => [
                 Route::get('/two-factor-challenge', Challenge::class)->name('two-factor.challenge'),
                 Route::get('/two-factor-recovery', Recovery::class)->name('two-factor.recovery'),
+            ]);
+        }
+
+        $panel
+            ->routes(fn() => [
                 Route::get('/two-factor-setup', Setup::class)->name('two-factor.setup'),
             ])
             ->userMenuItems([
                 MenuItem::make()
                     ->visible($this->hasTwoFactorMenuItem())
-                    ->url(fn (): string => $panel->route('two-factor.setup'))
-                    ->label(fn () => __($this->getTwoFactorMenuItemLabel()))
-                    ->icon(fn () => $this->getTwoFactorMenuItemIcon()),
+                    ->url(fn(): string => $panel->route('two-factor.setup'))
+                    ->label(fn() => __($this->getTwoFactorMenuItemLabel()))
+                    ->icon(fn() => $this->getTwoFactorMenuItemIcon()),
             ])
             ->authMiddleware(
                 array_filter([
@@ -82,7 +87,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
-    public function requirePasswordWhenEnabling(bool | Closure $condition = true): static
+    public function requirePasswordWhenEnabling(bool|Closure $condition = true): static
     {
         $this->isPasswordRequiredForEnable = $this->evaluate($condition);
 
@@ -90,7 +95,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
-    public function requirePasswordWhenDisabling(bool | Closure $condition = true): static
+    public function requirePasswordWhenDisabling(bool|Closure $condition = true): static
     {
         $this->isPasswordRequiredForDisable = $this->evaluate($condition);
 
@@ -98,7 +103,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
-    public function requirePasswordWhenRegeneratingRecoveryCodes(Closure | bool $condition = true): static
+    public function requirePasswordWhenRegeneratingRecoveryCodes(Closure|bool $condition = true): static
     {
         $this->isPasswordRequiredForRegenerateRecoveryCodes = $this->evaluate($condition);
 
@@ -129,7 +134,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     #[Deprecated('Use enableTwoFactorAuthentication(challengeMiddleware:ChallengeTwoFactor::class) instead')]
-    public function setChallengeTwoFactorMiddleware(Closure | string | bool $middleware = TwoFactorChallenge::class): static
+    public function setChallengeTwoFactorMiddleware(Closure|string|bool $middleware = TwoFactorChallenge::class): static
     {
         $this->twoFactorChallengeMiddleware = $this->evaluate($middleware);
 
@@ -149,8 +154,8 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     #[Deprecated('Use forceTwoFactorSetup() instead')]
     public function enforceTwoFactorSetup(
-        Closure | bool $condition = true,
-        Closure | string $middleware = ForceTwoFactorSetup::class
+        Closure|bool $condition = true,
+        Closure|string $middleware = ForceTwoFactorSetup::class
     ): static {
         $this->hasForcedTwoFactorSetup = $this->evaluate($condition);
 
@@ -162,9 +167,9 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     public function forceTwoFactorSetup(
-        Closure | bool $condition = true,
-        Closure | bool $requiresPassword = true,
-        Closure | string $middleware = ForceTwoFactorSetup::class,
+        Closure|bool $condition = true,
+        Closure|bool $requiresPassword = true,
+        Closure|string $middleware = ForceTwoFactorSetup::class,
     ): static {
         $this->hasForcedTwoFactorSetup = $this->evaluate($condition);
 
@@ -184,8 +189,8 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     public function enableTwoFactorAuthentication(
-        Closure | bool $condition = true,
-        Closure | string $challengeMiddleware = TwoFactorChallenge::class,
+        Closure|bool $condition = true,
+        Closure|string $challengeMiddleware = TwoFactorChallenge::class,
     ): static {
         $this->enableTwoFactorAuthentication = $this->evaluate($condition);
 
@@ -204,7 +209,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->enablePasskeyAuthentication;
     }
 
-    public function enablePasskeyAuthentication(Closure | bool $condition = true): static
+    public function enablePasskeyAuthentication(Closure|bool $condition = true): static
     {
         $this->enablePasskeyAuthentication = $this->evaluate($condition);
 
@@ -234,9 +239,9 @@ class TwoFactorAuthenticationPlugin implements Plugin
     }
 
     public function addTwoFactorMenuItem(
-        Closure | bool $condition = true,
-        Closure | string | null $label = null,
-        Closure | string | null $icon = null,
+        Closure|bool $condition = true,
+        Closure|string|null $label = null,
+        Closure|string|null $icon = null,
     ): static {
         $this->hasTwoFactorMenuItem = $this->evaluate($condition);
 
@@ -262,7 +267,9 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->twoFactorMenuItemIcon;
     }
 
-    public function boot(Panel $panel): void {}
+    public function boot(Panel $panel): void
+    {
+    }
 
     public static function make(): static
     {
