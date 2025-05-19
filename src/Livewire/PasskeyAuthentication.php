@@ -33,7 +33,7 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
     public function table(Table $table): Table
     {
         return $table
-            ->query(fn() => $this->getUser()->passkeys()->latest())
+            ->query(fn () => $this->getUser()->passkeys()->latest())
             ->headerActions([
                 Action::make('addPasskey')
                     ->label(__('filament-two-factor-authentication::components.passkey.add'))
@@ -56,7 +56,7 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
                 Stack::make([
                     TextColumn::make('name')
                         ->label(__('Name'))
-                        ->description(fn($record) => $record->last_used_at
+                        ->description(fn ($record) => $record->last_used_at
                             ? $record->last_used_at->diffForHumans()
                             : __('Never used')),
                 ]),
@@ -64,7 +64,7 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
             ->actions([
                 DeleteAction::make()
                     ->form(function () {
-                        if (!TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
+                        if (! TwoFactorAuthenticationPlugin::get()->twoFactorSetupRequiresPassword()) {
                             return null;
                         }
 
@@ -76,8 +76,8 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
                                 ->required()
                                 ->autocomplete('current-password')
                                 ->rules([
-                                    fn() => function (string $attribute, $value, $fail) {
-                                        if (!\Hash::check($value, $this->getUser()->password)) {
+                                    fn () => function (string $attribute, $value, $fail) {
+                                        if (! \Hash::check($value, $this->getUser()->password)) {
                                             $fail(
                                                 __('filament-two-factor-authentication::components.2fa.wrong_password')
                                             );
