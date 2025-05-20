@@ -16,8 +16,8 @@ class TwoFactorChallenge
         }
 
         if ($user?->hasEnabledTwoFactorAuthentication() &&
-            !$user?->isTwoFactorChallengePassed() &&
-            !$user?->passkeyAuthenticated()) {
+            ! $user?->isTwoFactorChallengePassed() &&
+            ! $user?->passkeyAuthenticated()) {
             return redirect()->to($this->twoFactorChallengeRoute());
         }
 
