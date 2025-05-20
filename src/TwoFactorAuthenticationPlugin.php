@@ -7,8 +7,11 @@ use Filament\Contracts\Plugin;
 use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use JetBrains\PhpStorm\Deprecated;
+use Spatie\LaravelPasskeys\Events\PasskeyUsedToAuthenticateEvent;
 use Spatie\LaravelPasskeys\Http\Controllers\AuthenticateUsingPasskeyController;
 use Spatie\LaravelPasskeys\Http\Controllers\GeneratePasskeyAuthenticationOptionsController;
 use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ForceTwoFactorSetup;
@@ -270,7 +273,16 @@ class TwoFactorAuthenticationPlugin implements Plugin
         return $this->twoFactorMenuItemIcon;
     }
 
-    public function boot(Panel $panel): void {}
+    public function boot(Panel $panel): void
+    {
+        Event::listen(function (PasskeyUsedToAuthenticateEvent $event) {
+            Cache::remember(
+                "passkey::auth::{$event->passkey->authenticatable->id}",
+                now()->addMinutes(3),
+                fn () => true
+            );
+        });
+    }
 
     public static function make(): static
     {

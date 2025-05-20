@@ -69,6 +69,7 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
                 $app->make(Repository::class)
             );
         });
+
     }
 
     public function packageBooted(): void

@@ -8,6 +8,7 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodeReplaced;
@@ -28,6 +29,11 @@ trait TwoFactorAuthenticatable
     public function hasEnabledPasskeyAuthentication(): bool
     {
         return $this?->passkeys()?->exists();
+    }
+
+    public function passkeyAuthenticated(): bool
+    {
+        return Cache::pull("passkey::auth::$this->id", false);
     }
 
     public function isTwoFactorChallengePassed(): bool
