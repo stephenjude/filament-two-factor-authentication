@@ -2,6 +2,15 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 2.0.0 - 2025-05-20
+
+### What's Changed
+
+* Add Passkey Authentication & Test Coverage by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/53
+* Passkey: Automatically Register Routes & Publish Migrations by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/54
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/1.0.0...2.0.0
+
 ## 0.0.27 - 2025-05-07
 
 ### What's Changed
