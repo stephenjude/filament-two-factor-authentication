@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 2.0.1 - 2025-05-20
+
+### What's Changed
+
+* Allow passkey login without 2fa challenge by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/55
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/2.0.0...2.0.1
+
 ## 2.0.0 - 2025-05-20
 
 ### What's Changed
