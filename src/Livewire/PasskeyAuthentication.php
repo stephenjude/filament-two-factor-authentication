@@ -40,6 +40,7 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
                     ->modalWidth(MaxWidth::Medium)
                     ->form([
                         TextInput::make('name')
+                            ->icon('heroicon-o-finger-print')
                             ->label(__('filament-two-factor-authentication::components.passkey.name'))
                             ->required()
                             ->autocomplete(false),
