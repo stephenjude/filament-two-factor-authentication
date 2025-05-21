@@ -33,7 +33,13 @@ trait TwoFactorAuthenticatable
 
     public function passkeyAuthenticated(): bool
     {
-        return Cache::pull("passkey::auth::$this->id", false);
+        $passkeyAuthenticated = Cache::pull("passkey::auth::$this->id", false);
+
+        if ($passkeyAuthenticated && $this->hasEnabledTwoFactorAuthentication()) {
+            $this->setTwoFactorChallengePassed();
+        }
+
+        return $passkeyAuthenticated;
     }
 
     public function isTwoFactorChallengePassed(): bool
