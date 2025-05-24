@@ -69,22 +69,10 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
                 $app->make(Repository::class)
             );
         });
-
     }
 
     public function packageBooted(): void
     {
-        $this->configurePasskey();
-
-        FilamentAsset::register([
-            Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
-        ]);
-
-        FilamentView::registerRenderHook(
-            PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
-            fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
-        );
-
         // Register Livewire Components
         Livewire::component('filament-two-factor-authentication::pages.challenge', Challenge::class);
         Livewire::component('filament-two-factor-authentication::pages.recovery', Recovery::class);
@@ -97,6 +85,19 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
             'filament-two-factor-authentication::livewire.passkey-authentication',
             PasskeyAuthentication::class
         );
+
+        if (filament()->hasPlugin('filament-two-factor-authentication') && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
+            $this->configurePasskey();
+
+            FilamentAsset::register([
+                Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
+            ]);
+
+            FilamentView::registerRenderHook(
+                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+                fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
+            );
+        }
     }
 
     protected function configurePasskey(): void
