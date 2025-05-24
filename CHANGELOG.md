@@ -2,6 +2,15 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 2.0.3 - 2025-05-24
+
+### What's Changed
+
+* Bump esbuild from 0.19.12 to 0.25.0 by @dependabot in https://github.com/stephenjude/filament-two-factor-authentication/pull/58
+* Register passkey configuration when plugin is registered and passkey enabled. by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/59
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/2.0.2...2.0.3
+
 ## 2.0.2 - 2025-05-21
 
 ### What's Changed
