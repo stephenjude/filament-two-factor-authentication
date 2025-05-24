@@ -40,6 +40,7 @@ class User extends Authenticatable implements FilamentUser, HasPasskeys
     //...
 
 ```
+> ⚠️ Passkey implementation is using the [spatie/laravel-passkeys](https://github.com/spatie/laravel-passkeys) package under the hood.
 
 Install the plugin migration using:
 ```bash
@@ -72,12 +73,9 @@ public function panel(Panel $panel): Panel
 ...
 ```
 
-> The passkey authentication feature is implemented using the [spatie/laravel-passkeys](https://github.com/spatie/laravel-passkeys) package under the hood.
-
 ### Advanced Configurations
 
 ```php
-...
 use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ForceTwoFactorSetup;
 use Stephenjude\FilamentTwoFactorAuthentication\Middleware\TwoFactorChallenge;
@@ -101,7 +99,6 @@ TwoFactorAuthenticationPlugin::make()
             icon:  'heroicon-s-key', // Menu item icon
         )
 ])
-...
 ```
 
 ### Custom Settings Page
