@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 2.0.4 - 2025-05-28
+
+### What's Changed
+
+* Add check for current panel in ServiceProvider. by @alecritson in https://github.com/stephenjude/filament-two-factor-authentication/pull/61
+
+### New Contributors
+
+* @alecritson made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/61
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/2.0.3...2.0.4
+
 ## 2.0.3 - 2025-05-24
 
 ### What's Changed
