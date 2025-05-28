@@ -86,7 +86,7 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
             PasskeyAuthentication::class
         );
 
-        if (filament()->hasPlugin('filament-two-factor-authentication') && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
+        if (filament()->getCurrentPanel() && filament()->hasPlugin('filament-two-factor-authentication') && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
             $this->configurePasskey();
 
             FilamentAsset::register([
