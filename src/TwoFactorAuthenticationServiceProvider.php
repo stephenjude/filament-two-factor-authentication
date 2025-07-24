@@ -86,6 +86,7 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
             PasskeyAuthentication::class
         );
 
+        // Register Passkey Assets
         if (filament()->getCurrentPanel() && filament()->hasPlugin('filament-two-factor-authentication') && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
             $this->configurePasskey();
 
@@ -93,7 +94,7 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
                 Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
             ]);
 
-            FilamentView::registerRenderHook(
+            filament()->getCurrentPanel()->renderHook(
                 PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
                 fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
             );
