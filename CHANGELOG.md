@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 2.0.6 - 2025-07-24
+
+### What's Changed
+
+* Register passkey auth view for only the current panel by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/63
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/2.0.5...2.0.6
+
 ## 2.0.5 - 2025-06-17
 
 ### What's Changed
