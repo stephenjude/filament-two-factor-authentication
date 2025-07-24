@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 2.0.7 - 2025-07-24
+
+### What's Changed
+
+* Fixed: blade facade class import by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/64
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/2.0.6...2.0.7
+
 ## 2.0.6 - 2025-07-24
 
 ### What's Changed
