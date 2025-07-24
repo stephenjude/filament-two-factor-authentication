@@ -4,10 +4,7 @@ namespace Stephenjude\FilamentTwoFactorAuthentication;
 
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentView;
-use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
