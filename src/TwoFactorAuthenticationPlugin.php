@@ -231,7 +231,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     {
         $panel->renderHook(
             PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
-            fn(): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
+            fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
         );
     }
 
