@@ -7,6 +7,7 @@ use Filament\Contracts\Plugin;
 use Filament\Navigation\MenuItem;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,10 @@ class TwoFactorAuthenticationPlugin implements Plugin
     {
         if (! $this->hasEnabledTwoFactorAuthentication() && ! $this->hasEnabledPasskeyAuthentication()) {
             return;
+        }
+
+        if ($this->hasEnabledPasskeyAuthentication()) {
+            $this->registerPasskeyAuthenticationHook($panel);
         }
 
         $panel
@@ -220,6 +225,14 @@ class TwoFactorAuthenticationPlugin implements Plugin
         $this->enablePasskeyAuthentication = $this->evaluate($condition);
 
         return $this;
+    }
+
+    public function registerPasskeyAuthenticationHook(Panel $panel): void
+    {
+        $panel->renderHook(
+            PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
+            fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
+        );
     }
 
     #[Deprecated('Use getForcedTwoFactorSetupMiddleware() instead')]

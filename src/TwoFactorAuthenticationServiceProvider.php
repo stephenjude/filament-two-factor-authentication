@@ -4,10 +4,7 @@ namespace Stephenjude\FilamentTwoFactorAuthentication;
 
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentView;
-use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
@@ -86,17 +83,13 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
             PasskeyAuthentication::class
         );
 
+        // Register Passkey Assets
         if (filament()->getCurrentPanel() && filament()->hasPlugin('filament-two-factor-authentication') && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
             $this->configurePasskey();
 
             FilamentAsset::register([
                 Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
             ]);
-
-            FilamentView::registerRenderHook(
-                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
-                fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
-            );
         }
     }
 
