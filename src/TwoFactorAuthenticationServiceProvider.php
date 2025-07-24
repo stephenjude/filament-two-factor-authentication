@@ -93,11 +93,6 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
             FilamentAsset::register([
                 Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
             ]);
-
-            filament()->getCurrentPanel()->renderHook(
-                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
-                fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
-            );
         }
     }
 
