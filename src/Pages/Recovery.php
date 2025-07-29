@@ -13,7 +13,7 @@ use Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCod
 
 class Recovery extends BaseSimplePage
 {
-    protected static string $view = 'filament-two-factor-authentication::pages.recovery';
+    protected string $view = 'filament-two-factor-authentication::pages.recovery';
 
     public ?array $data = [];
 
