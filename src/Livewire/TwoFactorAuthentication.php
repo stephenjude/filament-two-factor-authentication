@@ -149,7 +149,8 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
                     ->label(__('filament-two-factor-authentication::components.2fa.code'))
                     ->required(),
             ])
-            ->statePath('data');
+            ->statePath('data')
+            ->model($this->getUser());
     }
 
     protected function disableTwoFactorAuthenticationAction(): Action
