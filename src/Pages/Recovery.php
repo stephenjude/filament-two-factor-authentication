@@ -6,7 +6,7 @@ use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Http\Responses\Auth\LoginResponse;
 use Illuminate\Contracts\Support\Htmlable;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCodeProvided;
@@ -98,9 +98,9 @@ class Recovery extends BaseSimplePage
         ];
     }
 
-    public function form(Form $form): Form
+    public function form(Schems $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     public function getFormActions(): array
