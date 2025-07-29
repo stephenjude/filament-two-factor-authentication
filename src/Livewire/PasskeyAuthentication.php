@@ -6,9 +6,9 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Support\Enums\MaxWidth;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\DeleteAction;
+use Filament\Support\Enums\Width;
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -37,7 +37,7 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
             ->headerActions([
                 Action::make('addPasskey')
                     ->label(__('filament-two-factor-authentication::components.passkey.add'))
-                    ->modalWidth(MaxWidth::Medium)
+                    ->modalWidth(Width::Medium)
                     ->form([
                         TextInput::make('name')
                             ->label(__('filament-two-factor-authentication::components.passkey.name'))
