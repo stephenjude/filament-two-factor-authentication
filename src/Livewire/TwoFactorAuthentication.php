@@ -8,7 +8,7 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Stephenjude\FilamentTwoFactorAuthentication\Actions\ConfirmTwoFactorAuthentication;
@@ -136,10 +136,10 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
             });
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Placeholder::make('setup_key')
                     ->label(fn () => __(
                         'filament-two-factor-authentication::components.2fa.setup_key',
