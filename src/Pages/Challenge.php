@@ -16,7 +16,7 @@ use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationProvider;
 
 class Challenge extends BaseSimplePage
 {
-    protected static string $view = 'filament-two-factor-authentication::pages.challenge';
+    protected string $view = 'filament-two-factor-authentication::pages.challenge';
 
     public ?array $data = [];
 
