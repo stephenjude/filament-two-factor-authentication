@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class Setup extends BaseSimplePage
 {
-    protected static string $view = 'filament-two-factor-authentication::pages.setup';
+    protected string $view = 'filament-two-factor-authentication::pages.setup';
 
     public ?array $data = [];
 

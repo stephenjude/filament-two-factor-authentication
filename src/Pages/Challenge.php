@@ -6,7 +6,7 @@ use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Http\Responses\Auth\LoginResponse;
 use Illuminate\Contracts\Support\Htmlable;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationChallenged;
@@ -16,7 +16,7 @@ use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationProvider;
 
 class Challenge extends BaseSimplePage
 {
-    protected static string $view = 'filament-two-factor-authentication::pages.challenge';
+    protected string $view = 'filament-two-factor-authentication::pages.challenge';
 
     public ?array $data = [];
 
@@ -120,9 +120,9 @@ class Challenge extends BaseSimplePage
         ];
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form;
+        return $schema;
     }
 
     public function getFormActions(): array
