@@ -2,13 +2,13 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication\Livewire;
 
+use Filament\Actions\Action;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\Width;
-use Filament\Actions\Action;
-use Filament\Actions\DeleteAction;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
