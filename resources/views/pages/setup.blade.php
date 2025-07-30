@@ -1,11 +1,13 @@
 @php
-    use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
+    use Filament\Models\Contracts\FilamentUser;
+    use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
+    use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
     $plugin = TwoFactorAuthenticationPlugin::get();
 
-    /** @var \Filament\Models\Contracts\FilamentUser $user */
+    /** @var FilamentUser $user */
     $user = filament()->auth()->user();
-     $panel = filament()->getCurrentPanel();
+    $panel = filament()->getCurrentPanel();
 @endphp
 <x-filament-panels::page.simple>
 
