@@ -7,10 +7,12 @@ use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
+use Filament\Schemas\Contracts\HasSchemas;
 
-abstract class BaseSimplePage extends SimplePage
+abstract class BaseSimplePage extends SimplePage implements HasSchemas
 {
     use InteractsWithFormActions;
+    use InteractsWithSchemas;
     use WithRateLimiting;
 
     protected function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
