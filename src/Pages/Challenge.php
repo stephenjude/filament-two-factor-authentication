@@ -7,7 +7,6 @@ use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
-use Filament\Http\Responses\Auth\LoginResponse;
 use Illuminate\Contracts\Support\Htmlable;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationChallenged;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationFailed;
@@ -52,7 +51,7 @@ class Challenge extends BaseSimplePage
             );
     }
 
-    public function authenticate(): ?LoginResponse
+    public function authenticate()
     {
         try {
             $this->rateLimit(5);
@@ -65,7 +64,7 @@ class Challenge extends BaseSimplePage
 
             event(new ValidTwoFactorAuthenticationCodeProvided($user));
 
-            return app(LoginResponse::class);
+            return redirect()->intended(filament()->getCurrentPanel()->getUrl());
         } catch (TooManyRequestsException $exception) {
             $this->getRateLimitedNotification($exception)?->send();
 
