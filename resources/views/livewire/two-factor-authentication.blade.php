@@ -8,7 +8,7 @@
             {{__('filament-two-factor-authentication::section.description')}}
         </x-slot>
 
-        <div class="">
+        <div class="fi-sc-form space-y-6">
             @if($this->isConfirmingSetup)
                 <x-filament-two-factor-authentication::setup-confirmation />
             @elseif($this->enableTwoFactorAuthentication->isVisible())

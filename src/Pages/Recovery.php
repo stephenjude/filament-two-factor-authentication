@@ -6,7 +6,6 @@ use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Http\Responses\Auth\LoginResponse;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCodeProvided;
@@ -28,7 +27,7 @@ class Recovery extends BaseSimplePage
         $this->form->fill();
     }
 
-    public function authenticate(): ?LoginResponse
+    public function authenticate()
     {
         try {
             $this->rateLimit(5);
@@ -41,7 +40,7 @@ class Recovery extends BaseSimplePage
 
             event(new ValidTwoFactorRecoveryCodeProvided($user));
 
-            return app(LoginResponse::class);
+            return redirect()->intended(filament()->getCurrentPanel()->getUrl());
         } catch (TooManyRequestsException $exception) {
             $this->getRateLimitedNotification($exception)?->send();
 
@@ -61,46 +60,35 @@ class Recovery extends BaseSimplePage
             );
     }
 
-    /**
-     * @return array<int | string, string | Form>
-     */
-    protected function getForms(): array
+    public function form(Schema $schema): Schema
     {
-        return [
-            'form' => $this->form(
-                $this->makeForm()
-                    ->schema([
-                        TextInput::make('recovery_code')
-                            ->hiddenLabel()
-                            ->hint(
-                                __(
-                                    'filament-two-factor-authentication::pages.recovery.form_hint'
-                                )
-                            )
-                            ->required()
-                            ->autocomplete()
-                            ->autofocus()->rules([
-                                fn () => function (string $attribute, $value, $fail) {
-                                    $user = Filament::auth()->user();
+        return $schema
+            ->schema([
+                TextInput::make('recovery_code')
+                    ->hiddenLabel()
+                    ->hint(
+                        __(
+                            'filament-two-factor-authentication::pages.recovery.form_hint'
+                        )
+                    )
+                    ->required()
+                    ->autocomplete()
+                    ->autofocus()
+                    ->rules([
+                        fn () => function (string $attribute, $value, $fail) {
+                            $user = Filament::auth()->user();
 
-                                    $validCode = collect($user->recoveryCodes())->first(
-                                        fn ($code) => hash_equals($code, $value) ? $code : null
-                                    );
+                            $validCode = collect($user->recoveryCodes())->first(
+                                fn ($code) => hash_equals($code, $value) ? $code : null
+                            );
 
-                                    if (! $validCode) {
-                                        $fail(__('filament-two-factor-authentication::pages.recovery.error'));
-                                    }
-                                },
-                            ]),
-                    ])
-                    ->statePath('data'),
-            ),
-        ];
-    }
-
-    public function form(Schems $schema): Schema
-    {
-        return $schema;
+                            if (! $validCode) {
+                                $fail(__('filament-two-factor-authentication::pages.recovery.error'));
+                            }
+                        },
+                    ]),
+            ])
+            ->statePath('data');
     }
 
     public function getFormActions(): array
