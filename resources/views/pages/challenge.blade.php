@@ -4,14 +4,14 @@
         {{ $this->recoveryAction }}
     </x-slot>
 
-    <x-filament-panels::form id="form" wire:submit="authenticate">
+    <form id="form" wire:submit="authenticate" class="fi-sc-form space-y-6">
         {{ $this->form }}
 
         <x-filament::actions
             :actions="$this->getCachedFormActions()"
             :full-width="$this->hasFullWidthFormActions()"
         />
-    </x-filament-panels::form>
+    </form>
 
     <x-filament-two-factor-authentication::logout />
 
