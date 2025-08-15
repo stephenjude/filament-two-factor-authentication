@@ -84,22 +84,24 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
         );
 
         // Register Passkey Assets
-        if (filament()->getCurrentPanel() && filament()->hasPlugin('filament-two-factor-authentication') && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
+        if (filament()->getCurrentPanel() && filament()->hasPlugin(
+                'filament-two-factor-authentication'
+            ) && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
             $this->configurePasskey();
 
             FilamentAsset::register([
-                Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
-            ]);
+                Js::make('passkey-js', __DIR__.'/../resources/dist/filament-two-factor-authentication.js'),
+            ], package: 'stephenjude/filament-two-factor-authentication');
         }
     }
 
     protected function configurePasskey(): void
     {
-        $provider = config('auth.guards.' . filament()?->getCurrentPanel()?->getAuthGuard() . '.provider');
+        $provider = config('auth.guards.'.filament()?->getCurrentPanel()?->getAuthGuard().'.provider');
 
         Config::set(
             key: 'passkeys.models.authenticatable',
-            value: Config::get('auth.providers.' . $provider . '.model', 'App\\Models\\User')
+            value: Config::get('auth.providers.'.$provider.'.model', 'App\\Models\\User')
         );
 
         $path = filament()?->getCurrentPanel()?->getPath();
