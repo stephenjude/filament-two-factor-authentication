@@ -3,6 +3,7 @@
 namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
 
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodesGenerated;
 
@@ -11,7 +12,7 @@ class GenerateNewRecoveryCodes
     /**
      * Generate new recovery codes for the user.
      */
-    public function __invoke(FilamentUser $user): void
+    public function __invoke(User $user): void
     {
         $user->forceFill([
             'two_factor_recovery_codes' => encrypt(

@@ -2,6 +2,7 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
 
+use Illuminate\Foundation\Auth\User;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationDisabled;
 
 class DisableTwoFactorAuthentication
@@ -9,7 +10,7 @@ class DisableTwoFactorAuthentication
     /**
      * Disable two factor authentication for the user.
      */
-    public function __invoke($user): void
+    public function __invoke(User $user): void
     {
         if (! is_null($user->two_factor_secret) ||
             ! is_null($user->two_factor_recovery_codes) ||

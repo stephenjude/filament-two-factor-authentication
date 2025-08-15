@@ -3,6 +3,7 @@
 namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
 
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
 use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationEnabled;
@@ -25,7 +26,7 @@ class EnableTwoFactorAuthentication
     /**
      * Enable two factor authentication for the user.
      */
-    public function __invoke(FilamentUser $user, bool $force = false): void
+    public function __invoke(User $user, bool $force = false): void
     {
         if (empty($user->two_factor_secret) || $force === true) {
             $user->forceFill([

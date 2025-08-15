@@ -30,7 +30,7 @@ return [
         'confirm_password' => 'Confirm Password',
         'wrong_password' => 'The provided password was incorrect.',
         'code' => 'Code',
-        'setup_key' => 'Setup Key :setup_key.',
+        'setup_key' => 'Setup Key: :setup_key.',
         'current_password' => 'Current Password',
         'regenerate_recovery_codes' => 'Generate New Recovery Codes',
     ],

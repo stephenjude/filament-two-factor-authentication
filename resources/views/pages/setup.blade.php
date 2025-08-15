@@ -19,10 +19,7 @@
     @endif
 
     <div class="text-center">
-        @if(
-            !$plugin->hasForcedTwoFactorSetup() ||
-             $user->hasEnabledTwoFactorAuthentication()
-        )
+        @if(!$plugin->hasForcedTwoFactorSetup() || $user->hasEnabledTwoFactorAuthentication())
             <x-filament::link :href="filament()->getCurrentPanel()->getUrl(filament()->getTenant())"
                               weight="semibold">
                 {{__('filament-two-factor-authentication::section.dashboard')}}
