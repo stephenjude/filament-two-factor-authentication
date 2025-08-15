@@ -56,7 +56,7 @@ it('can render challenge page', function () {
 
 it('can render recovery page', function () {
     livewire(Recovery::class)
-        ->assertSuccessful();
+        ->assertOk();
 });
 
 it('can render two factor component', function () {
@@ -67,6 +67,6 @@ it('can render two factor component', function () {
 it('can render passkey component', function () {
     livewire(PasskeyAuthentication::class)
         ->assertSuccessful()
-        ->assertTableActionExists('delete')
+        ->assertActionExists('delete')
         ->assertTableHeaderActionsExistInOrder(['addPasskey']);
 });
