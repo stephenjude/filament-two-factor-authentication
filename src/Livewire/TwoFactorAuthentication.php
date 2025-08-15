@@ -154,7 +154,7 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
     {
         return $schema
             ->live()
-            ->hidden(fn () => !$this->getUser()->hasEnabledTwoFactorAuthentication())
+            ->hidden(fn () => ! $this->getUser()->hasEnabledTwoFactorAuthentication())
             ->components([
                 TextEntry::make('recoveryCode')
                     ->listWithLineBreaks()
