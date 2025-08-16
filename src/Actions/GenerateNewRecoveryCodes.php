@@ -2,7 +2,6 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
 
-use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodesGenerated;
