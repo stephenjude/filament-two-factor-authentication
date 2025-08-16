@@ -13,8 +13,8 @@
         @endif
     </div>
 
-    <div onclick="authenticateWithPasskey()">
-        <x-filament::link href="#" weight="thin" icon="heroicon-o-finger-print">
+    <div style="text-align: center" onclick="authenticateWithPasskey()">
+        <x-filament::link href="#" weight="normal" :class="'text-center'" icon="heroicon-o-finger-print">
             {{__("filament-two-factor-authentication::components.passkey.login")}}
         </x-filament::link>
     </div>

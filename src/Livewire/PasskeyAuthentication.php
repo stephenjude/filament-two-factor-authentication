@@ -7,7 +7,10 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
@@ -25,6 +28,8 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
 
     public bool $aside = true;
 
+    public bool $showSetupForm = false;
+
     public function render(): View
     {
         return view('filament-two-factor-authentication::livewire.passkey-authentication');
@@ -34,24 +39,6 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
     {
         return $table
             ->query(fn() => $this->getUser()->passkeys()->latest())
-            ->headerActions([
-                Action::make('addPasskey')
-                    ->label(__('filament-two-factor-authentication::components.passkey.add'))
-                    ->modalWidth(Width::Medium)
-                    ->schema([
-                        TextInput::make('name')
-                            ->label(__('filament-two-factor-authentication::components.passkey.name'))
-                            ->required()
-                            ->autocomplete(false),
-                    ])
-                    ->action(function ($data) {
-                        $this->name = $data['name'];
-
-                        $this->dispatch('passkeyPropertiesValidated', [
-                            'passkeyOptions' => json_decode($this->generatePasskeyOptions()),
-                        ]);
-                    }),
-            ])
             ->columns([
                 Stack::make([
                     TextColumn::make('name')
@@ -90,6 +77,38 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
                     }),
             ])
             ->paginated(false);
+    }
+
+    public function createPasskeyForm(Schema $schema): Schema
+    {
+        return $schema
+            ->live()
+            ->statePath('data')
+            ->model($this->getUser())
+            ->components([
+                TextEntry::make('header')
+                    ->hiddenLabel()
+                    ->state(__('filament-two-factor-authentication::components.passkey.notice.header')),
+                Actions::make([
+                    Action::make('addPasskey')
+                        ->label(__('filament-two-factor-authentication::components.passkey.add'))
+                        ->modalWidth(Width::Medium)
+                        ->schema([
+                            TextInput::make('name')
+                                ->label(__('filament-two-factor-authentication::components.passkey.name'))
+                                ->required()
+                                ->autocomplete(false),
+                        ])
+                        ->action(function ($data) {
+
+                            $this->name = $data['name'];
+
+                            $this->dispatch('passkeyPropertiesValidated', [
+                                'passkeyOptions' => json_decode($this->generatePasskeyOptions()),
+                            ]);
+                        }),
+                ]),
+            ]);
     }
 
     public function storePasskey(string $passkey): void

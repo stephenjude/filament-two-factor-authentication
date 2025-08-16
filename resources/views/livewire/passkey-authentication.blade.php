@@ -9,7 +9,7 @@
         </x-slot>
 
         <div class="fi-sc-form space-y-6">
-            {{ $this->form }}
+            {{ $this->createPasskeyForm }}
 
             {{ $this->table }}
         </div>
