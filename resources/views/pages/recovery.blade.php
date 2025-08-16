@@ -13,6 +13,4 @@
         />
     </form>
 
-    <x-filament-two-factor-authentication::logout />
-
 </x-filament-panels::page.simple>
