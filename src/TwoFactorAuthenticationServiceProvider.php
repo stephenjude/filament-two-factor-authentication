@@ -91,7 +91,7 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
                     assets: [
                         Js::make(
                             id: 'passkey-js',
-                            path: __DIR__.'/../resources/dist/filament-two-factor-authentication.js'
+                            path: __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'
                         ),
                     ],
                     package: 'stephenjude/filament-two-factor-authentication'
@@ -103,11 +103,11 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
 
     protected function configurePasskey(): void
     {
-        $provider = config('auth.guards.'.filament()?->getCurrentOrDefaultPanel()?->getAuthGuard().'.provider');
+        $provider = config('auth.guards.' . filament()?->getCurrentOrDefaultPanel()?->getAuthGuard() . '.provider');
 
         Config::set(
             key: 'passkeys.models.authenticatable',
-            value: Config::get('auth.providers.'.$provider.'.model', 'App\\Models\\User')
+            value: Config::get('auth.providers.' . $provider . '.model', 'App\\Models\\User')
         );
 
         $path = filament()?->getCurrentOrDefaultPanel()?->getPath();
