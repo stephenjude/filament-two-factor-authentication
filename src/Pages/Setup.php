@@ -38,7 +38,7 @@ class Setup extends BaseSimplePage
                             || filament()->auth()->user()->hasEnabledTwoFactorAuthentication()
                         )
                         ->label(__('filament-two-factor-authentication::section.dashboard'))
-                        ->url(fn() => \filament()->getCurrentPanel()->getUrl())
+                        ->url(fn() => \filament()->getCurrentOrDefaultPanel()->getUrl())
                         ->color('gray')
                         ->icon('heroicon-o-home')
                         ->link(),

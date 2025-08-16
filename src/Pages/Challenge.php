@@ -27,7 +27,7 @@ class Challenge extends BaseSimplePage
     public function mount(): void
     {
         if (! Filament::auth()->check()) {
-            redirect()->to(filament()->getCurrentPanel()?->getLoginUrl());
+            redirect()->to(filament()->getCurrentOrDefaultPanel()?->getLoginUrl());
 
             return;
         }
@@ -45,7 +45,7 @@ class Challenge extends BaseSimplePage
             ->link()
             ->label(__('filament-two-factor-authentication::pages.challenge.action_label'))
             ->url(
-                filament()->getCurrentPanel()->route(
+                filament()->getCurrentOrDefaultPanel()->route(
                     'two-factor.recovery'
                 )
             );
@@ -64,7 +64,7 @@ class Challenge extends BaseSimplePage
 
             event(new ValidTwoFactorAuthenticationCodeProvided($user));
 
-            return redirect()->intended(filament()->getCurrentPanel()->getUrl());
+            return redirect()->intended(filament()->getCurrentOrDefaultPanel()->getUrl());
         } catch (TooManyRequestsException $exception) {
             $this->getRateLimitedNotification($exception)?->send();
 
@@ -91,7 +91,7 @@ class Challenge extends BaseSimplePage
                             if (is_null($user)) {
                                 $fail(__('filament-two-factor-authentication::pages.challenge.error'));
 
-                                redirect()->to(filament()->getCurrentPanel()->getLoginUrl());
+                                redirect()->to(filament()->getCurrentOrDefaultPanel()->getLoginUrl());
 
                                 return;
                             }

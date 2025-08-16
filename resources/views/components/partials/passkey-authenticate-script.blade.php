@@ -1,6 +1,6 @@
 <script>
     async function authenticateWithPasskey() {
-        const response = await fetch('{{ filament()->getCurrentPanel()->route('passkeys.authentication_options') }}')
+        const response = await fetch('{{ filament()->getCurrentOrDefaultPanel()->route('passkeys.authentication_options') }}')
 
         const options = await response.json();
 

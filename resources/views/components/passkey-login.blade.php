@@ -1,7 +1,7 @@
 <div class="flex justify-center w-full" style="text-align: center">
     @include('filament-two-factor-authentication::components.partials.passkey-authenticate-script')
 
-    <form id="passkey-login-form" method="POST" action="{{ filament()->getCurrentPanel()->route('passkeys.login') }}">
+    <form id="passkey-login-form" method="POST" action="{{ filament()->getCurrentOrDefaultPanel()->route('passkeys.login') }}">
         @csrf
     </form>
 
