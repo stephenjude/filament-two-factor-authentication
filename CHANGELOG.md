@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.1 - 2025-08-16
+
+### What's Changed
+
+* Support Arabic language by @yhyasyrian in https://github.com/stephenjude/filament-two-factor-authentication/pull/75
+
+### New Contributors
+
+* @yhyasyrian made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/75
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.0...3.0.1
+
 ## 3.0.0 - 2025-08-16
 
 ### What's Changed
