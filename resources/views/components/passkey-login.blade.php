@@ -1,20 +1,24 @@
-<div class="flex justify-center w-full">
+<div class="flex justify-center w-full" style="text-align: center">
     @include('filament-two-factor-authentication::components.partials.passkey-authenticate-script')
 
     <form id="passkey-login-form" method="POST" action="{{ filament()->getCurrentPanel()->route('passkeys.login') }}">
         @csrf
     </form>
 
-    <div class="flex w-full">
+
+    <div>
         @if($message = session()->get('authenticatePasskey::message'))
-            <div class="bg-red-100 text-red-700 p-4 border border-red-400 rounded">
-                {{ $message }}
-            </div>
+            <x-filament::link tag="a" weight="light"  color="danger">{{ $message }}</x-filament::link>
+            <br><br>
         @endif
     </div>
 
-    <div style="text-align: center" onclick="authenticateWithPasskey()">
-        <x-filament::link href="#" weight="normal" :class="'text-center'" icon="heroicon-o-finger-print">
+    <div onclick="authenticateWithPasskey()">
+        <x-filament::link
+            href="#"
+            weight="normal"
+            :tooltip='__("filament-two-factor-authentication::components.passkey.tootip")'
+            icon="heroicon-o-finger-print">
             {{__("filament-two-factor-authentication::components.passkey.login")}}
         </x-filament::link>
     </div>
