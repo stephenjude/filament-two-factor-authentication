@@ -2,6 +2,25 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.0 - 2025-08-16
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/66
+* Filament 4.x upgrade by @broqit in https://github.com/stephenjude/filament-two-factor-authentication/pull/67
+* ref: Updated UI by @dipesh79 in https://github.com/stephenjude/filament-two-factor-authentication/pull/69
+* Fix pages with schema on Filament 4.x by @broqit in https://github.com/stephenjude/filament-two-factor-authentication/pull/70
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/71
+* Revert "ref: Updated UI" by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/72
+* Filament V4 Support by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/73
+
+### New Contributors
+
+* @broqit made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/67
+* @dipesh79 made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/69
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/2.0.7...3.0.0
+
 ## 2.0.7 - 2025-07-24
 
 ### What's Changed
