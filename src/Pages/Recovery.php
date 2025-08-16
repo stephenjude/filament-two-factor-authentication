@@ -40,7 +40,7 @@ class Recovery extends BaseSimplePage
 
             event(new ValidTwoFactorRecoveryCodeProvided($user));
 
-            return redirect()->intended(filament()->getCurrentPanel()->getUrl());
+            return redirect()->intended(filament()->getCurrentOrDefaultPanel()->getUrl());
         } catch (TooManyRequestsException $exception) {
             $this->getRateLimitedNotification($exception)?->send();
 
@@ -54,7 +54,7 @@ class Recovery extends BaseSimplePage
             ->link()
             ->label(__('filament-two-factor-authentication::pages.recovery.action_label'))
             ->url(
-                filament()->getCurrentPanel()->route(
+                filament()->getCurrentOrDefaultPanel()->route(
                     'two-factor.challenge'
                 )
             );

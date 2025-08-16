@@ -30,7 +30,7 @@ return [
         'confirm_password' => 'Confirm Password',
         'wrong_password' => 'The provided password was incorrect.',
         'code' => 'Code',
-        'setup_key' => 'Setup Key :setup_key.',
+        'setup_key' => 'Setup Key: :setup_key.',
         'current_password' => 'Current Password',
         'regenerate_recovery_codes' => 'Generate New Recovery Codes',
     ],
@@ -39,5 +39,9 @@ return [
         'name' => 'Name',
         'added' => 'Passkey added successfully.',
         'login' => 'Login with Passkey',
+        'tootip' => 'Use Face ID, fingerprint, or PIN',
+        'notice' => [
+            'header' => 'Passkeys are a passwordless login method using your device’s biometric authentication (fingerprint, Face ID, Windows Hello, etc.). Instead of typing a password, you approve login on your trusted device.',
+        ],
     ],
 ];

@@ -24,7 +24,7 @@ class ForceTwoFactorSetup
 
     protected function redirectTo(): ?string
     {
-        return filament()->getCurrentPanel()?->route(
+        return filament()->getCurrentOrDefaultPanel()?->route(
             'two-factor.setup'
         );
     }

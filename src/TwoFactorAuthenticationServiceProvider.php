@@ -75,34 +75,42 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
         Livewire::component('filament-two-factor-authentication::pages.recovery', Recovery::class);
         Livewire::component('filament-two-factor-authentication::pages.setup', Setup::class);
         Livewire::component(
-            'filament-two-factor-authentication::livewire.two-factor-authentication',
-            TwoFactorAuthentication::class
+            name: 'filament-two-factor-authentication::livewire.two-factor-authentication',
+            class: TwoFactorAuthentication::class
         );
         Livewire::component(
-            'filament-two-factor-authentication::livewire.passkey-authentication',
-            PasskeyAuthentication::class
+            name: 'filament-two-factor-authentication::livewire.passkey-authentication',
+            class: PasskeyAuthentication::class
         );
 
-        // Register Passkey Assets
-        if (filament()->getCurrentPanel() && filament()->hasPlugin('filament-two-factor-authentication') && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
-            $this->configurePasskey();
+        try {
+            if (filament()->getPlugin('filament-two-factor-authentication')->hasEnabledPasskeyAuthentication()) {
+                $this->configurePasskey();
 
-            FilamentAsset::register([
-                Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
-            ]);
+                FilamentAsset::register(
+                    assets: [
+                        Js::make(
+                            id: 'passkey-js',
+                            path: __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'
+                        ),
+                    ],
+                    package: 'stephenjude/filament-two-factor-authentication'
+                );
+            }
+        } catch (\Exception $exception) {
         }
     }
 
     protected function configurePasskey(): void
     {
-        $provider = config('auth.guards.' . filament()?->getCurrentPanel()?->getAuthGuard() . '.provider');
+        $provider = config('auth.guards.' . filament()?->getCurrentOrDefaultPanel()?->getAuthGuard() . '.provider');
 
         Config::set(
             key: 'passkeys.models.authenticatable',
             value: Config::get('auth.providers.' . $provider . '.model', 'App\\Models\\User')
         );
 
-        $path = filament()?->getCurrentPanel()?->getPath();
+        $path = filament()?->getCurrentOrDefaultPanel()?->getPath();
 
         Config::set(
             key: 'passkeys.redirect_to_after_login',

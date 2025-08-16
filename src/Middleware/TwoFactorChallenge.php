@@ -27,6 +27,6 @@ class TwoFactorChallenge
 
     protected function twoFactorChallengeRoute(): ?string
     {
-        return filament()->getCurrentPanel()?->route('two-factor.challenge');
+        return filament()->getCurrentOrDefaultPanel()?->route('two-factor.challenge');
     }
 }
