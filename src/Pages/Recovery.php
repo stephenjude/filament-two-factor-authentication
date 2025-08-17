@@ -66,11 +66,7 @@ class Recovery extends BaseSimplePage
             ->schema([
                 TextInput::make('recovery_code')
                     ->hiddenLabel()
-                    ->hint(
-                        __(
-                            'filament-two-factor-authentication::pages.recovery.form_hint'
-                        )
-                    )
+                    ->hint(__('filament-two-factor-authentication::pages.recovery.form_hint'))
                     ->required()
                     ->autocomplete()
                     ->autofocus()
@@ -101,7 +97,7 @@ class Recovery extends BaseSimplePage
     protected function getAuthenticateFormAction(): Action
     {
         return Action::make('authenticate')
-            ->label(__('filament-panels::pages/auth/login.form.actions.authenticate.label'))
+            ->label(__('filament-panels::auth/pages/login.form.actions.authenticate.label'))
             ->submit('authenticate');
     }
 

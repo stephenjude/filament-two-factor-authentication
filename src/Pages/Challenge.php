@@ -44,11 +44,7 @@ class Challenge extends BaseSimplePage
         return Action::make('recovery')
             ->link()
             ->label(__('filament-two-factor-authentication::pages.challenge.action_label'))
-            ->url(
-                filament()->getCurrentOrDefaultPanel()->route(
-                    'two-factor.recovery'
-                )
-            );
+            ->url(filament()->getCurrentOrDefaultPanel()->route('two-factor.recovery'));
     }
 
     public function authenticate()
@@ -86,7 +82,6 @@ class Challenge extends BaseSimplePage
                     ->autocomplete()
                     ->rules([
                         fn () => function (string $attribute, $value, $fail) {
-
                             $user = Filament::auth()->user();
                             if (is_null($user)) {
                                 $fail(__('filament-two-factor-authentication::pages.challenge.error'));
@@ -122,7 +117,7 @@ class Challenge extends BaseSimplePage
     protected function getAuthenticateFormAction(): Action
     {
         return Action::make('authenticate')
-            ->label(__('filament-panels::pages/auth/login.form.actions.authenticate.label'))
+            ->label(__('filament-panels::auth/pages/login.form.actions.authenticate.label'))
             ->submit('authenticate');
     }
 

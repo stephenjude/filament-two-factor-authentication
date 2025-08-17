@@ -9,7 +9,6 @@ use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodeReplaced;
 
@@ -44,17 +43,16 @@ trait TwoFactorAuthenticatable
 
     public function isTwoFactorChallengePassed(): bool
     {
-        $sessionKey = 'login_2fa_challenge_passed_' . $this->id;
+        if ($twoFactorSecretFromSession = session()->get("login:challenge:secret:$this->id")) {
+            return decrypt($this->two_factor_secret) === decrypt($twoFactorSecretFromSession);
+        }
 
-        return Hash::check($this->two_factor_secret, session()->get($sessionKey));
+        return false;
     }
 
     public function setTwoFactorChallengePassed(): void
     {
-        $sessionKey = 'login_2fa_challenge_passed_' . $this->id;
-        $sessionValue = Hash::make($this->two_factor_secret);
-
-        session()->put($sessionKey, $sessionValue);
+        session()->put("login:challenge:secret:$this->id", $this->two_factor_secret);
     }
 
     /**
