@@ -2,7 +2,7 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication\Events;
 
-use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Events\Dispatchable;
 
 class RecoveryCodesGenerated
@@ -10,15 +10,7 @@ class RecoveryCodesGenerated
     use Dispatchable;
 
     /**
-     * The user instance.
-     */
-    public FilamentUser $user;
-
-    /**
      * Create a new event instance.
      */
-    public function __construct(FilamentUser $user)
-    {
-        $this->user = $user;
-    }
+    public function __construct(public User $user) {}
 }
