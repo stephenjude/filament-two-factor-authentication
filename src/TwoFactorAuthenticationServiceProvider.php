@@ -4,10 +4,7 @@ namespace Stephenjude\FilamentTwoFactorAuthentication;
 
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentView;
-use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
@@ -78,38 +75,42 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
         Livewire::component('filament-two-factor-authentication::pages.recovery', Recovery::class);
         Livewire::component('filament-two-factor-authentication::pages.setup', Setup::class);
         Livewire::component(
-            'filament-two-factor-authentication::livewire.two-factor-authentication',
-            TwoFactorAuthentication::class
+            name: 'filament-two-factor-authentication::livewire.two-factor-authentication',
+            class: TwoFactorAuthentication::class
         );
         Livewire::component(
-            'filament-two-factor-authentication::livewire.passkey-authentication',
-            PasskeyAuthentication::class
+            name: 'filament-two-factor-authentication::livewire.passkey-authentication',
+            class: PasskeyAuthentication::class
         );
 
-        if (filament()->hasPlugin('filament-two-factor-authentication') && TwoFactorAuthenticationPlugin::get()->hasEnabledPasskeyAuthentication()) {
-            $this->configurePasskey();
+        try {
+            if (filament()->getPlugin('filament-two-factor-authentication')->hasEnabledPasskeyAuthentication()) {
+                $this->configurePasskey();
 
-            FilamentAsset::register([
-                Js::make('passkey-js', __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'),
-            ]);
-
-            FilamentView::registerRenderHook(
-                PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
-                fn (): string => Blade::render('<x-filament-two-factor-authentication::passkey-login />'),
-            );
+                FilamentAsset::register(
+                    assets: [
+                        Js::make(
+                            id: 'passkey-js',
+                            path: __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'
+                        ),
+                    ],
+                    package: 'stephenjude/filament-two-factor-authentication'
+                );
+            }
+        } catch (\Exception $exception) {
         }
     }
 
     protected function configurePasskey(): void
     {
-        $provider = config('auth.guards.' . filament()?->getCurrentPanel()?->getAuthGuard() . '.provider');
+        $provider = config('auth.guards.' . filament()?->getCurrentOrDefaultPanel()?->getAuthGuard() . '.provider');
 
         Config::set(
             key: 'passkeys.models.authenticatable',
             value: Config::get('auth.providers.' . $provider . '.model', 'App\\Models\\User')
         );
 
-        $path = filament()?->getCurrentPanel()?->getPath();
+        $path = filament()?->getCurrentOrDefaultPanel()?->getPath();
 
         Config::set(
             key: 'passkeys.redirect_to_after_login',

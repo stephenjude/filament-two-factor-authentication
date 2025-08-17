@@ -2,7 +2,7 @@
 
 namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
 
-use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Validation\ValidationException;
 use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationConfirmed;
@@ -25,7 +25,7 @@ class ConfirmTwoFactorAuthentication
     /**
      * Confirm the two factor authentication configuration for the user.
      */
-    public function __invoke(FilamentUser $user, string $code): void
+    public function __invoke(User $user, string $code): void
     {
         if (empty($user->two_factor_secret) ||
             empty($code) ||

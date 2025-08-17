@@ -6,8 +6,7 @@ use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Http\Responses\Auth\LoginResponse;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationChallenged;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationFailed;
@@ -16,7 +15,7 @@ use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationProvider;
 
 class Challenge extends BaseSimplePage
 {
-    protected static string $view = 'filament-two-factor-authentication::pages.challenge';
+    protected string $view = 'filament-two-factor-authentication::pages.challenge';
 
     public ?array $data = [];
 
@@ -28,7 +27,7 @@ class Challenge extends BaseSimplePage
     public function mount(): void
     {
         if (! Filament::auth()->check()) {
-            redirect()->to(filament()->getCurrentPanel()?->getLoginUrl());
+            redirect()->to(filament()->getCurrentOrDefaultPanel()?->getLoginUrl());
 
             return;
         }
@@ -46,13 +45,13 @@ class Challenge extends BaseSimplePage
             ->link()
             ->label(__('filament-two-factor-authentication::pages.challenge.action_label'))
             ->url(
-                filament()->getCurrentPanel()->route(
+                filament()->getCurrentOrDefaultPanel()->route(
                     'two-factor.recovery'
                 )
             );
     }
 
-    public function authenticate(): ?LoginResponse
+    public function authenticate()
     {
         try {
             $this->rateLimit(5);
@@ -65,7 +64,7 @@ class Challenge extends BaseSimplePage
 
             event(new ValidTwoFactorAuthenticationCodeProvided($user));
 
-            return app(LoginResponse::class);
+            return redirect()->intended(filament()->getCurrentOrDefaultPanel()->getUrl());
         } catch (TooManyRequestsException $exception) {
             $this->getRateLimitedNotification($exception)?->send();
 
@@ -73,56 +72,44 @@ class Challenge extends BaseSimplePage
         }
     }
 
-    /**
-     * @return array<int | string, string | Form>
-     */
-    protected function getForms(): array
+    public function form(Schema $schema): Schema
     {
-        return [
-            'form' => $this->form(
-                $this->makeForm()
-                    ->schema([
-                        TextInput::make('code')
-                            ->hiddenLabel()
-                            ->hint(
-                                __('filament-two-factor-authentication::pages.challenge.confirm')
-                            )
-                            ->label(__('filament-two-factor-authentication::pages.challenge.code'))
-                            ->required()
-                            ->autocomplete()
-                            ->rules([
-                                fn () => function (string $attribute, $value, $fail) {
+        return $schema
+            ->schema([
+                TextInput::make('code')
+                    ->hiddenLabel()
+                    ->hint(
+                        __('filament-two-factor-authentication::pages.challenge.confirm')
+                    )
+                    ->label(__('filament-two-factor-authentication::pages.challenge.code'))
+                    ->required()
+                    ->autocomplete()
+                    ->rules([
+                        fn () => function (string $attribute, $value, $fail) {
 
-                                    $user = Filament::auth()->user();
-                                    if (is_null($user)) {
-                                        $fail(__('filament-two-factor-authentication::pages.challenge.error'));
+                            $user = Filament::auth()->user();
+                            if (is_null($user)) {
+                                $fail(__('filament-two-factor-authentication::pages.challenge.error'));
 
-                                        redirect()->to(filament()->getCurrentPanel()->getLoginUrl());
+                                redirect()->to(filament()->getCurrentOrDefaultPanel()->getLoginUrl());
 
-                                        return;
-                                    }
+                                return;
+                            }
 
-                                    $isValidCode = app(TwoFactorAuthenticationProvider::class)->verify(
-                                        secret: decrypt($user->two_factor_secret),
-                                        code: $value
-                                    );
+                            $isValidCode = app(TwoFactorAuthenticationProvider::class)->verify(
+                                secret: decrypt($user->two_factor_secret),
+                                code: $value
+                            );
 
-                                    if (! $isValidCode) {
-                                        $fail(__('filament-two-factor-authentication::pages.challenge.error'));
+                            if (! $isValidCode) {
+                                $fail(__('filament-two-factor-authentication::pages.challenge.error'));
 
-                                        event(new TwoFactorAuthenticationFailed($user));
-                                    }
-                                },
-                            ]),
-                    ])
-                    ->statePath('data'),
-            ),
-        ];
-    }
-
-    public function form(Form $form): Form
-    {
-        return $form;
+                                event(new TwoFactorAuthenticationFailed($user));
+                            }
+                        },
+                    ]),
+            ])
+            ->statePath('data');
     }
 
     public function getFormActions(): array

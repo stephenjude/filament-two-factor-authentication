@@ -8,8 +8,8 @@
             {{__('filament-two-factor-authentication::section.passkey.description')}}
         </x-slot>
 
-        <div>
-            {{ $this->form }}
+        <div class="fi-sc-form space-y-6">
+            {{ $this->createPasskeyForm }}
 
             {{ $this->table }}
         </div>

@@ -8,22 +8,12 @@
             {{__('filament-two-factor-authentication::section.description')}}
         </x-slot>
 
-        <div class="">
-            @if($this->isConfirmingSetup)
-                <x-filament-two-factor-authentication::setup-confirmation />
-            @elseif($this->enableTwoFactorAuthentication->isVisible())
-                <x-filament-two-factor-authentication::enable />
-            @elseif($this->disableTwoFactorAuthentication->isVisible())
-                <x-filament-two-factor-authentication::enabled />
+        <div class="fi-sc-form space-y-6">
+            {{ $this->setupTwoFactorAuthenticationForm }}
 
-                @if($this->showRecoveryCodes)
-                    <x-filament-two-factor-authentication::recovery-codes />
-                @endif
+            {{ $this->enableTwoFactorAuthenticationForm }}
 
-                {{$this->generateNewRecoveryCodes}}
-
-                {{$this->disableTwoFactorAuthentication}}
-            @endif
+            {{ $this->disableTwoFactorAuthenticationForm }}
         </div>
     </x-filament::section>
 

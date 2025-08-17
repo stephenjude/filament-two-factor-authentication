@@ -6,14 +6,13 @@ use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Http\Responses\Auth\LoginResponse;
+use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCodeProvided;
 
 class Recovery extends BaseSimplePage
 {
-    protected static string $view = 'filament-two-factor-authentication::pages.recovery';
+    protected string $view = 'filament-two-factor-authentication::pages.recovery';
 
     public ?array $data = [];
 
@@ -28,7 +27,7 @@ class Recovery extends BaseSimplePage
         $this->form->fill();
     }
 
-    public function authenticate(): ?LoginResponse
+    public function authenticate()
     {
         try {
             $this->rateLimit(5);
@@ -41,7 +40,7 @@ class Recovery extends BaseSimplePage
 
             event(new ValidTwoFactorRecoveryCodeProvided($user));
 
-            return app(LoginResponse::class);
+            return redirect()->intended(filament()->getCurrentOrDefaultPanel()->getUrl());
         } catch (TooManyRequestsException $exception) {
             $this->getRateLimitedNotification($exception)?->send();
 
@@ -55,52 +54,41 @@ class Recovery extends BaseSimplePage
             ->link()
             ->label(__('filament-two-factor-authentication::pages.recovery.action_label'))
             ->url(
-                filament()->getCurrentPanel()->route(
+                filament()->getCurrentOrDefaultPanel()->route(
                     'two-factor.challenge'
                 )
             );
     }
 
-    /**
-     * @return array<int | string, string | Form>
-     */
-    protected function getForms(): array
+    public function form(Schema $schema): Schema
     {
-        return [
-            'form' => $this->form(
-                $this->makeForm()
-                    ->schema([
-                        TextInput::make('recovery_code')
-                            ->hiddenLabel()
-                            ->hint(
-                                __(
-                                    'filament-two-factor-authentication::pages.recovery.form_hint'
-                                )
-                            )
-                            ->required()
-                            ->autocomplete()
-                            ->autofocus()->rules([
-                                fn () => function (string $attribute, $value, $fail) {
-                                    $user = Filament::auth()->user();
+        return $schema
+            ->schema([
+                TextInput::make('recovery_code')
+                    ->hiddenLabel()
+                    ->hint(
+                        __(
+                            'filament-two-factor-authentication::pages.recovery.form_hint'
+                        )
+                    )
+                    ->required()
+                    ->autocomplete()
+                    ->autofocus()
+                    ->rules([
+                        fn () => function (string $attribute, $value, $fail) {
+                            $user = Filament::auth()->user();
 
-                                    $validCode = collect($user->recoveryCodes())->first(
-                                        fn ($code) => hash_equals($code, $value) ? $code : null
-                                    );
+                            $validCode = collect($user->recoveryCodes())->first(
+                                fn ($code) => hash_equals($code, $value) ? $code : null
+                            );
 
-                                    if (! $validCode) {
-                                        $fail(__('filament-two-factor-authentication::pages.recovery.error'));
-                                    }
-                                },
-                            ]),
-                    ])
-                    ->statePath('data'),
-            ),
-        ];
-    }
-
-    public function form(Form $form): Form
-    {
-        return $form;
+                            if (! $validCode) {
+                                $fail(__('filament-two-factor-authentication::pages.recovery.error'));
+                            }
+                        },
+                    ]),
+            ])
+            ->statePath('data');
     }
 
     public function getFormActions(): array
