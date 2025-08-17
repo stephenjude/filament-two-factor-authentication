@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.2 - 2025-08-17
+
+### What's Changed
+
+* Revert logout action deletion by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/77
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.1...3.0.2
+
 ## 3.0.1 - 2025-08-16
 
 ### What's Changed
