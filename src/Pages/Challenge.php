@@ -19,14 +19,14 @@ class Challenge extends BaseSimplePage
 
     public ?array $data = [];
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string | Htmlable
     {
         return __('filament-two-factor-authentication::section.header');
     }
 
     public function mount(): void
     {
-        if (!Filament::auth()->check()) {
+        if (! Filament::auth()->check()) {
             redirect()->to(filament()->getCurrentOrDefaultPanel()?->getLoginUrl());
 
             return;
@@ -81,7 +81,7 @@ class Challenge extends BaseSimplePage
                     ->required()
                     ->autocomplete()
                     ->rules([
-                        fn() => function (string $attribute, $value, $fail) {
+                        fn () => function (string $attribute, $value, $fail) {
                             $user = Filament::auth()->user();
                             if (is_null($user)) {
                                 $fail(__('filament-two-factor-authentication::pages.challenge.error'));
@@ -96,7 +96,7 @@ class Challenge extends BaseSimplePage
                                 code: $value
                             );
 
-                            if (!$isValidCode) {
+                            if (! $isValidCode) {
                                 $fail(__('filament-two-factor-authentication::pages.challenge.error'));
 
                                 event(new TwoFactorAuthenticationFailed($user));
