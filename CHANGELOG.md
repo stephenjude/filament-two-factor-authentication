@@ -2,6 +2,15 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.3 - 2025-08-17
+
+### What's Changed
+
+* Add constructor property promotion support for events by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/78
+* Improvements: Switch 2FA challenge from hash validation to decrypt validation and Cleanup translation usage. by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/79
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.2...3.0.3
+
 ## 3.0.2 - 2025-08-17
 
 ### What's Changed
