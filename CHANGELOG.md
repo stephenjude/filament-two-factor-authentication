@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.5 - 2025-08-18
+
+### What's Changed
+
+* [3.x] Set the intended URL before redirecting to the challenge by @ashleyshenton in https://github.com/stephenjude/filament-two-factor-authentication/pull/81
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.4...3.0.5
+
 ## 3.0.4 - 2025-08-18
 
 ### What's Changed
