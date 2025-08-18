@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.4 - 2025-08-18
+
+### What's Changed
+
+* Chore: Middleware Usage & Translation Fixes by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/80
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.3...3.0.4
+
 ## 3.0.3 - 2025-08-17
 
 ### What's Changed
