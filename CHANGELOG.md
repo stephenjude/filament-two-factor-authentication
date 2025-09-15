@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.6 - 2025-09-15
+
+### What's Changed
+
+* Added Turkish Translation (Türkçe Dil Desteği Eklendi) by @engbz in https://github.com/stephenjude/filament-two-factor-authentication/pull/83
+
+### New Contributors
+
+* @engbz made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/83
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.5...3.0.6
+
 ## 2.0.8 - 2025-08-22
 
 ### What's Changed
