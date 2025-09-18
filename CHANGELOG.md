@@ -2,6 +2,42 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.6 - 2025-09-15
+
+### What's Changed
+
+* Added Turkish Translation (Türkçe Dil Desteği Eklendi) by @engbz in https://github.com/stephenjude/filament-two-factor-authentication/pull/83
+
+### New Contributors
+
+* @engbz made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/83
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.5...3.0.6
+
+## 2.0.8 - 2025-08-22
+
+### What's Changed
+
+* [2.x] Set the intended URL before redirecting to the challenge by @ashleyshenton in https://github.com/stephenjude/filament-two-factor-authentication/pull/74
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/2.0.7...2.0.8
+
+## 3.0.5 - 2025-08-18
+
+### What's Changed
+
+* [3.x] Set the intended URL before redirecting to the challenge by @ashleyshenton in https://github.com/stephenjude/filament-two-factor-authentication/pull/81
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.4...3.0.5
+
+## 3.0.4 - 2025-08-18
+
+### What's Changed
+
+* Chore: Middleware Usage & Translation Fixes by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/80
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.3...3.0.4
+
 ## 3.0.3 - 2025-08-17
 
 ### What's Changed
