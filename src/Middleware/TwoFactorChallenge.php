@@ -19,7 +19,7 @@ class TwoFactorChallenge
             ! $user?->isTwoFactorChallengePassed() &&
             ! $user?->passkeyAuthenticated()
         ) {
-            return redirect()->to($this->twoFactorChallengeRoute());
+            return redirect()->guest($this->twoFactorChallengeRoute());
         }
 
         return $next($request);
