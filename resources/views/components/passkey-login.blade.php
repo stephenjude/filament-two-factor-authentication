@@ -8,7 +8,9 @@
 
     <div>
         @if($message = session()->get('authenticatePasskey::message'))
-            <x-filament::link tag="a" weight="light"  color="danger">{{ __('filament-two-factor-authentication::components.passkey.error', ['message' => $message]) }}</x-filament::link>
+            <x-filament::link tag="a" weight="light"  color="danger">
+                {{ $message }}
+            </x-filament::link>
             <br><br>
         @endif
     </div>
