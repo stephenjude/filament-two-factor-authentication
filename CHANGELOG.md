@@ -2,6 +2,19 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.7 - 2025-09-18
+
+### What's Changed
+
+* Add Brazilian Portuguese language support for two-factor authentication by @Mapexss in https://github.com/stephenjude/filament-two-factor-authentication/pull/84
+* revert duplicate error message translation  by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/85
+
+### New Contributors
+
+* @Mapexss made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/84
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.6...3.0.7
+
 ## 3.0.6 - 2025-09-15
 
 ### What's Changed
