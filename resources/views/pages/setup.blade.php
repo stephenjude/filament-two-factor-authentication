@@ -14,6 +14,4 @@
     @if($plugin->hasEnabledPasskeyAuthentication())
         @livewire(PasskeyAuthentication::class, ['aside' => false])
     @endif
-
-    {{$this->utilityActionsForm}}
 </x-filament-panels::page.simple>
