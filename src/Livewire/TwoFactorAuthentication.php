@@ -82,6 +82,7 @@ class TwoFactorAuthentication extends Component implements HasActions, HasForms
                             app(ConfirmTwoFactorAuthentication::class)($record, $data['code']);
 
                             $this->showSetupCode = false;
+                            $this->dispatch('refresh-page');
                         }),
                     Action::make('cancel')
                         ->label(__('filament-two-factor-authentication::components.2fa.cancel'))
