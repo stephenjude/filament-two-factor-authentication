@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 3.0.8 - 2025-09-20
+
+### What's Changed
+
+* Reactive dashboard link after verifying the code by @yhyasyrian in https://github.com/stephenjude/filament-two-factor-authentication/pull/87
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.7...3.0.8
+
 ## 3.0.7 - 2025-09-18
 
 ### What's Changed
