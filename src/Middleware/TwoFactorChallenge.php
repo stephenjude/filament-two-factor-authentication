@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Middleware;
+namespace Mapexss\FilamentTwoFactorAuthentication\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

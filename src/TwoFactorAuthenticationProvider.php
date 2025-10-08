@@ -1,10 +1,10 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication;
+namespace Mapexss\FilamentTwoFactorAuthentication;
 
 use Illuminate\Contracts\Cache\Repository;
 use PragmaRX\Google2FA\Google2FA;
-use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
+use Mapexss\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 
 class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProviderContract
 {

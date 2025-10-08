@@ -1,11 +1,11 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
+namespace Mapexss\FilamentTwoFactorAuthentication\Actions;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
-use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider;
-use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationEnabled;
+use Mapexss\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider;
+use Mapexss\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationEnabled;
 
 class EnableTwoFactorAuthentication
 {

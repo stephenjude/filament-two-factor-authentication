@@ -1,9 +1,9 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
+namespace Mapexss\FilamentTwoFactorAuthentication\Actions;
 
 use Illuminate\Foundation\Auth\User;
-use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationDisabled;
+use Mapexss\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationDisabled;
 
 class DisableTwoFactorAuthentication
 {

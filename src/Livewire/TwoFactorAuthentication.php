@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Livewire;
+namespace Mapexss\FilamentTwoFactorAuthentication\Livewire;
 
 use Filament\Actions\Action;
 use Filament\Actions\Contracts\HasActions;
@@ -12,11 +12,11 @@ use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
-use Stephenjude\FilamentTwoFactorAuthentication\Actions\ConfirmTwoFactorAuthentication;
-use Stephenjude\FilamentTwoFactorAuthentication\Actions\DisableTwoFactorAuthentication;
-use Stephenjude\FilamentTwoFactorAuthentication\Actions\EnableTwoFactorAuthentication;
-use Stephenjude\FilamentTwoFactorAuthentication\Actions\GenerateNewRecoveryCodes;
-use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
+use Mapexss\FilamentTwoFactorAuthentication\Actions\ConfirmTwoFactorAuthentication;
+use Mapexss\FilamentTwoFactorAuthentication\Actions\DisableTwoFactorAuthentication;
+use Mapexss\FilamentTwoFactorAuthentication\Actions\EnableTwoFactorAuthentication;
+use Mapexss\FilamentTwoFactorAuthentication\Actions\GenerateNewRecoveryCodes;
+use Mapexss\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
 class TwoFactorAuthentication extends Component implements HasActions, HasForms
 {

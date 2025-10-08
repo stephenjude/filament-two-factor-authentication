@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication;
+namespace Mapexss\FilamentTwoFactorAuthentication;
 
 use Closure;
 use Filament\Actions\Action;
@@ -16,11 +16,11 @@ use JetBrains\PhpStorm\Deprecated;
 use Spatie\LaravelPasskeys\Events\PasskeyUsedToAuthenticateEvent;
 use Spatie\LaravelPasskeys\Http\Controllers\AuthenticateUsingPasskeyController;
 use Spatie\LaravelPasskeys\Http\Controllers\GeneratePasskeyAuthenticationOptionsController;
-use Stephenjude\FilamentTwoFactorAuthentication\Middleware\ForceTwoFactorSetup;
-use Stephenjude\FilamentTwoFactorAuthentication\Middleware\TwoFactorChallenge;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
+use Mapexss\FilamentTwoFactorAuthentication\Middleware\ForceTwoFactorSetup;
+use Mapexss\FilamentTwoFactorAuthentication\Middleware\TwoFactorChallenge;
+use Mapexss\FilamentTwoFactorAuthentication\Pages\Challenge;
+use Mapexss\FilamentTwoFactorAuthentication\Pages\Recovery;
+use Mapexss\FilamentTwoFactorAuthentication\Pages\Setup;
 
 class TwoFactorAuthenticationPlugin implements Plugin
 {

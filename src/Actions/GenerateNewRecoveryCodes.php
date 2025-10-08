@@ -1,10 +1,10 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
+namespace Mapexss\FilamentTwoFactorAuthentication\Actions;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Collection;
-use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodesGenerated;
+use Mapexss\FilamentTwoFactorAuthentication\Events\RecoveryCodesGenerated;
 
 class GenerateNewRecoveryCodes
 {

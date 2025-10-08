@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Livewire;
+namespace Mapexss\FilamentTwoFactorAuthentication\Livewire;
 
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use DanHarrin\LivewireRateLimiting\WithRateLimiting;

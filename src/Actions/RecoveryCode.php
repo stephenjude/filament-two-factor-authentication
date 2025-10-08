@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
+namespace Mapexss\FilamentTwoFactorAuthentication\Actions;
 
 use Illuminate\Support\Str;
 

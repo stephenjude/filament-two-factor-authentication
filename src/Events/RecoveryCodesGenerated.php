@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Events;
+namespace Mapexss\FilamentTwoFactorAuthentication\Events;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Events\Dispatchable;

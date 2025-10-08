@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Livewire;
+namespace Mapexss\FilamentTwoFactorAuthentication\Livewire;
 
 use Filament\Actions\Action;
 use Filament\Actions\Contracts\HasActions;
@@ -19,7 +19,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\View\View;
 use Spatie\LaravelPasskeys\Livewire\PasskeysComponent;
-use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
+use Mapexss\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
 class PasskeyAuthentication extends PasskeysComponent implements HasActions, HasForms, HasTable
 {

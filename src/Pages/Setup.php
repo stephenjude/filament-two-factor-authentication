@@ -1,13 +1,13 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Pages;
+namespace Mapexss\FilamentTwoFactorAuthentication\Pages;
 
 use Filament\Actions\Action;
 use Filament\Facades\Filament;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
-use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
+use Mapexss\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
 class Setup extends BaseSimplePage
 {

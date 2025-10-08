@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Events;
+namespace Mapexss\FilamentTwoFactorAuthentication\Events;
 
 class ValidTwoFactorAuthenticationCodeProvided extends TwoFactorAuthenticationEvent
 {

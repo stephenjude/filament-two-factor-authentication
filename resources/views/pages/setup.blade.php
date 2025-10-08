@@ -1,7 +1,7 @@
 @php
-    use Stephenjude\FilamentTwoFactorAuthentication\Livewire\PasskeyAuthentication;
-    use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
-    use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
+    use Mapexss\FilamentTwoFactorAuthentication\Livewire\PasskeyAuthentication;
+    use Mapexss\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
+    use Mapexss\FilamentTwoFactorAuthentication\TwoFactorAuthenticationPlugin;
 
     $plugin = TwoFactorAuthenticationPlugin::get();
 @endphp

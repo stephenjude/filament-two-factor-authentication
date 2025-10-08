@@ -1,11 +1,11 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Actions;
+namespace Mapexss\FilamentTwoFactorAuthentication\Actions;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Validation\ValidationException;
-use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider;
-use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationConfirmed;
+use Mapexss\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider;
+use Mapexss\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationConfirmed;
 
 class ConfirmTwoFactorAuthentication
 {

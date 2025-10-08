@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Pages;
+namespace Mapexss\FilamentTwoFactorAuthentication\Pages;
 
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Actions\Action;
@@ -8,10 +8,10 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
-use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationChallenged;
-use Stephenjude\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationFailed;
-use Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorAuthenticationCodeProvided;
-use Stephenjude\FilamentTwoFactorAuthentication\TwoFactorAuthenticationProvider;
+use Mapexss\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationChallenged;
+use Mapexss\FilamentTwoFactorAuthentication\Events\TwoFactorAuthenticationFailed;
+use Mapexss\FilamentTwoFactorAuthentication\Events\ValidTwoFactorAuthenticationCodeProvided;
+use Mapexss\FilamentTwoFactorAuthentication\TwoFactorAuthenticationProvider;
 
 class Challenge extends BaseSimplePage
 {

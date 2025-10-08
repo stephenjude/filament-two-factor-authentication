@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication\Contracts;
+namespace Mapexss\FilamentTwoFactorAuthentication\Contracts;
 
 interface TwoFactorAuthenticationProvider
 {

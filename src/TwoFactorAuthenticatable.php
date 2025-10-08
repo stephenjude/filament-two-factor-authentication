@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication;
+namespace Mapexss\FilamentTwoFactorAuthentication;
 
 use BaconQrCode\Renderer\Color\Rgb;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
@@ -10,7 +10,7 @@ use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Illuminate\Support\Facades\Cache;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
-use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodeReplaced;
+use Mapexss\FilamentTwoFactorAuthentication\Events\RecoveryCodeReplaced;
 
 trait TwoFactorAuthenticatable
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Stephenjude\FilamentTwoFactorAuthentication;
+namespace Mapexss\FilamentTwoFactorAuthentication;
 
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
@@ -11,12 +11,12 @@ use PragmaRX\Google2FA\Google2FA;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Stephenjude\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
-use Stephenjude\FilamentTwoFactorAuthentication\Livewire\PasskeyAuthentication;
-use Stephenjude\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Challenge;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Recovery;
-use Stephenjude\FilamentTwoFactorAuthentication\Pages\Setup;
+use Mapexss\FilamentTwoFactorAuthentication\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
+use Mapexss\FilamentTwoFactorAuthentication\Livewire\PasskeyAuthentication;
+use Mapexss\FilamentTwoFactorAuthentication\Livewire\TwoFactorAuthentication;
+use Mapexss\FilamentTwoFactorAuthentication\Pages\Challenge;
+use Mapexss\FilamentTwoFactorAuthentication\Pages\Recovery;
+use Mapexss\FilamentTwoFactorAuthentication\Pages\Setup;
 
 class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
 {
@@ -42,7 +42,7 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
                     ->publishMigrations()
                     ->publish('passkeys-migrations')
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub('stephenjude/filament-two-factor-authentication');
+                    ->askToStarRepoOnGitHub('Mapexss/filament-two-factor-authentication');
             });
 
         if (file_exists($package->basePath('/../database/migrations'))) {
@@ -94,7 +94,7 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
                             path: __DIR__ . '/../resources/dist/filament-two-factor-authentication.js'
                         ),
                     ],
-                    package: 'stephenjude/filament-two-factor-authentication'
+                    package: 'Mapexss/filament-two-factor-authentication'
                 );
             }
         } catch (\Exception $exception) {
