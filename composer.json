@@ -1,23 +1,23 @@
 {
-    "name": "stephenjude/filament-two-factor-authentication",
+    "name": "mapexss/filament-two-factor-authentication",
     "description": "Filament Two Factor Authentication: Google 2FA + Passkey Authentication",
     "keywords": [
-        "stephenjude",
+        "mapexss",
         "laravel",
         "filament",
         "2fa",
         "passkey authentication",
         "two-factor authentication"
     ],
-    "homepage": "https://github.com/stephenjude/filament-two-factor-authentication",
+    "homepage": "https://github.com/mapexss/filament-two-factor-authentication",
     "support": {
-        "issues": "https://github.com/stephenjude/filament-two-factor-authentication/issues",
-        "source": "https://github.com/stephenjude/filament-two-factor-authentication"
+        "issues": "https://github.com/mapexss/filament-two-factor-authentication/issues",
+        "source": "https://github.com/mapexss/filament-two-factor-authentication"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "stephenjude",
+            "name": "mapexss",
             "email": "stephenjudesuccess@gmail.com",
             "role": "Developer"
         }
@@ -41,12 +41,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Stephenjude\\FilamentTwoFactorAuthentication\\": "src/"
+            "Mapexss\\FilamentTwoFactorAuthentication\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Stephenjude\\FilamentTwoFactorAuthentication\\Tests\\": "tests/"
+            "Mapexss\\FilamentTwoFactorAuthentication\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -66,7 +66,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Stephenjude\\FilamentTwoFactorAuthentication\\TwoFactorAuthenticationServiceProvider"
+                "Mapexss\\FilamentTwoFactorAuthentication\\TwoFactorAuthenticationServiceProvider"
             ],
             "aliases": {
             }
