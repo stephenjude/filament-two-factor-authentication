@@ -39,9 +39,11 @@ return [
         'name' => 'Name',
         'added' => 'Passkey added successfully.',
         'login' => 'Login with Passkey',
-        'tootip' => 'Use Face ID, fingerprint, or PIN',
+        'tooltip' => 'Use Face ID, fingerprint, or PIN',
+        'error' => 'Authentication error: :message',
+        'never_used' => 'Never used',
         'notice' => [
-            'header' => 'Passkeys are a passwordless login method using your device’s biometric authentication. Instead of typing a password, you approve login on your trusted device.',
+            'header' => 'Passkeys are a passwordless login method using your device\'s biometric authentication. Instead of typing a password, you approve login on your trusted device.',
         ],
     ],
 ];

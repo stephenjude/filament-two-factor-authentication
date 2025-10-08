@@ -17,7 +17,7 @@
         <x-filament::link
             href="#"
             weight="normal"
-            :tooltip='__("filament-two-factor-authentication::components.passkey.tootip")'
+            :tooltip='__("filament-two-factor-authentication::components.passkey.tooltip")'
             icon="heroicon-o-finger-print">
             {{__("filament-two-factor-authentication::components.passkey.login")}}
         </x-filament::link>

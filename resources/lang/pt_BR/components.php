@@ -39,7 +39,7 @@ return [
         'name' => 'Nome',
         'added' => 'Passkey adicionada com sucesso.',
         'login' => 'Entrar com Passkey',
-        'tootip' => 'Use Face ID, impressão digital ou PIN',
+        'tooltip' => 'Use Face ID, impressão digital ou PIN',
         'error' => 'Erro de autenticação: :message',
         'never_used' => 'Nunca usado',
         'notice' => [

@@ -1,4 +1,21 @@
 {
     "Name": "Nome",
-    "Never used": "Nunca usado"
+    "Never used": "Nunca usado",
+    "Delete": "Excluir",
+    "Edit": "Editar",
+    "Save": "Salvar",
+    "Cancel": "Cancelar",
+    "Close": "Fechar",
+    "Confirm": "Confirmar",
+    "Enable": "Habilitar",
+    "Disable": "Desabilitar",
+    "Settings": "Configurações",
+    "Security": "Segurança",
+    "Authentication": "Autenticação",
+    "Two Factor Authentication": "Autenticação de Dois Fatores",
+    "Passkey Authentication": "Autenticação Passkey",
+    "Recovery Codes": "Códigos de Recuperação",
+    "Setup": "Configuração",
+    "Challenge": "Desafio",
+    "Recovery": "Recuperação"
 }
