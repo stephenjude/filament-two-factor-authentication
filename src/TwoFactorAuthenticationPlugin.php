@@ -26,9 +26,9 @@ class TwoFactorAuthenticationPlugin implements Plugin
 {
     use EvaluatesClosures;
 
-    protected bool $enablePasskeyAuthentication = false;
+    protected bool | Closure $enablePasskeyAuthentication = false;
 
-    protected bool $enableTwoFactorAuthentication = false;
+    protected bool | Closure $enableTwoFactorAuthentication = false;
 
     #[Deprecated('Use the `hasForcedTwoFactorSetup` property instead.')]
     protected bool $hasEnforcedTwoFactorSetup = false;
@@ -39,7 +39,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
 
     protected string $enforceTwoFactorSetupMiddleware = ForceTwoFactorSetup::class;
 
-    protected string | bool $twoFactorChallengeMiddleware = TwoFactorChallenge::class;
+    protected string | bool | Closure $twoFactorChallengeMiddleware = TwoFactorChallenge::class;
 
     protected bool $hasTwoFactorMenuItem = false;
 
@@ -104,7 +104,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
     public function requirePasswordWhenEnabling(bool | Closure $condition = true): static
     {
-        $this->isPasswordRequiredForEnable = $this->evaluate($condition);
+        $this->isPasswordRequiredForEnable = $condition;
 
         return $this;
     }
@@ -112,7 +112,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
     public function requirePasswordWhenDisabling(bool | Closure $condition = true): static
     {
-        $this->isPasswordRequiredForDisable = $this->evaluate($condition);
+        $this->isPasswordRequiredForDisable = $condition;
 
         return $this;
     }
@@ -120,7 +120,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     #[Deprecated('Use enableTwoFactorAuthentication instead')]
     public function requirePasswordWhenRegeneratingRecoveryCodes(Closure | bool $condition = true): static
     {
-        $this->isPasswordRequiredForRegenerateRecoveryCodes = $this->evaluate($condition);
+        $this->isPasswordRequiredForRegenerateRecoveryCodes = $condition;
 
         return $this;
     }
@@ -151,7 +151,7 @@ class TwoFactorAuthenticationPlugin implements Plugin
     #[Deprecated('Use enableTwoFactorAuthentication(challengeMiddleware:ChallengeTwoFactor::class) instead')]
     public function setChallengeTwoFactorMiddleware(Closure | string | bool $middleware = TwoFactorChallenge::class): static
     {
-        $this->twoFactorChallengeMiddleware = $this->evaluate($middleware);
+        $this->twoFactorChallengeMiddleware = $middleware;
 
         return $this;
     }
@@ -159,12 +159,12 @@ class TwoFactorAuthenticationPlugin implements Plugin
     #[Deprecated('Use getTwoFactorChallengeMiddleware() instead')]
     public function getChallengeTwoFactorMiddleware(): string
     {
-        return $this->twoFactorChallengeMiddleware;
+        return $this->evaluate($this->twoFactorChallengeMiddleware);
     }
 
     public function getTwoFactorChallengeMiddleware(): string
     {
-        return $this->twoFactorChallengeMiddleware;
+        return $this->evaluate($this->twoFactorChallengeMiddleware);
     }
 
     #[Deprecated('Use forceTwoFactorSetup() instead')]
@@ -207,26 +207,26 @@ class TwoFactorAuthenticationPlugin implements Plugin
         Closure | bool $condition = true,
         Closure | string $challengeMiddleware = TwoFactorChallenge::class,
     ): static {
-        $this->enableTwoFactorAuthentication = $this->evaluate($condition);
+        $this->enableTwoFactorAuthentication = $condition;
 
-        $this->twoFactorChallengeMiddleware = $this->evaluate($challengeMiddleware);
+        $this->twoFactorChallengeMiddleware = $challengeMiddleware;
 
         return $this;
     }
 
     public function hasEnabledTwoFactorAuthentication(): bool
     {
-        return $this->enableTwoFactorAuthentication;
+        return $this->evaluate($this->enableTwoFactorAuthentication);
     }
 
     public function hasEnabledPasskeyAuthentication(): bool
     {
-        return $this->enablePasskeyAuthentication;
+        return $this->evaluate($this->enablePasskeyAuthentication);
     }
 
     public function enablePasskeyAuthentication(Closure | bool $condition = true): static
     {
-        $this->enablePasskeyAuthentication = $this->evaluate($condition);
+        $this->enablePasskeyAuthentication = $condition;
 
         return $this;
     }
