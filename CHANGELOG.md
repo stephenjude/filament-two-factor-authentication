@@ -2,6 +2,22 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 4.0.0 - 2026-02-09
+
+### What's Changed
+
+* Bump form-data from 4.0.2 to 4.0.4 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/92
+* Bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/93
+* Bump glob from 10.4.5 to 10.5.0 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/94
+* Bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/99
+* Filament V5 Support by @andresilvagomez in https://github.com/stephenjude/filament-two-factor-authentication/pull/101
+
+### New Contributors
+
+* @andresilvagomez made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/101
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/3.0.9...4.0.0
+
 ## 3.0.9 - 2025-10-13
 
 ### What's Changed
