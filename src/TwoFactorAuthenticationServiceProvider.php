@@ -71,15 +71,15 @@ class TwoFactorAuthenticationServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         // Register Livewire Components
-        Livewire::component('filament-two-factor-authentication::pages.challenge', Challenge::class);
-        Livewire::component('filament-two-factor-authentication::pages.recovery', Recovery::class);
-        Livewire::component('filament-two-factor-authentication::pages.setup', Setup::class);
+        Livewire::component('filament-two-factor-authentication.pages.challenge', Challenge::class);
+        Livewire::component('filament-two-factor-authentication.pages.recovery', Recovery::class);
+        Livewire::component('filament-two-factor-authentication.pages.setup', Setup::class);
         Livewire::component(
-            name: 'filament-two-factor-authentication::livewire.two-factor-authentication',
+            name: 'filament-two-factor-authentication.livewire.two-factor-authentication',
             class: TwoFactorAuthentication::class
         );
         Livewire::component(
-            name: 'filament-two-factor-authentication::livewire.passkey-authentication',
+            name: 'filament-two-factor-authentication.livewire.passkey-authentication',
             class: PasskeyAuthentication::class
         );
 
