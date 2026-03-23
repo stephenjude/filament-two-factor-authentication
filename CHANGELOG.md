@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 4.1.0 - 2026-03-23
+
+### What's Changed
+
+* [v3] Update composer.json to support v9 of pragmarx/google2fa by @glennjacobs in https://github.com/stephenjude/filament-two-factor-authentication/pull/97
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/4.0.0...4.1.0
+
 ## 4.0.0 - 2026-02-09
 
 ### What's Changed
