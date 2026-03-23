@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 4.1.1 - 2026-03-23
+
+### What's Changed
+
+* Bump minimatch by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/102
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/4.1.0...4.1.1
+
 ## 4.1.0 - 2026-03-23
 
 ### What's Changed
