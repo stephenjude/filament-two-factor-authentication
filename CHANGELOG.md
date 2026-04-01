@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 4.1.2 - 2026-04-01
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.5.0 to 3.0.0 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/104
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/4.1.1...4.1.2
+
 ## 4.1.1 - 2026-03-23
 
 ### What's Changed
