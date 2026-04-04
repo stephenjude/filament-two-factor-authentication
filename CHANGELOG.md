@@ -2,6 +2,18 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 4.1.3 - 2026-04-04
+
+### What's Changed
+
+* Remove duplicated requires from composer.json by @bretto36 in https://github.com/stephenjude/filament-two-factor-authentication/pull/105
+
+### New Contributors
+
+* @bretto36 made their first contribution in https://github.com/stephenjude/filament-two-factor-authentication/pull/105
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/4.1.2...4.1.3
+
 ## 4.1.2 - 2026-04-01
 
 ### What's Changed
