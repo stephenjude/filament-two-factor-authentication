@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 4.1.4 - 2026-04-13
+
+### What's Changed
+
+* Bump axios from 1.9.0 to 1.15.0 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/106
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/4.1.3...4.1.4
+
 ## 4.1.3 - 2026-04-04
 
 ### What's Changed
