@@ -2,6 +2,17 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 5.0.0 - 2026-05-31
+
+### What's Changed
+
+* Bump axios from 1.15.0 to 1.16.1 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/108
+* Bump picomatch from 2.3.1 to 2.3.2 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/109
+* Bump postcss from 8.5.3 to 8.5.15 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/110
+* Add Laravel 13 support by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/111
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/4.1.5...5.0.0
+
 ## 4.1.5 - 2026-04-22
 
 ### What's Changed
