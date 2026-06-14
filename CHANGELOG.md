@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 5.0.1 - 2026-06-14
+
+### What's Changed
+
+* Bump esbuild from 0.25.0 to 0.28.1 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/112
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/5.0.0...5.0.1
+
 ## 5.0.0 - 2026-05-31
 
 ### What's Changed
