@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 5.0.2 - 2026-06-24
+
+### What's Changed
+
+* Bump actions/checkout from 6 to 7 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/113
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/5.0.1...5.0.2
+
 ## 5.0.1 - 2026-06-14
 
 ### What's Changed
