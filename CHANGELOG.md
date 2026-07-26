@@ -2,6 +2,17 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 5.0.3 - 2026-07-26
+
+### What's Changed
+
+* Bump shell-quote from 1.8.2 to 1.10.0 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/114
+* Bump form-data from 4.0.5 to 4.0.6 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/115
+* Bump postcss from 8.5.15 to 8.5.23 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/117
+* Bump axios from 1.16.1 to 1.18.1 by @dependabot[bot] in https://github.com/stephenjude/filament-two-factor-authentication/pull/116
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/5.0.2...5.0.3
+
 ## 5.0.2 - 2026-06-24
 
 ### What's Changed
