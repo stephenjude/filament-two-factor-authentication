@@ -4,6 +4,7 @@ namespace Stephenjude\FilamentTwoFactorAuthentication\Pages;
 
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use DanHarrin\LivewireRateLimiting\WithRateLimiting;
+use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
@@ -15,6 +16,16 @@ abstract class BaseSimplePage extends SimplePage implements HasSchemas
     use InteractsWithFormActions;
     use InteractsWithSchemas;
     use WithRateLimiting;
+
+    public function logoutAction(): Action
+    {
+        return Action::make('logout')
+            ->link()
+            ->color('gray')
+            ->label(__('filament-panels::layout.actions.logout.label'))
+            ->url(filament()->getCurrentOrDefaultPanel()->getLogoutUrl())
+            ->postToUrl();
+    }
 
     protected function getRateLimitedNotification(TooManyRequestsException $exception): ?Notification
     {
