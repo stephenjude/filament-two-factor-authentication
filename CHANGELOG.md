@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 5.0.5 - 2026-11-05
+
+### What's Changed
+
+* Keep the panel top bar off the two factor challenge pages by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/121
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/5.0.4...5.0.5
+
 ## 4.2.1 - 2026-11-05
 
 ### What's Changed
