@@ -19,6 +19,8 @@ class TwoFactorChallenge
             ! $user?->isTwoFactorChallengePassed() &&
             ! $user?->passkeyAuthenticated()
         ) {
+            abort_if($request->hasHeader('X-Livewire'), 403);
+
             return redirect()->guest($this->twoFactorChallengeRoute());
         }
 
