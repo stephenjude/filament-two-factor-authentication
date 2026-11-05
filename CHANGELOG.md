@@ -2,6 +2,14 @@
 
 All notable changes to `filament-two-factor-authentication` will be documented in this file.
 
+## 5.0.4 - 2026-11-05
+
+### What's Changed
+
+* Consume recovery codes on use by @stephenjude in https://github.com/stephenjude/filament-two-factor-authentication/pull/118
+
+**Full Changelog**: https://github.com/stephenjude/filament-two-factor-authentication/compare/5.0.3...5.0.4
+
 ## 4.2.0 - 2026-11-05
 
 ### What's Changed
