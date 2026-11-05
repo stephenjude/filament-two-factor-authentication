@@ -38,7 +38,7 @@ class PasskeyAuthentication extends PasskeysComponent implements HasActions, Has
     public function table(Table $table): Table
     {
         return $table
-            ->query(fn () => $this->getUser()->passkeys()->latest())
+            ->query(fn () => $this->getUser()->passkeys()->latest()->getQuery())
             ->columns([
                 Stack::make([
                     TextColumn::make('name')

@@ -3,10 +3,12 @@
 namespace Stephenjude\FilamentTwoFactorAuthentication\Events;
 
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
 class RecoveryCodeReplaced
 {
+    use Dispatchable;
     use SerializesModels;
 
     /**
