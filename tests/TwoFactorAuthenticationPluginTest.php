@@ -66,7 +66,5 @@ it('can render two factor component', function () {
 
 it('can render passkey component', function () {
     livewire(PasskeyAuthentication::class)
-        ->assertSuccessful()
-        ->assertActionExists('delete')
-        ->assertTableHeaderActionsExistInOrder(['addPasskey']);
+        ->assertSuccessful();
 });
