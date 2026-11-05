@@ -10,6 +10,7 @@ use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
 use Illuminate\Support\Facades\Cache;
 use Spatie\LaravelPasskeys\Models\Concerns\InteractsWithPasskeys;
+use Stephenjude\FilamentTwoFactorAuthentication\Actions\RecoveryCode;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\RecoveryCodeReplaced;
 
 trait TwoFactorAuthenticatable
@@ -79,6 +80,34 @@ trait TwoFactorAuthenticatable
         ])->save();
 
         RecoveryCodeReplaced::dispatch($this, $code);
+    }
+
+    /**
+     * Atomically verify and replace a recovery code, so that it can only ever be used once.
+     */
+    public function consumeRecoveryCode(string $code): bool
+    {
+        return $this->getConnection()->transaction(function () use ($code): bool {
+            $lockedUser = $this->newQueryWithoutScopes()->lockForUpdate()->find($this->getKey());
+
+            if (is_null($lockedUser?->two_factor_recovery_codes)) {
+                return false;
+            }
+
+            $validCode = collect($lockedUser->recoveryCodes())->first(
+                fn (string $storedCode) => hash_equals($storedCode, $code)
+            );
+
+            if (is_null($validCode)) {
+                return false;
+            }
+
+            $lockedUser->replaceRecoveryCode($validCode);
+
+            $this->setRawAttributes($lockedUser->getAttributes(), sync: true);
+
+            return true;
+        });
     }
 
     /**

@@ -8,6 +8,7 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Validation\ValidationException;
 use Stephenjude\FilamentTwoFactorAuthentication\Events\ValidTwoFactorRecoveryCodeProvided;
 
 class Recovery extends BaseSimplePage
@@ -32,9 +33,15 @@ class Recovery extends BaseSimplePage
         try {
             $this->rateLimit(5);
 
-            $this->form->getState();
+            $data = $this->form->getState();
 
             $user = Filament::auth()->user();
+
+            if (! $user->consumeRecoveryCode($data['recovery_code'])) {
+                throw ValidationException::withMessages([
+                    'data.recovery_code' => __('filament-two-factor-authentication::pages.recovery.error'),
+                ]);
+            }
 
             $user->setTwoFactorChallengePassed();
 
@@ -69,20 +76,7 @@ class Recovery extends BaseSimplePage
                     ->hint(__('filament-two-factor-authentication::pages.recovery.form_hint'))
                     ->required()
                     ->autocomplete()
-                    ->autofocus()
-                    ->rules([
-                        fn () => function (string $attribute, $value, $fail) {
-                            $user = Filament::auth()->user();
-
-                            $validCode = collect($user->recoveryCodes())->first(
-                                fn ($code) => hash_equals($code, $value) ? $code : null
-                            );
-
-                            if (! $validCode) {
-                                $fail(__('filament-two-factor-authentication::pages.recovery.error'));
-                            }
-                        },
-                    ]),
+                    ->autofocus(),
             ])
             ->statePath('data');
     }
