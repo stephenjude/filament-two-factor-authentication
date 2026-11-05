@@ -94,10 +94,11 @@ class TwoFactorAuthenticationPlugin implements Plugin
                     ->icon(fn () => $this->getTwoFactorMenuItemIcon()),
             ])
             ->authMiddleware(
-                array_filter([
-                    $this->getTwoFactorChallengeMiddleware(),
-                    $this->hasForcedTwoFactorSetup() ? $this->getForcedTwoFactorSetupMiddleware() : null,
-                ])
+                array_filter([$this->getTwoFactorChallengeMiddleware()]),
+                isPersistent: true,
+            )
+            ->authMiddleware(
+                array_filter([$this->hasForcedTwoFactorSetup() ? $this->getForcedTwoFactorSetupMiddleware() : null])
             );
     }
 

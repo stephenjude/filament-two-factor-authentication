@@ -15,6 +15,8 @@ class Recovery extends BaseSimplePage
 {
     protected string $view = 'filament-two-factor-authentication::pages.recovery';
 
+    protected bool $hasTopbar = false;
+
     public ?array $data = [];
 
     public function mount(): void

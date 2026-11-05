@@ -41,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 TwoFactorAuthenticationPlugin::make()
+                    ->enableTwoFactorAuthentication()
                     ->enablePasskeyAuthentication()
                     ->addTwoFactorMenuItem(),
             ]);

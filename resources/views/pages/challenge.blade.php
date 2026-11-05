@@ -13,4 +13,7 @@
         />
     </form>
 
+    <div style="text-align: center">
+        {{ $this->logoutAction }}
+    </div>
 </x-filament-panels::page.simple>
